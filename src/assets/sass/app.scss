@@ -1,0 +1,37 @@
+/* OUTILS - ne génèrent pas de css
+========================================================================= = */
+@import 'utilities/reset';
+@import 'utilities/variables';
+@import 'utilities/mixins';
+@import 'utilities/utils';
+@import 'utilities/animations';
+// @import 'utilities/pagesjs.lib';
+
+/* BASE - partie générique du site
+========================================================================= = */
+@import 'base/typographie';
+@import 'base/medias';
+
+/* COMPONENTS - Modules réutilisable dans le site
+========================================================================= = */
+@import 'components/buttons';
+@import 'components/forms';
+
+/* LAYOUT - Mise en page, framework structure des éléments
+========================================================================= = */
+@import 'layout/navigation';
+@import 'layout/header';
+@import 'layout/mainlayout';
+@import 'layout/footer';
+@import 'layout/mediascreens';
+
+/* PAGES - Mise en page relative aux pages spécifique
+========================================================================= = */
+
+/* Global
+========================================================================= = */
+
+body{
+      font-family: 'pixel';
+      font-size: 16px;
+}
