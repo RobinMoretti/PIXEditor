@@ -1,38 +1,35 @@
-import { InjectionKey } from 'vue'
-import { createStore, useStore as baseUseStore, Store } from 'vuex'
+import { createStore, createLogger } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
-// define your typings for the store state
-export interface State {
-	// mousePosition: object,
-	canUpdateMousePosition: boolean
-}
+// TODO: How to surpass cyclical dependency linting errors cleanly?
+// eslint-disable-next-line import/no-cycle
+import { store as documents, DocumentsStore, State as DocumentsState } from '@/store/modules/documents';
+// eslint-disable-next-line import/no-cycle
+import { store as profile, ProfileStore, State as ProfileState } from '@/store/modules/profile';
 
-// define injection key
-export const key: InjectionKey<Store<State>> = Symbol()
+export type RootState = {
+  documents: DocumentsState;
+  profile: ProfileState;
+};
 
-export const store = createStore<State>({
-	state: {
-		canUpdateMousePosition: false,
-	},
-	mutations: {
-		// updateMousePostion: function(state, position){
-		// 	state.mousePosition = position;
-		// },
-		// toggleMouseTracker: function(state, value = null){
-		// 	if(value != null)
-		// 		state.updateMousePosBool = value;
-		// 	else
-		// 		state.updateMousePosBool = !state.updateMousePosBool;
-		// },
-	},
-	actions: {
-	},
-	modules: {
-	}
-})
+export type Store = DocumentsStore<Pick<RootState, 'documents'>>
+ & ProfileStore<Pick<RootState, 'profile'>>;
 
+// Plug in logger when in development environment
+const debug = process.env.NODE_ENV !== 'production';
+const plugins = debug ? [createLogger({})] : [];
 
-// define your own `useStore` composition function
-export function useStore () {
-	return baseUseStore(key)
+// Plug in session storage based persistence
+plugins.push(createPersistedState({ storage: window.sessionStorage }));
+
+export const store = createStore({
+  plugins,
+  modules: {
+    documents,
+    profile,
+  },
+});
+
+export function useStore(): Store {
+  return store as Store;
 }
