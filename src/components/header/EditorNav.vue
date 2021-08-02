@@ -3,39 +3,26 @@
 		<nav class="left">
 			<h1>PIX</h1>
 			<ul>
-				<li>{{userName}}	</li>
-				<li>livre</li>
-				<li>pages</li>
-				<li>grilles</li>
+				<li @click="goToPage('Book')">livre</li>
+				<li @click="goToPage('Pages')">pages</li>
+				<li @click="goToPage('Grids')">grilles</li>
 			</ul>
-
 		</nav>
 	</header>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component'
-import { getModule } from 'vuex-module-decorators';
-import UserModule from '@/store/modules/user'
+import { Component, Vue } from 'vue-property-decorator';
 
+@Component
 export default class EditorNav extends Vue {
-	private userStore!: UserModule
-
-    public created() {
-		console.log('this.$store =', this.$store)
-        // this.userStore = getModule(UserModule, this.$store);
-        // Do stuff with module
-        // this.userStore.setName("test");
-    }
-
-	get userName(){
-		// return this.userStore.setName("test");
+	public goToPage(targetPage: string): void{
+		if (this.$route.name !== targetPage) {
+			this.$router.push({
+				name: targetPage,
+			});
+		}
 	}
-	// @user.Getter
-	// public nameUpperCase!: string
-
-	// @user.Action
-	// public updateActive!: (newName: string) => void
 }
 </script>
 
@@ -93,7 +80,5 @@ export default class EditorNav extends Vue {
 				background-color: rgba(175, 31, 156, 0.158);
 			}
 		}
-
 	}
-	
 </style>
