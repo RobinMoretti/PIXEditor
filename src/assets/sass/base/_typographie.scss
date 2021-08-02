@@ -1,20 +1,14 @@
 html{
-      font-family: 'pixel';
+      font-family: 'rubik', sans-serif;
       font-size: 16px;
 }
 h1,h2,h3,h4,h5,h6,p, input{
-      font-family: 'pixel';
+      font-family: 'rubik', sans-serif;
 }
 
 h1{
       font-size: 32px;
 }
-
-h1{
-      font-family: 'pixel';
-      font-size: 32px;
-}
-
 //     ____            __
 //    / __/___  ____  / /_
 //   / /_/ __ \/ __ \/ __/
@@ -23,40 +17,8 @@ h1{
 
 
 @font-face {
-      font-family: 'pixel';
-      src: url('~@/assets/fonts/visitor1.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
+      font-family: 'rubik';
+      src: url('~@/assets/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
+      font-weight: bolder;
+      font-style: italic;
 }
-
-// @font-face {
-//   font-family: 'Gonfaron_Grotesk';
-//   src: url('~@/assets/fonts/gonfarongrotesk-bold.woff2') format('woff2'),
-//        url('~@/assets/fonts/gonfarongrotesk-bold.woff') format('woff');
-//   font-weight: 700;
-//   font-style: normal;
-// }
-
-// @font-face {
-//   font-family: 'Gonfaron_Grotesk';
-//   src: url('./../../fonts/gonfarongrotesk/gonfarongrotesk-ExtraBold.woff2') format('woff2'),
-//        url('./../../fonts/gonfarongrotesk/gonfarongrotesk-ExtraBold.woff') format('woff');
-//   font-weight: 800;
-//   font-style: normal;
-// }
-
-// @font-face {
-//   font-family: 'Gonfaron_Grotesk';
-//   src: url('./../../fonts/gonfarongrotesk/gonfarongrotesk-bolditalic.woff2') format('woff2'),
-//        url('./../../fonts/gonfarongrotesk/gonfarongrotesk-bolditalic.woff') format('woff');
-//   font-weight: 700;
-//   font-style: italic;
-// }
-
-// @font-face {
-//   font-family: 'Gonfaron_Grotesk';
-//   src: url('./../../fonts/gonfarongrotesk/gonfarongrotesk-italic.woff2') format('woff2'),
-//        url('./../../fonts/gonfarongrotesk/gonfarongrotesk-italic.woff') format('woff');
-//   font-weight: normal;
-//   font-style: italic;
-// }
