@@ -20,7 +20,7 @@ export default class Background extends Vue {
 	public rectsCount = 0;
 
 	mounted(): void {
-		this.rectsCount = (window.innerWidth * window.innerHeight) / (this.rectSize * this.rectSize);
+		this.rectsCount = ((window.innerWidth + 30) * (window.innerHeight + 30)) / (this.rectSize * this.rectSize);
 			this.rectsCount = Math.round(this.rectsCount);
 	}
 
@@ -44,6 +44,7 @@ export default class Background extends Vue {
 		align-items: flex-start;
 		align-content: flex-start;
 		flex-direction: row;
+		max-width: calc(100vw + 20px); max-height: calc(100vh + 20px);
 	}
 
 	.rect{

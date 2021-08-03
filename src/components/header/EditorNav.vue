@@ -25,7 +25,7 @@ export default class EditorNav extends Vue {
 			font-size: 20px;
 			font-weight: 350;
 			position: absolute;
-			left: 10px; top: 10px;
+			left: 5px; top: 5px;
 		}
 	}
 </style>

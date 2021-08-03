@@ -1,25 +1,26 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Book from '../views/Book.vue';
+// import Grids from '../views/Grids.vue';
+import Grid from '../views/Grid.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
 	{
 		path: '/',
-		name: 'Book',
-		component: Book,
+		name: 'grid',
+		component: Grid,
 	},
 	{
 		path: '/Pages',
 		name: 'Pages',
 		component: () => import(/* webpackChunkName: "about" */ '../views/Pages.vue'),
 	},
-	{
-		path: '/Grids',
-		name: 'Grids',
-		component: () => import(/* webpackChunkName: "about" */ '../views/Grids.vue'),
-	},
+	// {
+	// 	path: '/Grids',
+	// 	name: 'Grids',
+	// 	component: () => import(/* webpackChunkName: "about" */ '../views/Grids.vue'),
+	// },
 	{
 		path: '/About',
 		name: 'About',
