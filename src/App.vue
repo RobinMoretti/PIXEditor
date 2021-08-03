@@ -1,17 +1,20 @@
 <template>
   <div id="app" class="app-container">
-    <EditorNav/>
-		<router-view/>
+    <background/>
+    <editor-nav/>
+	<router-view/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import EditorNav from '@/components/header/EditorNav.vue';
+import Background from '@/components/UI/Background.vue';
 
 @Component({
 	components: {
 		EditorNav,
+		Background,
 	},
 })
 export default class App extends Vue {
