@@ -1,16 +1,36 @@
 <template>
 	<div class="grids-container">
+		<!-- <p v-html="horizontalCellsCount"></p> -->
 		<div class="grid" ref="gridElement" v-if="cells.length">
 			<div
-				class="cells-row"
-				v-for="y in grid.height"
-				:key="'cells-row-' + y">
+				class="cells-count-horizontal">
 				<div
-					class="cell"
-					v-for="x in grid.width"
-					:key="'cell-' + x"
-					:class="{'checked': cells[((y-1) * grid.width) + (x-1)].checked}"
-					@click="toggle(((y-1) * grid.width) + (x-1))">
+					class="cells-count-row"
+					v-for="(row, key) in horizontalCellsCount"
+					:key="'cells-count-row-' + key">
+					<div
+						class="cells-count-row-count"
+						v-for="(count, countKey) in row.items"
+						:key="'cells-horizontal-count-' + countKey">
+						{{ count.number }}
+					</div>
+				</div>
+			</div>
+
+			<div class="cells-container">
+				<div
+					class="cells-row"
+					v-for="y in grid.height"
+					:key="'cells-row-' + y">
+					<div
+						class="cell"
+						v-for="x in grid.width"
+						:key="'cell-' + x"
+						:class="{'checked': cells[((y-1) * grid.width) + (x-1)].checked}"
+						@mouseover="toggle(((y-1) * grid.width) + (x-1))"
+						@mousedown="mouseDownCell(((y-1) * grid.width) + (x-1))"
+						@mouseup="mouseUpCell(((y-1) * grid.width) + (x-1))">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -18,28 +38,59 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import * as htmlToImage from 'html-to-image';
+import gridModule from '@/store/modules/grid';
 
 interface cell{
 	checked: boolean,
 	x: number,
 	y: number,
 }
+interface row{
+	items: Array<count>,
+}
+interface count{
+	color: color,
+	number: number,
+}
+interface color{
+	r: number,
+	g: number,
+	b: number,
+	a: number,
+}
 
 @Component({
 })
 export default class GridsContainer extends Vue {
+	gridModule = gridModule;
 	$refs!: {
 		grid: HTMLInputElement
 	}
 
 	public grid = {
-		width: 5,
+		width: 10,
 		height: 5,
 	};
 
 	public cells: Array<cell> = [];
+
+	public horizontalCellsCount: Array<row> = [];
+
+	public verticalCellsCount: Array<row> = [];
+
+	public toggleSystemClick(cellIndex: number): void{
+		this.gridModule.toggleCellsInteractionClicked();
+	}
+	public mouseDownCell(cellIndex: number): void{
+		this.gridModule.toggleCellsInteractionClicked();
+		this.toggle(cellIndex);
+	}
+	public mouseUpCell(cellIndex: number): void{
+		this.gridModule.toggleCellsInteractionClicked();
+		this.toggle(cellIndex);
+	}
 
 	mounted(): void {
 		for (let y = 0; y < this.grid.height; y += 1) {
@@ -51,35 +102,87 @@ export default class GridsContainer extends Vue {
 				});
 			}
 		}
-		
-		setTimeout(() => {
-			this.exportImage();
-		}, 1000);
+		this.updateCounts();
 	}
 
-	exportImage(){
+	exportImage() {
 		console.log('export');
-		var node = document.querySelector(".grid") as HTMLElement;
+		const node = document.querySelector('.grid') as HTMLElement;
 		console.log(node);
-		htmlToImage.toPng(node, { 
-			// cacheBust: true, 
+		htmlToImage.toPng(node, {
+			// cacheBust: true,
 			// width: 1000,
 			// canvasWidth: 2000,
 			pixelRatio: 3,
 		})
-		.then(function (dataUrl) {
-			var img = new Image();
-			img.src = dataUrl;
-			img.classList.add("preview-image");
-			document.body.appendChild(img);
-		})
-		.catch(function (error) {
-			console.error('oops, something went wrong!', error);
-		});
+			.then((dataUrl) => {
+				const img = new Image();
+				img.src = dataUrl;
+				img.classList.add('preview-image');
+				document.body.appendChild(img);
+			})
+			.catch((error) => {
+				console.error('oops, something went wrong!', error);
+			});
 	}
 
 	public toggle(cellIndex: number): void{
-		this.cells[cellIndex].checked = !this.cells[cellIndex].checked; 
+		if(this.gridModule.cellsInteraction.clicked){
+			this.cells[cellIndex].checked = !this.cells[cellIndex].checked;
+			this.updateCounts();
+		}
+	}
+
+	updateCounts() {
+		this.horizontalCellsCount = [];
+		for (let y = 0; y < this.grid.height; y++) {
+			const activeRow: row = {
+				items: [],
+			};
+
+			for (let x = 0; x < this.grid.width; x++) {
+				const activeCellIndex = (y * this.grid.width) + x;
+				const activeCell = this.cells[(y * this.grid.width) + x];
+
+				// si active row est vide, ajouter un premier item
+				if (!activeRow.items[activeRow.items.length - 1]) {
+					activeRow.items.push({
+						number: 0,
+						color: {
+							r: 0, g: 0, b: 0, a: 1,
+						},
+					} as count);
+				}
+
+				const lastItemCount = activeRow.items[activeRow.items.length - 1];
+
+				if (activeCell.checked) {
+					let previousCell = null;
+
+					if ((activeCellIndex - (y * this.grid.width)) - 1) {
+						previousCell = this.cells[(y * this.grid.width) + x - 1];
+					}
+
+					if (previousCell == null || previousCell.checked) {
+						lastItemCount.number += 1;
+					} else if (lastItemCount.number) {
+						activeRow.items.push({
+							number: 1,
+							color: {
+								r: 0, g: 0, b: 0, a: 1,
+							},
+						} as count);
+					} else {
+						lastItemCount.number += 1;
+					}
+				}
+			}
+
+			this.horizontalCellsCount.push(activeRow);
+		}
+		// this.cells.forEach(element => {
+
+		// });
 	}
 }
 </script>
@@ -91,9 +194,13 @@ export default class GridsContainer extends Vue {
 		justify-content: center;
 		align-items: center;
 
-		grid{
+		.grid{
 			margin: 20px;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
 		}
+
 		.cells-row{
 			display: flex;
 			flex-direction: row;
@@ -114,6 +221,29 @@ export default class GridsContainer extends Vue {
 
 		.cell.checked{
 			background: black;
+		}
+
+		.cells-count-horizontal{
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			box-sizing: border-box;
+
+			.cells-count-row{
+				box-sizing: border-box;
+				height: 30px;
+				width: 100%;
+				border-bottom: solid 1px black;
+				border-top: solid 1px black;
+				border-left: solid 1px black;
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-end;
+				margin-bottom: -1px;
+				align-items: center;
+
+				padding: 2px;
+			}
 		}
 	}
 </style>

@@ -1,15 +1,17 @@
 <template>
-  <div id="app" class="app-container">
-    <background/>
-    <editor-nav/>
-	<router-view/>
-  </div>
+	<div id="app" class="app-container" @mousedown="toggleSystemClick" @mouseup="toggleSystemClick">
+		<background/>
+		<editor-nav/>
+		<router-view/>
+	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import EditorNav from '@/components/header/EditorNav.vue';
 import Background from '@/components/UI/Background.vue';
+
+import systemModule from '@/store/modules/system';
 
 @Component({
 	components: {
@@ -18,6 +20,15 @@ import Background from '@/components/UI/Background.vue';
 	},
 })
 export default class App extends Vue {
+	systemModule = systemModule;
+
+	public toggleSystemClick(){
+		this.systemModule.toggleClicked();
+	}
+
+	get getClickState(){
+		return this.systemModule.mouse.clicked;
+	}
 }
 </script>
 

@@ -35,7 +35,8 @@ export default class Background extends Vue {
 
 <style scoped lang="scss">
 	.background-container{
-		position: absolute;
+		position: fixed;
+		left: 0; top: 0;
 		background-color: rgba(240, 248, 255, 0.555);
 		width: calc(100% + 25px); height: 100%;
 		z-index: -1;
