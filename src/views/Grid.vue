@@ -1,11 +1,11 @@
 <template>
 	<div class="grids-container">
 		<div class="grid">
-			<div 
+			<div
 				class="cells-row"
 				v-for="y in grid.height"
 				:key="'cells-row-' + y">
-				<div 
+				<div
 					class="cell"
 					v-for="x in grid.width"
 					:key="'cell-' + x"
@@ -30,24 +30,24 @@ interface cell{
 export default class GridsContainer extends Vue {
 	public grid = {
 		width: 5,
-		height: 5
+		height: 5,
 	};
 
 	public cells: Array<cell> = [];
-	mounted(){
-		for (let y = 0; y < this.grid.height; y++) {
-			for (let x = 0; x < this.grid.width; x++) {
+
+	mounted(): void {
+		for (let y = 0; y < this.grid.height; y += 1) {
+			for (let x = 0; x < this.grid.width; x += 1) {
 				this.cells.push({
-					checked: Math.random() < 0.5 ? true : false,
-					x: x,
-					y: y
-				})
+					checked: Math.random() < 0.5,
+					x,
+					y,
+				});
 			}
 		}
 	}
 }
 </script>
-
 
 <style scoped lang="scss">
 	.grids-container{
@@ -55,7 +55,7 @@ export default class GridsContainer extends Vue {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		
+
 		.cells-row{
 			display: flex;
 			flex-direction: row;
@@ -75,4 +75,3 @@ export default class GridsContainer extends Vue {
 		}
 	}
 </style>
-
