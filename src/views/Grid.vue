@@ -1,6 +1,6 @@
 <template>
 	<div class="grids-container">
-		<div class="grid">
+		<div class="grid" ref="gridElement" v-if="cells.length">
 			<div
 				class="cells-row"
 				v-for="y in grid.height"
@@ -9,7 +9,8 @@
 					class="cell"
 					v-for="x in grid.width"
 					:key="'cell-' + x"
-					:class="{'checked': cells[((y-1) * grid.width) + (x-1)].checked}">
+					:class="{'checked': cells[((y-1) * grid.width) + (x-1)].checked}"
+					@click="toggle(((y-1) * grid.width) + (x-1))">
 				</div>
 			</div>
 		</div>
@@ -18,6 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import * as htmlToImage from 'html-to-image';
 
 interface cell{
 	checked: boolean,
@@ -28,6 +30,10 @@ interface cell{
 @Component({
 })
 export default class GridsContainer extends Vue {
+	$refs!: {
+		grid: HTMLInputElement
+	}
+
 	public grid = {
 		width: 5,
 		height: 5,
@@ -45,6 +51,35 @@ export default class GridsContainer extends Vue {
 				});
 			}
 		}
+		
+		setTimeout(() => {
+			this.exportImage();
+		}, 1000);
+	}
+
+	exportImage(){
+		console.log('export');
+		var node = document.querySelector(".grid") as HTMLElement;
+		console.log(node);
+		htmlToImage.toPng(node, { 
+			// cacheBust: true, 
+			// width: 1000,
+			// canvasWidth: 2000,
+			pixelRatio: 3,
+		})
+		.then(function (dataUrl) {
+			var img = new Image();
+			img.src = dataUrl;
+			img.classList.add("preview-image");
+			document.body.appendChild(img);
+		})
+		.catch(function (error) {
+			console.error('oops, something went wrong!', error);
+		});
+	}
+
+	public toggle(cellIndex: number): void{
+		this.cells[cellIndex].checked = !this.cells[cellIndex].checked; 
 	}
 }
 </script>
@@ -56,10 +91,17 @@ export default class GridsContainer extends Vue {
 		justify-content: center;
 		align-items: center;
 
+		grid{
+			margin: 20px;
+		}
 		.cells-row{
 			display: flex;
 			flex-direction: row;
-			justify-content: start;
+			justify-content: flex-start;
+			margin-left: 1px;
+		}
+		.cells-row:last-child{
+			margin-bottom: 1px;
 		}
 
 		.cell{
