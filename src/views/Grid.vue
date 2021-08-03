@@ -1,7 +1,7 @@
 <template>
 	<div class="grids-container">
 		<!-- <p v-html="horizontalCellsCount"></p> -->
-		<div class="grid" ref="gridElement" v-if="cells.length">
+		<div class="grid" ref="grid" v-if="cells.length">
 			<div
 				class="cells-count-horizontal">
 				<div
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import * as htmlToImage from 'html-to-image';
 import gridModule from '@/store/modules/grid';
 
@@ -47,24 +47,25 @@ interface cell{
 	x: number,
 	y: number,
 }
-interface row{
-	items: Array<count>,
-}
-interface count{
-	color: color,
-	number: number,
-}
 interface color{
 	r: number,
 	g: number,
 	b: number,
 	a: number,
 }
+interface count{
+	color: color,
+	number: number,
+}
+interface row{
+	items: Array<count>,
+}
 
 @Component({
 })
 export default class GridsContainer extends Vue {
 	gridModule = gridModule;
+
 	$refs!: {
 		grid: HTMLInputElement
 	}
@@ -80,13 +81,11 @@ export default class GridsContainer extends Vue {
 
 	public verticalCellsCount: Array<row> = [];
 
-	public toggleSystemClick(cellIndex: number): void{
-		this.gridModule.toggleCellsInteractionClicked();
-	}
 	public mouseDownCell(cellIndex: number): void{
 		this.gridModule.toggleCellsInteractionClicked();
 		this.toggle(cellIndex);
 	}
+
 	public mouseUpCell(cellIndex: number): void{
 		this.gridModule.toggleCellsInteractionClicked();
 		this.toggle(cellIndex);
@@ -105,9 +104,8 @@ export default class GridsContainer extends Vue {
 		this.updateCounts();
 	}
 
-	exportImage() {
-		console.log('export');
-		const node = document.querySelector('.grid') as HTMLElement;
+	exportImage(): void {
+		const node = this.$refs.grid as HTMLElement;
 		console.log(node);
 		htmlToImage.toPng(node, {
 			// cacheBust: true,
@@ -127,20 +125,20 @@ export default class GridsContainer extends Vue {
 	}
 
 	public toggle(cellIndex: number): void{
-		if(this.gridModule.cellsInteraction.clicked){
+		if (this.gridModule.cellsInteraction.clicked) {
 			this.cells[cellIndex].checked = !this.cells[cellIndex].checked;
 			this.updateCounts();
 		}
 	}
 
-	updateCounts() {
+	updateCounts(): void {
 		this.horizontalCellsCount = [];
-		for (let y = 0; y < this.grid.height; y++) {
+		for (let y = 0; y < this.grid.height; y += 1) {
 			const activeRow: row = {
 				items: [],
 			};
 
-			for (let x = 0; x < this.grid.width; x++) {
+			for (let x = 0; x < this.grid.width; x += 1) {
 				const activeCellIndex = (y * this.grid.width) + x;
 				const activeCell = this.cells[(y * this.grid.width) + x];
 
@@ -163,7 +161,7 @@ export default class GridsContainer extends Vue {
 						previousCell = this.cells[(y * this.grid.width) + x - 1];
 					}
 
-					if (previousCell == null || previousCell.checked) {
+					if (!previousCell || previousCell.checked) {
 						lastItemCount.number += 1;
 					} else if (lastItemCount.number) {
 						activeRow.items.push({
@@ -180,9 +178,6 @@ export default class GridsContainer extends Vue {
 
 			this.horizontalCellsCount.push(activeRow);
 		}
-		// this.cells.forEach(element => {
-
-		// });
 	}
 }
 </script>

@@ -22,7 +22,7 @@ class SystemModule extends VuexModule {
 			this.mouse.clicked = !this.mouse.clicked;
 		}
 
-		if (this.mouse.clicked == false) {
+		if (this.mouse.clicked === false) {
 			// reset all other model
 			gridModule.toggleCellsInteractionClicked(false);
 		}

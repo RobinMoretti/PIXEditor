@@ -22,11 +22,11 @@ import systemModule from '@/store/modules/system';
 export default class App extends Vue {
 	systemModule = systemModule;
 
-	public toggleSystemClick(){
+	public toggleSystemClick(): void {
 		this.systemModule.toggleClicked();
 	}
 
-	get getClickState(){
+	get getClickState(): boolean {
 		return this.systemModule.mouse.clicked;
 	}
 }

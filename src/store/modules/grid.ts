@@ -12,13 +12,11 @@ class GridModule extends VuexModule {
 		clicked: false,
 	};
 
-
 	@Mutation
 	toggleCellsInteractionClicked(clickState?: boolean | null) {
-		if(clickState != null){
+		if (clickState != null) {
 			this.cellsInteraction.clicked = clickState;
-		}
-		else{
+		} else {
 			this.cellsInteraction.clicked = !this.cellsInteraction.clicked;
 		}
 	}
