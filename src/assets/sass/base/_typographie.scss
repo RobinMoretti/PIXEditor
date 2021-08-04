@@ -1,9 +1,9 @@
 html{
-      font-family: sans-serif;
+      font-family: 'rubik', sans-serif;
       font-size: 16px;
 }
 h1,h2,h3,h4,h5,h6,p, input{
-      font-family: sans-serif;
+      font-family: 'rubik', sans-serif;
 }
 
 h1{
@@ -16,9 +16,9 @@ h1{
 // /_/  \____/_/ /_/\__/
 
 
-// @font-face {
-//       font-family: 'rubik';
-//       src: url('~@/assets/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
-//       font-weight: bolder;
-//       font-style: italic;
-// }
+@font-face {
+      font-family: 'rubik';
+      src: url('~@/assets/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
+      font-weight: bolder;
+      font-style: italic;
+}
