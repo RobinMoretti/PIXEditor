@@ -20,6 +20,20 @@ class GridModule extends VuexModule {
 		height: 5,
 	};
 
+	@Action
+	initGrid():void {
+		// generate random grid
+		for (let y = 0; y < this.grid.height; y += 1) {
+			for (let x = 0; x < this.grid.width; x += 1) {
+				this.addCell({
+					checked: false,
+					x,
+					y,
+				});
+			}
+		}
+	}
+
 	//--------------------------------------------------------------------------------------//
 	//                                   CELLS                                   			//
 	//--------------------------------------------------------------------------------------//
@@ -48,6 +62,10 @@ class GridModule extends VuexModule {
 
 	@Action
 	updateCounts(): void {
+		if(this.cells.length == 0){
+			this.initGrid();
+		}
+
 		this.updateHorizontalCounts();
 		this.updateVerticalCounts();
 	}
@@ -137,11 +155,9 @@ class GridModule extends VuexModule {
 						previousCell = this.cells[activeCellIndex - this.grid.width];
 					}
 					else if((activeCellIndex - 1 + (this.grid.width * this.grid.height - 1)) >= 0){
-						console.log("ok cool")
 						previousCellIndex = activeCellIndex - 1 + (this.grid.width * this.grid.height - 1);
 						previousCell = this.cells[activeCellIndex - 1 + (this.grid.width * this.grid.height - 1)];
 					}
-					console.log(`previousCellIndex == ${previousCellIndex}`)
 
 					if (!previousCell || previousCell.checked) {
 						previousItemCount.number += 1;

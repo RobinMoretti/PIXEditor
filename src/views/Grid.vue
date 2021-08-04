@@ -96,17 +96,6 @@ export default class GridsContainer extends Vue {
 	}
 
 	mounted(): void {
-		// generate random grid
-		for (let y = 0; y < this.grid.height; y += 1) {
-			for (let x = 0; x < this.grid.width; x += 1) {
-				this.gridModule.addCell({
-					checked: Math.random() < 0.5,
-					x,
-					y,
-				});
-			}
-		}
-		
 		this.gridModule.updateCounts();
 	}
 
@@ -195,11 +184,11 @@ export default class GridsContainer extends Vue {
 			display: flex;
 			flex-direction: row;
 			justify-content: flex-end;
+			align-items: stretch;
 			box-sizing: border-box;
 
 			.cells-count-column{
 				box-sizing: border-box;
-				height: 100%;
 				width: 30px;
 				border-left: solid 1px black;
 				border-right: solid 1px black;
