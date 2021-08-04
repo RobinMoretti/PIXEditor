@@ -73,6 +73,17 @@ export default class Color extends ColorProps {
 
 	get canDelete(): boolean{
 		if(this.gridModule.cellsColors.length > 1){
+			// check if color have some cells
+			let filteredCells = this.gridModule.cells.filter(
+				cell => {
+					return cell.color == this.color;
+				}
+			);
+
+			if(filteredCells.length > 0){
+				return false;
+			}
+
 			return true;
 		}
 

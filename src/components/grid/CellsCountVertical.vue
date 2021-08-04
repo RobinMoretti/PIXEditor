@@ -7,7 +7,8 @@
 			<div
 				class="cells-count-column-item"
 				v-for="(count, countKey) in column.items"
-				:key="'cells-vertical-count-' + countKey">
+				:key="'cells-vertical-count-' + countKey"
+				:style="getCssCount(count)">
 				{{ count.number }}
 			</div>
 		</div>
@@ -17,7 +18,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
-import { row } from '@/store/modules/grid-types';
+import { count, row } from '@/store/modules/grid-types';
 
 @Component
 export default class cellsCountVertical extends Vue {
@@ -25,6 +26,16 @@ export default class cellsCountVertical extends Vue {
 
 	get verticalCellsCount(): row[] {
 		return this.gridModule.verticalCellsCount;
+	}
+
+	getCssCount(countItem: count){
+		if(countItem.color){
+			return {
+				'color': `rgb(${countItem.color.r}, ${countItem.color.g}, ${countItem.color.b})`
+			}
+		}
+
+		return {};
 	}
 }
 </script>
@@ -42,15 +53,10 @@ export default class cellsCountVertical extends Vue {
 		.cells-count-column{
 			box-sizing: border-box;
 			width: 30px;
-			// border-left: solid var(--grid-border-width) rgba(0, 0, 0, 0);
-			// border-right: solid var(--grid-border-width) rgba(0, 0, 0, 0);
-			// border-top: solid var(--grid-border-width) rgba(0, 0, 0, 0);
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
 			align-items: stretch;
-
-			// align-items: center;
 
 			.cells-count-column-item{
 				height: 30px;

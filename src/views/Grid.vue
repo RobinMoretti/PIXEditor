@@ -13,16 +13,10 @@
 					<background-grid class="background-gid"/>
 				</div>
 				<div class="cells-container">
-					<div
-						class="cell"
-						:id="`cell-${index-1}`"
+					<cell
 						v-for="index in ( cellsCount )"
 						:key="'cell-' + (index-1)"
-						:class="{'checked': cells[index-1].checked}"
-						@mouseover="gridModule.toggleCell(index-1)"
-						@mousedown="mouseDownCell(index-1)"
-						@mouseup="mouseUpCell(index-1)">
-					</div>
+						:index="index"/>
 				</div>
 			</div>
 		</div>
@@ -39,6 +33,7 @@ import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue';
 import cellsCountVertical from '@/components/grid/CellsCountVertical.vue';
 import backgroundGrid from '@/components/grid/BackgroundGrid.vue';
 import ColorsEditor from '@/components/UI/Colors/ColorsEditor.vue';
+import Cell from '@/components/grid/Cell.vue';
 import { cell, gridSetting } from '@/store/modules/grid-types';
 
 @Component({
@@ -47,6 +42,7 @@ import { cell, gridSetting } from '@/store/modules/grid-types';
 		cellsCountVertical,
 		backgroundGrid,
 		ColorsEditor,
+		Cell,
 	},
 })
 export default class GridsContainer extends Vue {
@@ -66,16 +62,6 @@ export default class GridsContainer extends Vue {
 
 	get cells(): Array<cell> {
 		return this.gridModule.cells;
-	}
-
-	public mouseDownCell(cellIndex: number): void{
-		this.gridModule.toggleCellsInteractionClicked();
-		this.gridModule.toggleCell(cellIndex);
-	}
-
-	public mouseUpCell(cellIndex: number): void{
-		this.gridModule.toggleCellsInteractionClicked();
-		this.gridModule.toggleCell(cellIndex);
 	}
 
 	mounted(): void {

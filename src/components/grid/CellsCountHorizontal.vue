@@ -8,7 +8,8 @@
 			<div
 				class="cells-count-row-item"
 				v-for="(count, countKey) in row.items"
-				:key="'cells-horizontal-count-' + countKey">
+				:key="'cells-horizontal-count-' + countKey"
+				:style="getCssCount(count)">
 				{{ count.number }}
 			</div>
 		</div>
@@ -18,7 +19,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
-import { row } from '@/store/modules/grid-types';
+import { count, row } from '@/store/modules/grid-types';
 
 @Component
 export default class cellsCountHorizontal extends Vue {
@@ -26,6 +27,15 @@ export default class cellsCountHorizontal extends Vue {
 
 	get horizontalCellsCount(): row[] {
 		return this.gridModule.horizontalCellsCount;
+	}
+	getCssCount(countItem: count){
+		if(countItem.color){
+			return {
+				'color': `rgb(${countItem.color.r}, ${countItem.color.g}, ${countItem.color.b})`
+			}
+		}
+		
+		return {};
 	}
 }
 </script>

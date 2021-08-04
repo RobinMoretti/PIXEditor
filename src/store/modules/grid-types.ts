@@ -1,15 +1,18 @@
-export interface cell{
-	checked: boolean,
-	x: number,
-	y: number,
-}
+
 export interface color{
 	r: number,
 	g: number,
 	b: number,
 }
+
+export interface cell{
+	checked: boolean,
+	x: number,
+	y: number,
+	color: color | null,
+}
 export interface count{
-	color: color,
+	color: color | null,
 	number: number,
 }
 
