@@ -14,18 +14,14 @@
 				</div>
 				<div class="cells-container">
 					<div
-						class="cells-row"
-						v-for="y in grid.height"
-						:key="'cells-row-' + y">
-						<div
-							class="cell"
-							v-for="x in grid.width"
-							:key="'cell-' + x"
-							:class="{'checked': cells[((y-1) * grid.width) + (x-1)].checked}"
-							@mouseover="gridModule.toggleCell(((y-1) * grid.width) + (x-1))"
-							@mousedown="mouseDownCell(((y-1) * grid.width) + (x-1))"
-							@mouseup="mouseUpCell(((y-1) * grid.width) + (x-1))">
-						</div>
+						class="cell"
+						:id="`cell-${index-1}`"
+						v-for="index in ( cellsCount )"
+						:key="'cell-' + (index-1)"
+						:class="{'checked': cells[index-1].checked}"
+						@mouseover="gridModule.toggleCell(index-1)"
+						@mousedown="mouseDownCell(index-1)"
+						@mouseup="mouseUpCell(index-1)">
 					</div>
 				</div>
 			</div>
@@ -60,6 +56,10 @@ export default class GridsContainer extends Vue {
 		return this.gridModule.settings.grid;
 	}
 
+	get cellsCount(): number{
+		return this.grid.width * this.grid.height;
+	}
+
 	get cells(){
 		return this.gridModule.cells;
 	}
@@ -76,6 +76,9 @@ export default class GridsContainer extends Vue {
 
 	mounted(): void {
 		this.gridModule.updateCounts();
+		// setTimeout(() => {
+		// 	this.exportImage();
+		// }, 500);
 	}
 
 	exportImage(): void {
@@ -113,19 +116,25 @@ export default class GridsContainer extends Vue {
 			justify-content: flex-start;
 		}
 
+		.cells-container{
+			display: grid;
+			grid-template-rows: var(--grid-template-rows);
+			grid-template-columns: var(--grid-template-columns);
+		}
+
 		.cells-row{
-			display: flex;
-			flex-direction: row;
-			justify-content: flex-start;
-			margin-left: var(--grid-border-width);
+			// display: flex;
+			// flex-direction: row;
+			// justify-content: flex-start;
+			// margin-left: var(--grid-border-width);
 		}
 		.cells-row:last-child{
-			margin-bottom: var(--grid-border-width);
+			// margin-bottom: var(--grid-border-width);
 		}
 
 		.cell{
-			margin-left: calc(0px - var(--grid-border-width)); 
-			margin-bottom: calc(0px - var(--grid-border-width));
+			// margin-left: calc(0px - var(--grid-border-width)); 
+			// margin-bottom: calc(0px - var(--grid-border-width));
 			width: 30px; height: 30px;
 			border: var(--grid-border-width) solid rgba(121, 121, 121, 0);
 			box-sizing: border-box;

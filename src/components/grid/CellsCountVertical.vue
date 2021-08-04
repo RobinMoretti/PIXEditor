@@ -30,35 +30,34 @@ export default class cellsCountVertical extends Vue {
 
 <style scoped lang="scss">
     .cells-count-vertical{
-        // padding-bottom: var(--grid-border-width);
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
         align-items: stretch;
         box-sizing: border-box;
+        margin-bottom: var(--grid-border-width);
         // background: white;
 
         .cells-count-column{
             box-sizing: border-box;
             width: 30px;
-            border-left: solid var(--grid-border-width) rgba(0, 0, 0, 0);
-            border-right: solid var(--grid-border-width) rgba(0, 0, 0, 0);
-            border-top: solid var(--grid-border-width) rgba(0, 0, 0, 0);
+            // border-left: solid var(--grid-border-width) rgba(0, 0, 0, 0);
+            // border-right: solid var(--grid-border-width) rgba(0, 0, 0, 0);
+            // border-top: solid var(--grid-border-width) rgba(0, 0, 0, 0);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             align-items: stretch;
             
-            margin-left: calc(0px - var(--grid-border-width));
             // align-items: center;
-            padding: 2px;
+
             .cells-count-column-item{
-                height: 25px;
+                height: 30px;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-		        font-size: 18px;
-		        font-weight: 400;
+		        font-size: 20px;
+		        font-weight: 600;
             }
         }
     }

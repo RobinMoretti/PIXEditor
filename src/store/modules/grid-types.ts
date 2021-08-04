@@ -17,4 +17,14 @@ export interface count{
 export interface row{
 	items: Array<count>,
 }
-
+export interface border{
+	width: number,
+}
+export interface gridSetting{
+	width: number,
+	height: number,
+	border: border
+}
+export interface settings{
+	grid: gridSetting
+}

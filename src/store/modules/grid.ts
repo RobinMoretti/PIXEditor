@@ -6,7 +6,7 @@ import {
 	// Action,
 } from 'vuex-class-modules';
 
-import { cell, row, color, count } from './grid-types';
+import { cell, row, color, count, settings, gridSetting } from './grid-types';
 import store from '../index';
 
 
@@ -15,14 +15,14 @@ class GridModule extends VuexModule {
 	//--------------------------------------------------------------------------------------//
 	//                                         GRID SETTINGS                                        //
 	//--------------------------------------------------------------------------------------//
-	settings = {
+	settings: settings = {
 		grid: {
 			width: 10,
-			height: 5,
+			height: 10,
 			border: {
 				width: 3
-			}
-		}
+			},
+		},
 	}
 
 	@Action
@@ -37,6 +37,26 @@ class GridModule extends VuexModule {
 				});
 			}
 		}
+	}
+
+	@Mutation
+	incrementBorder():void {
+		this.settings.grid.border.width++;
+	}
+
+	get getCssGridColumns(){
+		let gridTemplaceColumn = '';
+		for (let index = 0; index < this.settings.grid.width; index++) {
+			gridTemplaceColumn = gridTemplaceColumn + '1fr ';
+		}
+		return gridTemplaceColumn;
+	}
+	get getCssGridRows(){
+		let gridTemplaceRow = '';
+		for (let index = 0; index < this.settings.grid.height; index++) {
+			gridTemplaceRow = gridTemplaceRow + '1fr ';
+		}
+		return gridTemplaceRow;
 	}
 
 	//--------------------------------------------------------------------------------------//

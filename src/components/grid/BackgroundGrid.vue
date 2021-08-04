@@ -1,14 +1,10 @@
 <template>
     <div class="background-cells-container">
         <div
-            class="cells-row"
-            v-for="y in grid.height"
-            :key="'cells-row-' + y">
-            <div
-                class="cell"
-                v-for="x in grid.width"
-                :key="'cell-' + x">
-            </div>
+            class="cell"
+            v-for="cell in cellsCount"
+            :key="'cell-' + cell">
+            <div class="cell-border-item"></div>
         </div>
     </div>
 </template>
@@ -24,31 +20,36 @@ export default class backgroundGrid extends Vue {
         return this.gridModule.settings.grid;
     }
 
+    get cellsCount(): number{
+        return this.gridModule.settings.grid.width * this.gridModule.settings.grid.height;
+    }
+
 }
 </script>
 
 <style scoped lang="scss">
-    .cells-row{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        margin-left: 1px;
-    }
-
-    .cells-row:last-child{
-        margin-bottom: 1px;
+    .background-cells-container{
+        display: grid;
+        grid-template-rows: var(--grid-template-rows);
+        grid-template-columns: var(--grid-template-columns);
     }
 
     .cell{
-        // margin-left: calc(1px - var(--grid-border-width) - 1px);
-        // margin-bottom: calc(1px - var(--grid-border-width) - 1px);
-        margin-left: calc(0px - var(--grid-border-width));
-        margin-bottom: calc(0px - var(--grid-border-width));
         width: 30px; height: 30px;
-        border-width: var(--grid-border-width);
-        border-style: dotted ;
-        border-color: rgba(121, 121, 121, 0.472);
-        box-sizing: border-box;
         background: white;
+        box-sizing: border-box;
+    }
+
+    .cell-border-item{
+        width: calc(100% + (var(--grid-border-width))); 
+        height: calc(100% + (var(--grid-border-width)));
+        position: relative;
+        right: calc(var(--grid-border-width) / 2);
+        bottom: calc(var(--grid-border-width) / 2);
+        display: inline-block;
+        border-style: inset ;
+        border-color: rgba(121, 121, 121, 0.472);
+        border-width: var(--grid-border-width);
+        box-sizing: border-box;
     }
 </style>

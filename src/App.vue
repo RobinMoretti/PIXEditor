@@ -37,13 +37,17 @@ export default class App extends Vue {
 	get getClickState(): boolean {
 		return this.systemModule.mouse.clicked;
 	}
-
 	
     get cssVars() {
       return {
         '--grid-border-width': `${this.gridModule.settings.grid.border.width}px`,
+        '--grid-template-columns': this.gridModule.getCssGridColumns,
+        '--grid-template-rows': this.gridModule.getCssGridRows,
       }
     }
+
+	mounted(){	
+	}
 }
 </script>
 
