@@ -1,5 +1,14 @@
 <template>
 	<div class="colors-editor-container">
+
+		<div class="gid-colors-container">
+			<simple-color-component
+				:color="backgroundGridColor"
+				no-margin-top></simple-color-component>
+			<simple-color-component
+				:color="borderGridColor"></simple-color-component>
+		</div>
+		
 		<color-component
 			v-for="(color, key) in cellsColor"
 			:key="`color-${key}`"
@@ -14,13 +23,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import colorComponent from './Color.vue';
+import colorComponent from './ColorPicker.vue';
+import simpleColorComponent from './SimpleColorPicker.vue';
 import gridModule from '@/store/modules/grid';
 import { color } from '@/store/modules/grid-types';
 
 @Component({
 	components: {
 		colorComponent,
+		simpleColorComponent,
 	}
 })
 export default class ColorsEditor extends Vue {
@@ -28,6 +39,12 @@ export default class ColorsEditor extends Vue {
 
 	get cellsColor(): Array<color>{
 		return this.gridModule.cellsColors;
+	}
+	get backgroundGridColor(): color{
+		return this.gridModule.backgroudColor;
+	}
+	get borderGridColor(): color{
+		return this.gridModule.borderColor;
 	}
 
 	addNewColor(): void{
@@ -48,5 +65,10 @@ export default class ColorsEditor extends Vue {
 		font-weight: 500;
 		margin-top: 10px;
 		cursor: pointer;
+	}
+
+	.gid-colors-container{
+		padding: 5px;
+		border: 2px solid rgba(12, 12, 12);
 	}
 </style>

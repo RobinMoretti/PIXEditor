@@ -286,6 +286,13 @@ class GridModule extends VuexModule {
 		this.cellsColors[colorIndex].b = newColor.b;
 	}
 
+	@Mutation
+	updateBasicColor({ newColor, color }: { newColor: color; color: color }): void {
+		color.r = newColor.r;
+		color.g = newColor.g;
+		color.b = newColor.b;
+	}
+	
 	@Action
 	deleteColor(index: number): void {
 		if(this.cellsColors.length > 1){
