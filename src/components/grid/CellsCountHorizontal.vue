@@ -31,7 +31,7 @@ export default class cellsCountHorizontal extends Vue {
 
 <style scoped lang="scss">
     .cells-count-horizontal{
-        padding-bottom: 1px;
+        padding-bottom: var(--grid-border-width);
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -42,13 +42,13 @@ export default class cellsCountHorizontal extends Vue {
             box-sizing: border-box;
             height: 30px;
             width: 100%;
-            border-bottom: solid 1px rgba(0, 0, 0, 0);
-            border-top: solid 1px rgba(0, 0, 0, 0);
-            border-left: solid 1px rgba(0, 0, 0, 0);
+            border-bottom: solid var(--grid-border-width) rgba(0, 0, 0, 0);
+            border-top: solid var(--grid-border-width) rgba(0, 0, 0, 0);
+            border-left: solid var(--grid-border-width) rgba(0, 0, 0, 0);
             display: flex;
             flex-direction: row;
             justify-content: flex-end;
-            margin-bottom: -1px;
+            margin-bottom: calc(0px - var(--grid-border-width));
             align-items: center;
 
             padding: 2px;

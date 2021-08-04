@@ -13,18 +13,23 @@ import store from '../index';
 @Module
 class GridModule extends VuexModule {
 	//--------------------------------------------------------------------------------------//
-	//                                         GRID                                         //
+	//                                         GRID SETTINGS                                        //
 	//--------------------------------------------------------------------------------------//
-	grid = {
-		width: 10,
-		height: 5,
-	};
+	settings = {
+		grid: {
+			width: 10,
+			height: 5,
+			border: {
+				width: 3
+			}
+		}
+	}
 
 	@Action
 	initGrid():void {
 		// generate random grid
-		for (let y = 0; y < this.grid.height; y += 1) {
-			for (let x = 0; x < this.grid.width; x += 1) {
+		for (let y = 0; y < this.settings.grid.height; y += 1) {
+			for (let x = 0; x < this.settings.grid.width; x += 1) {
 				this.addCell({
 					checked: false,
 					x,
@@ -74,14 +79,14 @@ class GridModule extends VuexModule {
 	updateHorizontalCounts(){
 		this.horizontalCellsCount = [];
 		
-		for (let y = 0; y < this.grid.height; y += 1) {
+		for (let y = 0; y < this.settings.grid.height; y += 1) {
 			const activeRow: row = {
 				items: [],
 			};
 
-			for (let x = 0; x < this.grid.width; x += 1) {
-				const activeCellIndex = (y * this.grid.width) + x;
-				const activeCell = this.cells[(y * this.grid.width) + x];
+			for (let x = 0; x < this.settings.grid.width; x += 1) {
+				const activeCellIndex = (y * this.settings.grid.width) + x;
+				const activeCell = this.cells[(y * this.settings.grid.width) + x];
 
 				// si active row est vide, ajouter un premier item
 				if (!activeRow.items[activeRow.items.length - 1]) {
@@ -98,8 +103,8 @@ class GridModule extends VuexModule {
 				if (activeCell.checked) {
 					let previousCell = null;
 
-					if ((y * this.grid.width) + x - 1) {
-						previousCell = this.cells[(y * this.grid.width) + x - 1];
+					if ((y * this.settings.grid.width) + x - 1) {
+						previousCell = this.cells[(y * this.settings.grid.width) + x - 1];
 					}
 
 					if (!previousCell || previousCell.checked) {
@@ -125,13 +130,13 @@ class GridModule extends VuexModule {
 	updateVerticalCounts(){
 		this.verticalCellsCount = [];
 		
-		for (let x = 0; x < this.grid.width; x += 1) {
+		for (let x = 0; x < this.settings.grid.width; x += 1) {
 			const activeColumn: row = {
 				items: [],
 			};
 
-			for (let y = 0; y < this.grid.height; y += 1) {
-				const activeCellIndex = (y * this.grid.width) + x;
+			for (let y = 0; y < this.settings.grid.height; y += 1) {
+				const activeCellIndex = (y * this.settings.grid.width) + x;
 				const activeCell = this.cells[activeCellIndex];
 
 				// si active row est vide, ajouter un premier item
@@ -150,13 +155,13 @@ class GridModule extends VuexModule {
 					let previousCell = null;
 					let previousCellIndex = null;
 
-					if ((activeCellIndex - this.grid.width) >= 0) {
-						previousCellIndex = activeCellIndex - this.grid.width;
-						previousCell = this.cells[activeCellIndex - this.grid.width];
+					if ((activeCellIndex - this.settings.grid.width) >= 0) {
+						previousCellIndex = activeCellIndex - this.settings.grid.width;
+						previousCell = this.cells[activeCellIndex - this.settings.grid.width];
 					}
-					else if((activeCellIndex - 1 + (this.grid.width * this.grid.height - 1)) >= 0){
-						previousCellIndex = activeCellIndex - 1 + (this.grid.width * this.grid.height - 1);
-						previousCell = this.cells[activeCellIndex - 1 + (this.grid.width * this.grid.height - 1)];
+					else if((activeCellIndex - 1 + (this.settings.grid.width * this.settings.grid.height - 1)) >= 0){
+						previousCellIndex = activeCellIndex - 1 + (this.settings.grid.width * this.settings.grid.height - 1);
+						previousCell = this.cells[activeCellIndex - 1 + (this.settings.grid.width * this.settings.grid.height - 1)];
 					}
 
 					if (!previousCell || previousCell.checked) {

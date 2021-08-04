@@ -9,6 +9,9 @@
 				<div class="vertical-container">
 					<cells-count-vertical class="vertical-cells-count-container"/>
 				</div>
+				<div class="background-gid-container">
+					<background-grid class="background-gid"/>
+				</div>
 				<div class="cells-container">
 					<div
 						class="cells-row"
@@ -37,11 +40,13 @@ import * as htmlToImage from 'html-to-image';
 import gridModule from '@/store/modules/grid';
 import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue'
 import cellsCountVertical from '@/components/grid/CellsCountVertical.vue'
+import backgroundGrid from '@/components/grid/BackgroundGrid.vue'
 
 @Component({
 	components: {
 		cellsCountHorizontal,
 		cellsCountVertical,
+		backgroundGrid,
 	}
 })
 export default class GridsContainer extends Vue {
@@ -52,7 +57,7 @@ export default class GridsContainer extends Vue {
 	}
 
 	get grid(){
-		return this.gridModule.grid;
+		return this.gridModule.settings.grid;
 	}
 
 	get cells(){
@@ -112,18 +117,18 @@ export default class GridsContainer extends Vue {
 			display: flex;
 			flex-direction: row;
 			justify-content: flex-start;
-			margin-left: 1px;
+			margin-left: var(--grid-border-width);
 		}
 		.cells-row:last-child{
-			margin-bottom: 1px;
+			margin-bottom: var(--grid-border-width);
 		}
 
 		.cell{
-			margin-left: -1px; margin-bottom: -1px;
+			margin-left: calc(0px - var(--grid-border-width)); 
+			margin-bottom: calc(0px - var(--grid-border-width));
 			width: 30px; height: 30px;
-			border: 1px solid black;
+			border: var(--grid-border-width) solid rgba(121, 121, 121, 0);
 			box-sizing: border-box;
-			background: white;
 		}
 
 		.cell.checked{
@@ -138,12 +143,22 @@ export default class GridsContainer extends Vue {
 				bottom: 0;
 			}
 		}
+
 		.horizontal-container{
 			position: relative;
 
 			.horizontal-cells-count-container{
 				position: absolute;
 				right: 0;
+			}
+		}
+
+		.background-gid-container{
+			position: relative;
+			z-index: -1;
+			.background-gid{
+				position: absolute;
+				top: 0;
 			}
 		}
 	}

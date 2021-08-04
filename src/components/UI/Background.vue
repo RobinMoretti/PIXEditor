@@ -20,9 +20,9 @@ export default class Background extends Vue {
 	public rectsCount = 0;
 
 	mounted(): void {
-		this.rectsCount = ((window.innerWidth + 30) * (window.innerHeight + 30));
-		this.rectsCount /= (this.rectSize * this.rectSize);
-		this.rectsCount = Math.round(this.rectsCount);
+		// this.rectsCount = ((window.innerWidth + 30) * (window.innerHeight + 30));
+		// this.rectsCount /= (this.rectSize * this.rectSize);
+		// this.rectsCount = Math.round(this.rectsCount);
 	}
 
 	get rectVars(): Record<string, string> {

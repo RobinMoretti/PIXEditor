@@ -1,5 +1,10 @@
 <template>
-	<div id="app" class="app-container" @mousedown="toggleSystemClick" @mouseup="toggleSystemClick">
+	<div 
+		id="app" 
+		class="app-container" 
+		@mousedown="toggleSystemClick" 
+		@mouseup="toggleSystemClick"
+		:style="cssVars">
 		<background/>
 		<editor-nav/>
 		<router-view/>
@@ -12,6 +17,7 @@ import EditorNav from '@/components/header/EditorNav.vue';
 import Background from '@/components/UI/Background.vue';
 
 import systemModule from '@/store/modules/system';
+import gridModule from '@/store/modules/grid';
 
 @Component({
 	components: {
@@ -19,8 +25,10 @@ import systemModule from '@/store/modules/system';
 		Background,
 	},
 })
+
 export default class App extends Vue {
 	systemModule = systemModule;
+	gridModule = gridModule;
 
 	public toggleSystemClick(): void {
 		this.systemModule.toggleClicked();
@@ -29,6 +37,13 @@ export default class App extends Vue {
 	get getClickState(): boolean {
 		return this.systemModule.mouse.clicked;
 	}
+
+	
+    get cssVars() {
+      return {
+        '--grid-border-width': `${this.gridModule.settings.grid.border.width}px`,
+      }
+    }
 }
 </script>
 
