@@ -6,21 +6,27 @@ import {
 	// Action,
 } from 'vuex-class-modules';
 
-import { cell, row, color, count, settings, gridSetting } from './grid-types';
+import {
+	cell, row, color, count, settings,
+} from './grid-types';
 import store from '../index';
-
 
 @Module
 class GridModule extends VuexModule {
-	//--------------------------------------------------------------------------------------//
+	@Action
+	init(): void{
+		this.initColors();
+	}
+
+	// --------------------------------------------------------------------------------------//
 	//                                         GRID SETTINGS                                        //
-	//--------------------------------------------------------------------------------------//
+	// --------------------------------------------------------------------------------------//
 	settings: settings = {
 		grid: {
 			width: 10,
 			height: 10,
 			border: {
-				width: 3
+				width: 3,
 			},
 		},
 	}
@@ -41,32 +47,33 @@ class GridModule extends VuexModule {
 
 	@Mutation
 	incrementBorder():void {
-		this.settings.grid.border.width++;
+		this.settings.grid.border.width += 1;
 	}
 
-	get getCssGridColumns(){
+	get getCssGridColumns() {
 		let gridTemplaceColumn = '';
-		for (let index = 0; index < this.settings.grid.width; index++) {
-			gridTemplaceColumn = gridTemplaceColumn + '1fr ';
+		for (let index = 0; index < this.settings.grid.width; index += 1) {
+			gridTemplaceColumn += '1fr ';
 		}
 		return gridTemplaceColumn;
 	}
-	get getCssGridRows(){
+
+	get getCssGridRows() {
 		let gridTemplaceRow = '';
-		for (let index = 0; index < this.settings.grid.height; index++) {
-			gridTemplaceRow = gridTemplaceRow + '1fr ';
+		for (let index = 0; index < this.settings.grid.height; index += 1) {
+			gridTemplaceRow += '1fr ';
 		}
 		return gridTemplaceRow;
 	}
 
-	//--------------------------------------------------------------------------------------//
+	// --------------------------------------------------------------------------------------//
 	//                                   CELLS                                   			//
-	//--------------------------------------------------------------------------------------//
+	// --------------------------------------------------------------------------------------//
 	cells: Array<cell> = [];
 
 	@Mutation
-	addCell(newCell: cell): void  {
-		this.cells.push(newCell)
+	addCell(newCell: cell): void {
+		this.cells.push(newCell);
 	}
 
 	@Action
@@ -77,9 +84,12 @@ class GridModule extends VuexModule {
 		}
 	}
 
-	//--------------------------------------------------------------------------------------//
+	get cellsCount(): number {
+		return this.settings.grid.width * this.settings.grid.height;
+	}
+	// --------------------------------------------------------------------------------------//
 	//                                    CELLS COUNT                                       //
-	//--------------------------------------------------------------------------------------//
+	// --------------------------------------------------------------------------------------//
 
 	horizontalCellsCount: Array<row> = [];
 
@@ -87,7 +97,7 @@ class GridModule extends VuexModule {
 
 	@Action
 	updateCounts(): void {
-		if(this.cells.length == 0){
+		if (this.cells.length === 0) {
 			this.initGrid();
 		}
 
@@ -96,9 +106,9 @@ class GridModule extends VuexModule {
 	}
 
 	@Mutation
-	updateHorizontalCounts(){
+	updateHorizontalCounts() {
 		this.horizontalCellsCount = [];
-		
+
 		for (let y = 0; y < this.settings.grid.height; y += 1) {
 			const activeRow: row = {
 				items: [],
@@ -106,7 +116,7 @@ class GridModule extends VuexModule {
 
 			for (let x = 0; x < this.settings.grid.width; x += 1) {
 				const activeCellIndex = (y * this.settings.grid.width) + x;
-				const activeCell = this.cells[(y * this.settings.grid.width) + x];
+				const activeCell = this.cells[activeCellIndex];
 
 				// si active row est vide, ajouter un premier item
 				if (!activeRow.items[activeRow.items.length - 1]) {
@@ -123,8 +133,8 @@ class GridModule extends VuexModule {
 				if (activeCell.checked) {
 					let previousCell = null;
 
-					if ((y * this.settings.grid.width) + x - 1) {
-						previousCell = this.cells[(y * this.settings.grid.width) + x - 1];
+					if (activeCellIndex - 1) {
+						previousCell = this.cells[activeCellIndex - 1];
 					}
 
 					if (!previousCell || previousCell.checked) {
@@ -147,9 +157,9 @@ class GridModule extends VuexModule {
 	}
 
 	@Mutation
-	updateVerticalCounts(){
+	updateVerticalCounts() {
 		this.verticalCellsCount = [];
-		
+
 		for (let x = 0; x < this.settings.grid.width; x += 1) {
 			const activeColumn: row = {
 				items: [],
@@ -178,10 +188,10 @@ class GridModule extends VuexModule {
 					if ((activeCellIndex - this.settings.grid.width) >= 0) {
 						previousCellIndex = activeCellIndex - this.settings.grid.width;
 						previousCell = this.cells[activeCellIndex - this.settings.grid.width];
-					}
-					else if((activeCellIndex - 1 + (this.settings.grid.width * this.settings.grid.height - 1)) >= 0){
-						previousCellIndex = activeCellIndex - 1 + (this.settings.grid.width * this.settings.grid.height - 1);
-						previousCell = this.cells[activeCellIndex - 1 + (this.settings.grid.width * this.settings.grid.height - 1)];
+					} else if ((activeCellIndex - 1 + (this.cellsCount - 1)) >= 0) {
+						previousCellIndex = activeCellIndex - 1;
+						previousCellIndex += (this.settings.grid.width * this.settings.grid.height - 1);
+						previousCell = this.cells[previousCellIndex];
 					}
 
 					if (!previousCell || previousCell.checked) {
@@ -203,9 +213,9 @@ class GridModule extends VuexModule {
 		}
 	}
 
-	//--------------------------------------------------------------------------------------//
+	// --------------------------------------------------------------------------------------//
 	//                                     INTERACTION                                      //
-	//--------------------------------------------------------------------------------------//
+	// --------------------------------------------------------------------------------------//
 	cellsInteraction = {
 		clicked: false,
 	};
@@ -219,35 +229,42 @@ class GridModule extends VuexModule {
 		}
 	}
 
-	//--------------------------------------------------------------------------------------//
+	// --------------------------------------------------------------------------------------//
 	//                                     COLORS                                      		//
-	//--------------------------------------------------------------------------------------//
+	// --------------------------------------------------------------------------------------//
 	cellsColors: Array<color> = [];
-	backgroudColor: color = { r: 150, g: 150, b: 150, a: 1 };
-	borderColor: color = { r: 255, g: 255, b: 255, a: 1 };
+
+	backgroudColor: color = {
+		r: 150, g: 150, b: 150, a: 1,
+	};
+
+	borderColor: color = {
+		r: 255, g: 255, b: 255, a: 1,
+	};
 
 	@Action
 	initColors(): void{
-		// add background color
-		// border color
 		// main color
+		const primaryColor: color = {
+			r: (Math.random() * 255), g: (Math.random() * 255), b: (Math.random() * 255), a: 1,
+		};
+		this.cellsColors.push(primaryColor);
 	}
 
 	@Mutation
-	addColor(color: color){
-		this.colors.push(color);
+	addColor(newColor: color) {
+		this.cellsColors.push(newColor);
 	}
 
 	@Mutation
-	removeColor(color: color){
-		this.colors.push(color);
+	removeColor(targetColor: color) {
+		this.cellsColors.push(targetColor);
 	}
 
 	@Mutation
-	updateColor(color: color){
-		this.colors.push(color);
+	updateColor(newColor: color) {
+		this.cellsColors.push(newColor);
 	}
-
 }
 
 export default new GridModule({ store, name: 'grid' });

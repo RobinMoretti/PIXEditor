@@ -12,18 +12,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
+import { gridSetting } from '@/store/modules/grid-types';
 
 @Component
 export default class backgroundGrid extends Vue {
 	gridModule = gridModule;
-    get grid(){
-        return this.gridModule.settings.grid;
-    }
 
-    get cellsCount(): number{
-        return this.gridModule.settings.grid.width * this.gridModule.settings.grid.height;
-    }
+	get grid(): gridSetting {
+		return this.gridModule.settings.grid;
+	}
 
+	get cellsCount(): number {
+		return this.gridModule.settings.grid.width * this.gridModule.settings.grid.height;
+	}
 }
 </script>
 
@@ -41,7 +42,7 @@ export default class backgroundGrid extends Vue {
     }
 
     .cell-border-item{
-        width: calc(100% + (var(--grid-border-width))); 
+        width: calc(100% + (var(--grid-border-width)));
         height: calc(100% + (var(--grid-border-width)));
         position: relative;
         right: calc((var(--grid-border-width) / 2));

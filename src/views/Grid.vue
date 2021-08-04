@@ -34,16 +34,17 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as htmlToImage from 'html-to-image';
 import gridModule from '@/store/modules/grid';
-import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue'
-import cellsCountVertical from '@/components/grid/CellsCountVertical.vue'
-import backgroundGrid from '@/components/grid/BackgroundGrid.vue'
+import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue';
+import cellsCountVertical from '@/components/grid/CellsCountVertical.vue';
+import backgroundGrid from '@/components/grid/BackgroundGrid.vue';
+import { cell, gridSetting } from '@/store/modules/grid-types';
 
 @Component({
 	components: {
 		cellsCountHorizontal,
 		cellsCountVertical,
 		backgroundGrid,
-	}
+	},
 })
 export default class GridsContainer extends Vue {
 	gridModule = gridModule;
@@ -52,15 +53,15 @@ export default class GridsContainer extends Vue {
 		grid: HTMLInputElement
 	}
 
-	get grid(){
+	get grid(): gridSetting {
 		return this.gridModule.settings.grid;
 	}
 
-	get cellsCount(): number{
+	get cellsCount(): number {
 		return this.grid.width * this.grid.height;
 	}
 
-	get cells(){
+	get cells(): Array<cell> {
 		return this.gridModule.cells;
 	}
 
@@ -133,7 +134,7 @@ export default class GridsContainer extends Vue {
 		}
 
 		.cell{
-			// margin-left: calc(0px - var(--grid-border-width)); 
+			// margin-left: calc(0px - var(--grid-border-width));
 			// margin-bottom: calc(0px - var(--grid-border-width));
 			width: 30px; height: 30px;
 			border: var(--grid-border-width) solid rgba(121, 121, 121, 0);

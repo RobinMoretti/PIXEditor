@@ -1,8 +1,8 @@
 <template>
-	<div 
-		id="app" 
-		class="app-container" 
-		@mousedown="toggleSystemClick" 
+	<div
+		id="app"
+		class="app-container"
+		@mousedown="toggleSystemClick"
 		@mouseup="toggleSystemClick"
 		:style="cssVars">
 		<background/>
@@ -15,6 +15,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import EditorNav from '@/components/header/EditorNav.vue';
 import Background from '@/components/UI/Background.vue';
+// import Background from '@/components/UI/';
 
 import systemModule from '@/store/modules/system';
 import gridModule from '@/store/modules/grid';
@@ -28,7 +29,12 @@ import gridModule from '@/store/modules/grid';
 
 export default class App extends Vue {
 	systemModule = systemModule;
+
 	gridModule = gridModule;
+
+	mounted(): void {
+		this.gridModule.init();
+	}
 
 	public toggleSystemClick(): void {
 		this.systemModule.toggleClicked();
@@ -37,33 +43,31 @@ export default class App extends Vue {
 	get getClickState(): boolean {
 		return this.systemModule.mouse.clicked;
 	}
-	get backgroundColor(){
+
+	get backgroundColor(): string {
 		let color = `rgba(${this.gridModule.backgroudColor.r}`;
 		color += `,${this.gridModule.backgroudColor.r}`;
 		color += `,${this.gridModule.backgroudColor.r}`;
 		color += `,${this.gridModule.backgroudColor.a})`;
 		return color;
 	}
-	get borderColor(){
+
+	get borderColor(): string {
 		let color = `rgba(${this.gridModule.borderColor.r}`;
 		color += `,${this.gridModule.borderColor.r}`;
 		color += `,${this.gridModule.borderColor.r}`;
 		color += `,${this.gridModule.borderColor.a})`;
 		return color;
 	}
-	
-    get cssVars() {
-      return {
-        '--grid-border-width': `${this.gridModule.settings.grid.border.width}px`,
-        '--grid-template-columns': this.gridModule.getCssGridColumns,
-        '--grid-template-rows': this.gridModule.getCssGridRows,
-        '--grid-border-color': this.backgroundColor,
-        '--grid-background-color': this.borderColor,
-      }
-    }
 
-	mounted(){
-
+	get cssVars(): Record<string, unknown> {
+		return {
+			'--grid-border-width': `${this.gridModule.settings.grid.border.width}px`,
+			'--grid-template-columns': this.gridModule.getCssGridColumns,
+			'--grid-template-rows': this.gridModule.getCssGridRows,
+			'--grid-border-color': this.backgroundColor,
+			'--grid-background-color': this.borderColor,
+		};
 	}
 }
 </script>
