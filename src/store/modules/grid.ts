@@ -123,7 +123,7 @@ class GridModule extends VuexModule {
 					activeRow.items.push({
 						number: 0,
 						color: {
-							r: 0, g: 0, b: 0, a: 1,
+							r: 0, g: 0, b: 0,
 						},
 					} as count);
 				}
@@ -143,7 +143,7 @@ class GridModule extends VuexModule {
 						activeRow.items.push({
 							number: 1,
 							color: {
-								r: 0, g: 0, b: 0, a: 1,
+								r: 0, g: 0, b: 0,
 							},
 						} as count);
 					} else {
@@ -174,7 +174,7 @@ class GridModule extends VuexModule {
 					activeColumn.items.push({
 						number: 0,
 						color: {
-							r: 0, g: 0, b: 0, a: 1,
+							r: 0, g: 0, b: 0,
 						},
 					} as count);
 				}
@@ -200,7 +200,7 @@ class GridModule extends VuexModule {
 						activeColumn.items.push({
 							number: 1,
 							color: {
-								r: 0, g: 0, b: 0, a: 1,
+								r: 0, g: 0, b: 0,
 							},
 						} as count);
 					} else {
@@ -235,25 +235,35 @@ class GridModule extends VuexModule {
 	cellsColors: Array<color> = [];
 
 	backgroudColor: color = {
-		r: 150, g: 150, b: 150, a: 1,
+		r: 150, g: 150, b: 150,
 	};
 
 	borderColor: color = {
-		r: 255, g: 255, b: 255, a: 1,
+		r: 255, g: 255, b: 255,
 	};
 
 	@Action
 	initColors(): void{
 		// main color
 		const primaryColor: color = {
-			r: (Math.random() * 255), g: (Math.random() * 255), b: (Math.random() * 255), a: 1,
+			r: (Math.random() * 255), g: (Math.random() * 255), b: (Math.random() * 255),
 		};
+		
 		this.cellsColors.push(primaryColor);
 	}
 
 	@Mutation
-	addColor(newColor: color) {
+	addColor(newColor: color): void {
 		this.cellsColors.push(newColor);
+	}
+
+	@Mutation
+	updateColor({ newColor, colorIndex }: { newColor: color; colorIndex: number }): void {
+		this.cellsColors[colorIndex].r = newColor.r;
+		this.cellsColors[colorIndex].g = newColor.g;
+		this.cellsColors[colorIndex].b = newColor.b;
+
+		console.log(newColor);
 	}
 
 	@Mutation
@@ -261,10 +271,6 @@ class GridModule extends VuexModule {
 		this.cellsColors.push(targetColor);
 	}
 
-	@Mutation
-	updateColor(newColor: color) {
-		this.cellsColors.push(newColor);
-	}
 }
 
 export default new GridModule({ store, name: 'grid' });

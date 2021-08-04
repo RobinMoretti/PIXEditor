@@ -15,7 +15,6 @@
 import { Component, Vue } from 'vue-property-decorator';
 import EditorNav from '@/components/header/EditorNav.vue';
 import Background from '@/components/UI/Background.vue';
-// import Background from '@/components/UI/';
 
 import systemModule from '@/store/modules/system';
 import gridModule from '@/store/modules/grid';
@@ -45,18 +44,16 @@ export default class App extends Vue {
 	}
 
 	get backgroundColor(): string {
-		let color = `rgba(${this.gridModule.backgroudColor.r}`;
-		color += `,${this.gridModule.backgroudColor.r}`;
-		color += `,${this.gridModule.backgroudColor.r}`;
-		color += `,${this.gridModule.backgroudColor.a})`;
+		let color = `rgb(${this.gridModule.backgroudColor.r}`;
+		color += `,${this.gridModule.backgroudColor.g}`;
+		color += `,${this.gridModule.backgroudColor.b}`;
 		return color;
 	}
 
 	get borderColor(): string {
 		let color = `rgba(${this.gridModule.borderColor.r}`;
-		color += `,${this.gridModule.borderColor.r}`;
-		color += `,${this.gridModule.borderColor.r}`;
-		color += `,${this.gridModule.borderColor.a})`;
+		color += `,${this.gridModule.borderColor.g}`;
+		color += `,${this.gridModule.borderColor.b}`;
 		return color;
 	}
 

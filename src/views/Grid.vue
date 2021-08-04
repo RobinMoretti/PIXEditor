@@ -25,8 +25,9 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
+
+		<colors-editor/>
 	</div>
 </template>
 
@@ -37,6 +38,7 @@ import gridModule from '@/store/modules/grid';
 import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue';
 import cellsCountVertical from '@/components/grid/CellsCountVertical.vue';
 import backgroundGrid from '@/components/grid/BackgroundGrid.vue';
+import ColorsEditor from '@/components/UI/Colors/ColorsEditor.vue';
 import { cell, gridSetting } from '@/store/modules/grid-types';
 
 @Component({
@@ -44,6 +46,7 @@ import { cell, gridSetting } from '@/store/modules/grid-types';
 		cellsCountHorizontal,
 		cellsCountVertical,
 		backgroundGrid,
+		ColorsEditor,
 	},
 })
 export default class GridsContainer extends Vue {
