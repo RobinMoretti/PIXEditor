@@ -242,19 +242,41 @@ class GridModule extends VuexModule {
 		r: 255, g: 255, b: 255,
 	};
 
+	selectedColor: color | null = null;
+
 	@Action
 	initColors(): void{
 		// main color
 		const primaryColor: color = {
-			r: (Math.random() * 255), g: (Math.random() * 255), b: (Math.random() * 255),
+			r: Math.round(Math.random() * 255), 
+			g: Math.round(Math.random() * 255), 
+			b: Math.round(Math.random() * 255),
 		};
 		
 		this.cellsColors.push(primaryColor);
+		this.selectColor(this.cellsColors[0]);
 	}
 
 	@Mutation
-	addColor(newColor: color): void {
-		this.cellsColors.push(newColor);
+	selectColor(color: color): void {
+		this.selectedColor = color;
+	}
+
+	@Action
+	addColor(newColor?: color): void {
+		if(newColor){
+			this.cellsColors.push(newColor);
+		}
+		else{
+			let newColor: color = {
+				r: Math.round(Math.random() * 255), 
+				g: Math.round(Math.random() * 255), 
+				b: Math.round(Math.random() * 255),
+			};
+
+			this.cellsColors.push(newColor);
+			this.selectColor(newColor);
+		}
 	}
 
 	@Mutation
@@ -262,13 +284,15 @@ class GridModule extends VuexModule {
 		this.cellsColors[colorIndex].r = newColor.r;
 		this.cellsColors[colorIndex].g = newColor.g;
 		this.cellsColors[colorIndex].b = newColor.b;
-
-		console.log(newColor);
 	}
 
-	@Mutation
-	removeColor(targetColor: color) {
-		this.cellsColors.push(targetColor);
+	@Action
+	deleteColor(index: number): void {
+		if(this.cellsColors.length > 1){
+			//TODO: checker si d'autre couleur avec cette couleur sont présente	
+			this.cellsColors.splice(index, 1);
+			this.selectColor(this.cellsColors[this.cellsColors.length - 1]);
+		}
 	}
 
 }

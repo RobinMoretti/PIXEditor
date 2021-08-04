@@ -1,3 +1,5 @@
+import { color } from "@/store/modules/grid-types";
+
 export function hexToRgbA(hexCode: string){
     let hex = hexCode.replace('#', '');
     
@@ -11,3 +13,16 @@ export function hexToRgbA(hexCode: string){
 
     return { r: r, g: g, b: b};
 }
+
+function componentToHex(c: number) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+  
+export function rgbToHex(c: color) {
+    return "#" 
+                + componentToHex(c.r) 
+                + componentToHex(c.g) 
+                + componentToHex(c.b);
+}
+  

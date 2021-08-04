@@ -5,6 +5,10 @@
 			:key="`color-${key}`"
 			:color="color"
 			:color-index="key"></color-component>
+
+		<div 
+			class="button"
+			@click="addNewColor">+</div>
 	</div>
 </template>
 
@@ -25,14 +29,24 @@ export default class ColorsEditor extends Vue {
 	get cellsColor(): Array<color>{
 		return this.gridModule.cellsColors;
 	}
+
+	addNewColor(): void{
+		this.gridModule.addColor();
+	}
 }
 </script>
 
 <style scoped lang="scss">
 	.colors-editor-container{
 		position: fixed;
-		right: 0;
-		top: 0;
-		margin-right: 15px;
+		right: 15px;
+		top: 15px;
+	}
+
+	.button{
+		font-size: 30px;
+		font-weight: 500;
+		margin-top: 10px;
+		cursor: pointer;
 	}
 </style>
