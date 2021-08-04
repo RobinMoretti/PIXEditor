@@ -2,37 +2,13 @@
 	<div class="grids-container">
 		<!-- <p v-html="horizontalCellsCount"></p> -->
 		<div class="grid" ref="grid" v-if="cells.length">
-			<div
-				class="cells-count-horizontal">
-				<div
-					class="cells-count-row"
-					v-for="(row, key) in horizontalCellsCount"
-					:key="'cells-count-row-' + key">
-					<div
-						class="cells-count-row-count"
-						v-for="(count, countKey) in row.items"
-						:key="'cells-horizontal-count-' + countKey">
-						{{ count.number }}
-					</div>
-				</div>
+			<div class="horizontal-container">
+				<cells-count-horizontal class="horizontal-cells-count-container"/>
 			</div>
-
 			<div>
-				
-				<div class="cells-count-vertical">
-					<div
-						class="cells-count-column"
-						v-for="(column, key) in verticalCellsCount"
-						:key="'cells-count-column-' + key">
-						<div
-							class="cells-count-column-count"
-							v-for="(count, countKey) in column.items"
-							:key="'cells-vertical-count-' + countKey">
-							{{ count.number }}
-						</div>
-					</div>
+				<div class="vertical-container">
+					<cells-count-vertical class="vertical-cells-count-container"/>
 				</div>
-
 				<div class="cells-container">
 					<div
 						class="cells-row"
@@ -59,8 +35,14 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as htmlToImage from 'html-to-image';
 import gridModule from '@/store/modules/grid';
+import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue'
+import cellsCountVertical from '@/components/grid/CellsCountVertical.vue'
 
 @Component({
+	components: {
+		cellsCountHorizontal,
+		cellsCountVertical,
+	}
 })
 export default class GridsContainer extends Vue {
 	gridModule = gridModule;
@@ -75,14 +57,6 @@ export default class GridsContainer extends Vue {
 
 	get cells(){
 		return this.gridModule.cells;
-	}
-
-	get horizontalCellsCount(){
-		return this.gridModule.horizontalCellsCount;
-	}
-
-	get verticalCellsCount(){
-		return this.gridModule.verticalCellsCount;
 	}
 
 	public mouseDownCell(cellIndex: number): void{
@@ -156,51 +130,20 @@ export default class GridsContainer extends Vue {
 			background: black;
 		}
 
-		.cells-count-horizontal{
-			padding-bottom: 1px;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-end;
-			box-sizing: border-box;
+		.vertical-container{
+			position: relative;
 
-			.cells-count-row{
-				box-sizing: border-box;
-				height: 30px;
-				width: 100%;
-				border-bottom: solid 1px black;
-				border-top: solid 1px black;
-				border-left: solid 1px black;
-				display: flex;
-				flex-direction: row;
-				justify-content: flex-end;
-				margin-bottom: -1px;
-				align-items: center;
-
-				padding: 2px;
+			.vertical-cells-count-container{
+				position: absolute;
+				bottom: 0;
 			}
 		}
-		.cells-count-vertical{
-			// padding-bottom: 1px;
-			display: flex;
-			flex-direction: row;
-			justify-content: flex-end;
-			align-items: stretch;
-			box-sizing: border-box;
+		.horizontal-container{
+			position: relative;
 
-			.cells-count-column{
-				box-sizing: border-box;
-				width: 30px;
-				border-left: solid 1px black;
-				border-right: solid 1px black;
-				border-top: solid 1px black;
-				display: flex;
-				flex-direction: column;
-				justify-content: flex-end;
-				align-items: stretch;
-				
-				margin-left: -1px;
-				// align-items: center;
-				padding: 2px;
+			.horizontal-cells-count-container{
+				position: absolute;
+				right: 0;
 			}
 		}
 	}
