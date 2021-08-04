@@ -36,7 +36,7 @@ export default class backgroundGrid extends Vue {
 
     .cell{
         width: 30px; height: 30px;
-        background: white;
+        background:  var(--grid-background-color);
         box-sizing: border-box;
     }
 
@@ -48,7 +48,7 @@ export default class backgroundGrid extends Vue {
         bottom: calc((var(--grid-border-width) / 2));
         display: inline-block;
         border-style: inset ;
-        border-color: rgba(121, 121, 121, 0.472);
+        border-color: var(--grid-border-color);
         border-width: var(--grid-border-width);
         box-sizing: border-box;
     }

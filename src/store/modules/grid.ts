@@ -218,6 +218,36 @@ class GridModule extends VuexModule {
 			this.cellsInteraction.clicked = !this.cellsInteraction.clicked;
 		}
 	}
+
+	//--------------------------------------------------------------------------------------//
+	//                                     COLORS                                      		//
+	//--------------------------------------------------------------------------------------//
+	cellsColors: Array<color> = [];
+	backgroudColor: color = { r: 150, g: 150, b: 150, a: 1 };
+	borderColor: color = { r: 255, g: 255, b: 255, a: 1 };
+
+	@Action
+	initColors(): void{
+		// add background color
+		// border color
+		// main color
+	}
+
+	@Mutation
+	addColor(color: color){
+		this.colors.push(color);
+	}
+
+	@Mutation
+	removeColor(color: color){
+		this.colors.push(color);
+	}
+
+	@Mutation
+	updateColor(color: color){
+		this.colors.push(color);
+	}
+
 }
 
 export default new GridModule({ store, name: 'grid' });

@@ -37,16 +37,33 @@ export default class App extends Vue {
 	get getClickState(): boolean {
 		return this.systemModule.mouse.clicked;
 	}
+	get backgroundColor(){
+		let color = `rgba(${this.gridModule.backgroudColor.r}`;
+		color += `,${this.gridModule.backgroudColor.r}`;
+		color += `,${this.gridModule.backgroudColor.r}`;
+		color += `,${this.gridModule.backgroudColor.a})`;
+		return color;
+	}
+	get borderColor(){
+		let color = `rgba(${this.gridModule.borderColor.r}`;
+		color += `,${this.gridModule.borderColor.r}`;
+		color += `,${this.gridModule.borderColor.r}`;
+		color += `,${this.gridModule.borderColor.a})`;
+		return color;
+	}
 	
     get cssVars() {
       return {
         '--grid-border-width': `${this.gridModule.settings.grid.border.width}px`,
         '--grid-template-columns': this.gridModule.getCssGridColumns,
         '--grid-template-rows': this.gridModule.getCssGridRows,
+        '--grid-border-color': this.backgroundColor,
+        '--grid-background-color': this.borderColor,
       }
     }
 
-	mounted(){	
+	mounted(){
+
 	}
 }
 </script>
