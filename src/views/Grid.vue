@@ -17,22 +17,40 @@
 				</div>
 			</div>
 
-			<div class="cells-container">
-				<div
-					class="cells-row"
-					v-for="y in grid.height"
-					:key="'cells-row-' + y">
+			<div>
+				
+				<div class="cells-count-vertical">
 					<div
-						class="cell"
-						v-for="x in grid.width"
-						:key="'cell-' + x"
-						:class="{'checked': cells[((y-1) * grid.width) + (x-1)].checked}"
-						@mouseover="gridModule.toggleCell(((y-1) * grid.width) + (x-1))"
-						@mousedown="mouseDownCell(((y-1) * grid.width) + (x-1))"
-						@mouseup="mouseUpCell(((y-1) * grid.width) + (x-1))">
+						class="cells-count-column"
+						v-for="(column, key) in verticalCellsCount"
+						:key="'cells-count-column-' + key">
+						<div
+							class="cells-count-column-count"
+							v-for="(count, countKey) in column.items"
+							:key="'cells-vertical-count-' + countKey">
+							{{ count.number }}
+						</div>
+					</div>
+				</div>
+
+				<div class="cells-container">
+					<div
+						class="cells-row"
+						v-for="y in grid.height"
+						:key="'cells-row-' + y">
+						<div
+							class="cell"
+							v-for="x in grid.width"
+							:key="'cell-' + x"
+							:class="{'checked': cells[((y-1) * grid.width) + (x-1)].checked}"
+							@mouseover="gridModule.toggleCell(((y-1) * grid.width) + (x-1))"
+							@mousedown="mouseDownCell(((y-1) * grid.width) + (x-1))"
+							@mouseup="mouseUpCell(((y-1) * grid.width) + (x-1))">
+						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </template>
@@ -63,7 +81,7 @@ export default class GridsContainer extends Vue {
 		return this.gridModule.horizontalCellsCount;
 	}
 
-	get verticlaCellsCount(){
+	get verticalCellsCount(){
 		return this.gridModule.verticalCellsCount;
 	}
 
@@ -150,9 +168,10 @@ export default class GridsContainer extends Vue {
 		}
 
 		.cells-count-horizontal{
+			padding-bottom: 1px;
 			display: flex;
 			flex-direction: column;
-			justify-content: flex-start;
+			justify-content: flex-end;
 			box-sizing: border-box;
 
 			.cells-count-row{
@@ -168,6 +187,30 @@ export default class GridsContainer extends Vue {
 				margin-bottom: -1px;
 				align-items: center;
 
+				padding: 2px;
+			}
+		}
+		.cells-count-vertical{
+			// padding-bottom: 1px;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+			box-sizing: border-box;
+
+			.cells-count-column{
+				box-sizing: border-box;
+				height: 100%;
+				width: 30px;
+				border-left: solid 1px black;
+				border-right: solid 1px black;
+				border-top: solid 1px black;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				align-items: stretch;
+				
+				margin-left: -1px;
+				// align-items: center;
 				padding: 2px;
 			}
 		}

@@ -49,7 +49,7 @@ class GridModule extends VuexModule {
 	@Action
 	updateCounts(): void {
 		this.updateHorizontalCounts();
-		// this.updateVerticalCounts();
+		this.updateVerticalCounts();
 	}
 
 	@Mutation
@@ -80,7 +80,7 @@ class GridModule extends VuexModule {
 				if (activeCell.checked) {
 					let previousCell = null;
 
-					if ((activeCellIndex - (y * this.grid.width)) - 1) {
+					if ((y * this.grid.width) + x - 1) {
 						previousCell = this.cells[(y * this.grid.width) + x - 1];
 					}
 
@@ -100,6 +100,65 @@ class GridModule extends VuexModule {
 			}
 
 			this.horizontalCellsCount.push(activeRow);
+		}
+	}
+
+	@Mutation
+	updateVerticalCounts(){
+		this.verticalCellsCount = [];
+		
+		for (let x = 0; x < this.grid.width; x += 1) {
+			const activeColumn: row = {
+				items: [],
+			};
+
+			for (let y = 0; y < this.grid.height; y += 1) {
+				const activeCellIndex = (y * this.grid.width) + x;
+				const activeCell = this.cells[activeCellIndex];
+
+				// si active row est vide, ajouter un premier item
+				if (!activeColumn.items[activeColumn.items.length - 1]) {
+					activeColumn.items.push({
+						number: 0,
+						color: {
+							r: 0, g: 0, b: 0, a: 1,
+						},
+					} as count);
+				}
+
+				const previousItemCount = activeColumn.items[activeColumn.items.length - 1];
+
+				if (activeCell.checked) {
+					let previousCell = null;
+					let previousCellIndex = null;
+
+					if ((activeCellIndex - this.grid.width) >= 0) {
+						previousCellIndex = activeCellIndex - this.grid.width;
+						previousCell = this.cells[activeCellIndex - this.grid.width];
+					}
+					else if((activeCellIndex - 1 + (this.grid.width * this.grid.height - 1)) >= 0){
+						console.log("ok cool")
+						previousCellIndex = activeCellIndex - 1 + (this.grid.width * this.grid.height - 1);
+						previousCell = this.cells[activeCellIndex - 1 + (this.grid.width * this.grid.height - 1)];
+					}
+					console.log(`previousCellIndex == ${previousCellIndex}`)
+
+					if (!previousCell || previousCell.checked) {
+						previousItemCount.number += 1;
+					} else if (previousItemCount.number) {
+						activeColumn.items.push({
+							number: 1,
+							color: {
+								r: 0, g: 0, b: 0, a: 1,
+							},
+						} as count);
+					} else {
+						previousItemCount.number += 1;
+					}
+				}
+			}
+
+			this.verticalCellsCount.push(activeColumn);
 		}
 	}
 
