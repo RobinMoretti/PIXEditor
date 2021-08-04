@@ -44,8 +44,8 @@ export default class backgroundGrid extends Vue {
         width: calc(100% + (var(--grid-border-width))); 
         height: calc(100% + (var(--grid-border-width)));
         position: relative;
-        right: calc(var(--grid-border-width) / 2);
-        bottom: calc(var(--grid-border-width) / 2);
+        right: calc((var(--grid-border-width) / 2));
+        bottom: calc((var(--grid-border-width) / 2));
         display: inline-block;
         border-style: inset ;
         border-color: rgba(121, 121, 121, 0.472);
