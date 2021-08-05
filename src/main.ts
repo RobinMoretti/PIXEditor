@@ -4,6 +4,10 @@ import './registerServiceWorker';
 import router from './router';
 import store from './store';
 
+import EventBus from 'vue-bus-ts';
+Vue.use(EventBus);
+var bus = new EventBus.Bus();
+
 Vue.config.productionTip = false;
 
 new Vue({

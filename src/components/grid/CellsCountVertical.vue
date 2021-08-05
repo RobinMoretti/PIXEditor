@@ -18,7 +18,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
-import { count, row } from '@/store/modules/grid-types';
+import { color, count, row } from '@/store/modules/grid-types';
 
 @Component
 export default class cellsCountVertical extends Vue {
@@ -26,6 +26,9 @@ export default class cellsCountVertical extends Vue {
 
 	get verticalCellsCount(): row[] {
 		return this.gridModule.verticalCellsCount;
+	}
+	get borderColor(): color {
+		return this.gridModule.backgroudColor;
 	}
 
 	getCssCount(countItem: count){
@@ -35,7 +38,9 @@ export default class cellsCountVertical extends Vue {
 			}
 		}
 
-		return {};
+		return {
+			'color': `rgb(${this.borderColor.r}, ${this.borderColor.g}, ${this.borderColor.b})`
+		}
 	}
 }
 </script>

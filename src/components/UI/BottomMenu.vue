@@ -11,6 +11,8 @@
                 v-model="gridHeight" 
                 @change="updateGridHeight">
         </div>
+
+        <p @click="exportImages" class="button export-button">EXPORT</p>
 			<!-- <input type="range" min="0" max="13" step="1" v-model="gridBorderWidth" @change="updateBorderWidth">  -->
 	</div>
 </template>
@@ -33,6 +35,12 @@ export default class BottomMenu extends Vue {
         this.gridModule.updateGridHeight(this.gridHeight);
     }
 
+    exportImages(): void{
+        this.$bus.$emit('EXPORT_IMAGES') // return this result from this event
+        // game
+        // solution
+    }
+
 }
 </script>
 
@@ -44,6 +52,9 @@ export default class BottomMenu extends Vue {
 		background-color: rgb(255, 255, 255);
 		width: 100%;
         padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 	}
 
     .grid-sizing{
@@ -55,6 +66,11 @@ export default class BottomMenu extends Vue {
             font-size: 20px;
             margin: 0 5px;
         }
+    }
+
+    .export-button{
+        margin-left: 20px;
+        cursor: pointer;
     }
 
     input[type=number]{

@@ -28,6 +28,9 @@ export default class cellsCountHorizontal extends Vue {
 	get horizontalCellsCount(): row[] {
 		return this.gridModule.horizontalCellsCount;
 	}
+	get borderColor(): color {
+		return this.gridModule.backgroudColor;
+	}
 	getCssCount(countItem: count){
 		if(countItem.color){
 			return {
@@ -35,7 +38,10 @@ export default class cellsCountHorizontal extends Vue {
 			}
 		}
 		
-		return {};
+
+		return {
+			'color': `rgb(${this.borderColor.r}, ${this.borderColor.g}, ${this.borderColor.b})`
+		}
 	}
 }
 </script>

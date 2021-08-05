@@ -1,7 +1,7 @@
 <template>
-	<div class="grids-container">
+	<div class="grids-container" ref="grid" >
 		<!-- <p v-html="horizontalCellsCount"></p> -->
-		<div class="grid" ref="grid" v-if="cells.length">
+		<div class="grid" v-if="cells.length">
 			<div class="horizontal-container">
 				<cells-count-horizontal class="horizontal-cells-count-container"/>
 			</div>
@@ -21,13 +21,13 @@
 			</div>
 		</div>
 
-		<colors-editor/>
+		<colors-editor v-if="UIIsVisible"/>
 
-		<div class="grid-settings"> 
+		<div class="grid-settings" v-if="UIIsVisible"> 
 			<input type="range" min="0" max="13" step="1" v-model="gridBorderWidth" @change="updateBorderWidth"> 
 		</div>
 
-		<bottom-menu/>
+		<bottom-menu v-if="UIIsVisible"/>
 		
 	</div>
 </template>
@@ -58,6 +58,7 @@ import { cell, gridSetting } from '@/store/modules/grid-types';
 export default class GridsContainer extends Vue {
 	gridModule = gridModule;
     gridBorderWidth = 10;
+	UIIsVisible = true;
 
 	$refs!: {
 		grid: HTMLInputElement
@@ -82,13 +83,15 @@ export default class GridsContainer extends Vue {
 	}
 
 	mounted(): void {
-		this.gridModule.updateCounts();
+		this.gridModule.updateCounts(); 
+		this.$bus.$on('EXPORT_IMAGES', this.exportImage)
 		// setTimeout(() => {
 		// 	this.exportImage();
 		// }, 500);
 	}
 
 	exportImage(): void {
+		this.UIIsVisible = false;
 		const node = this.$refs.grid as HTMLElement;
 		htmlToImage.toPng(node, {
 			// cacheBust: true,
@@ -97,13 +100,16 @@ export default class GridsContainer extends Vue {
 			pixelRatio: 3,
 		})
 			.then((dataUrl) => {
-				const img = new Image();
-				img.src = dataUrl;
-				img.classList.add('preview-image');
-				document.body.appendChild(img);
+				var link = document.createElement('a');
+				link.download = 'pix-export.png';
+				link.href = dataUrl;
+				link.click();
+				link.classList.add("inexistant");
+				this.UIIsVisible = true;
 			})
 			.catch((error) => {
 				console.error('oops, something went wrong!', error);
+				this.UIIsVisible = true;
 			});
 	}
 
@@ -191,5 +197,13 @@ export default class GridsContainer extends Vue {
 				border: solid rgba(10, 10, 10, 0.424) 2px;
 			}
 		}
+	}
+
+	.inexistant{
+		display: none;
+		visibility: hidden;
+		position: fixed;
+		left: -100000px;
+		right: -100000px;
 	}
 </style>
