@@ -8,6 +8,8 @@
 		<background/>
 		<editor-nav/>
 		<router-view/>
+
+		<p>mouse {{mouse}}</p>
 	</div>
 </template>
 
@@ -31,12 +33,18 @@ export default class App extends Vue {
 
 	gridModule = gridModule;
 
+	get mouse(){
+		return this.gridModule.cellsInteraction
+	}
 	mounted(): void {
 		this.gridModule.init();
 	}
 
 	public toggleSystemClick(): void {
 		this.systemModule.toggleClicked();
+	}
+	public disableOtherClick(): void {
+		this.systemModule.disableOtherClick();
 	}
 
 	get getClickState(): boolean {

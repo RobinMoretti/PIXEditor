@@ -49,12 +49,20 @@ export default class Cell extends CellProps {
 
 	public mouseUpCell(cellIndex: number): void{
 		this.gridModule.toggleCellsInteractionClicked();
-		this.gridModule.toggleCell(cellIndex);
 	}
 }
 </script>
 
 <style scoped lang="scss">
 	.cells-container{
+		*{
+			
+		-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none; /* Safari */
+			-khtml-user-select: none; /* Konqueror HTML */
+			-moz-user-select: none; /* Old versions of Firefox */
+				-ms-user-select: none; /* Internet Explorer/Edge */
+					user-select: none;
+		}
 	}
 </style>

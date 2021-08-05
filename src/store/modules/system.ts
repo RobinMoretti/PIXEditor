@@ -27,6 +27,11 @@ class SystemModule extends VuexModule {
 			gridModule.toggleCellsInteractionClicked(false);
 		}
 	}
+
+	@Mutation
+	disableOtherClick():void{
+		gridModule.toggleCellsInteractionClicked(false);
+	}
 }
 
 export default new SystemModule({ store, name: 'system' });
