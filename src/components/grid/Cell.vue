@@ -34,7 +34,7 @@ export default class Cell extends CellProps {
         if(this.cells[this.index-1] && this.cells[this.index-1].color){
             let color = this.cells[this.index-1].color;
             return {
-                'background-color': `rgb(${color.r},${color.g},${color.b})`,
+                'background-color': `rgb(${color?.r},${color?.g},${color?.b})`,
             };
         }
         else{

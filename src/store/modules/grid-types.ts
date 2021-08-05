@@ -7,8 +7,6 @@ export interface color{
 
 export interface cell{
 	checked: boolean,
-	x: number,
-	y: number,
 	color: color | null,
 }
 export interface count{

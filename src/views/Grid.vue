@@ -22,19 +22,28 @@
 		</div>
 
 		<colors-editor/>
+
+		<div class="grid-settings"> 
+			<input type="range" min="0" max="13" step="1" v-model="gridBorderWidth" @change="updateBorderWidth"> 
+		</div>
+
+		<bottom-menu/>
+		
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import * as htmlToImage from 'html-to-image';
 import gridModule from '@/store/modules/grid';
 import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue';
 import cellsCountVertical from '@/components/grid/CellsCountVertical.vue';
 import backgroundGrid from '@/components/grid/BackgroundGrid.vue';
 import ColorsEditor from '@/components/UI/Colors/ColorsEditor.vue';
+import BottomMenu from '@/components/UI/BottomMenu.vue';
 import Cell from '@/components/grid/Cell.vue';
 import { cell, gridSetting } from '@/store/modules/grid-types';
+
 
 @Component({
 	components: {
@@ -43,14 +52,22 @@ import { cell, gridSetting } from '@/store/modules/grid-types';
 		backgroundGrid,
 		ColorsEditor,
 		Cell,
+		BottomMenu,
 	},
 })
 export default class GridsContainer extends Vue {
 	gridModule = gridModule;
+    gridBorderWidth = 10;
 
 	$refs!: {
 		grid: HTMLInputElement
 	}
+ 	
+	@Watch('gridBorderWidth')
+	onGridBorderWidthChange(value: number, oldValue: number) {
+		this.updateBorderWidth();
+	}
+
 
 	get grid(): gridSetting {
 		return this.gridModule.settings.grid;
@@ -88,6 +105,10 @@ export default class GridsContainer extends Vue {
 			.catch((error) => {
 				console.error('oops, something went wrong!', error);
 			});
+	}
+
+	updateBorderWidth(): void{
+		this.gridModule.updateBorderWidth(this.gridBorderWidth);
 	}
 }
 </script>
@@ -158,6 +179,16 @@ export default class GridsContainer extends Vue {
 			.background-gid{
 				position: absolute;
 				top: 0;
+			}
+		}
+
+		.grid-settings{
+			position: absolute;
+			top: 14px;
+			right: 75px;
+
+			input{
+				border: solid rgba(10, 10, 10, 0.424) 2px;
 			}
 		}
 	}

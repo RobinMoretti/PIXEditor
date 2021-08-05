@@ -30,6 +30,13 @@ class GridModule extends VuexModule {
 		},
 	}
 
+	tempGridSetting = {
+		grid: {
+			width: 0,
+			height: 0,
+		},
+	}
+
 	@Action
 	initGrid():void {
 
@@ -37,19 +44,33 @@ class GridModule extends VuexModule {
 		// generate random grid
 		for (let y = 0; y < this.settings.grid.height; y += 1) {
 			for (let x = 0; x < this.settings.grid.width; x += 1) {
-				this.addCell({
-					checked: false,
-					x: x,
-					y: y,
-					color: null
-				});
+				this.addNewCell();
 			}
 		}
 	}
 
 	@Mutation
-	incrementBorder():void {
-		this.settings.grid.border.width += 1;
+	updateBorderWidth(value: number):void {
+		this.settings.grid.border.width = value;
+	}
+	@Action
+	updateGridWidth(value: number):void {
+		this.saveGridSetting();
+		this.settings.grid.width = value;
+		this.updateCellsLenght();
+		this.updateCounts();
+	}
+	@Action
+	updateGridHeight(value: number):void {
+		this.saveGridSetting();
+		this.settings.grid.height = value;
+		this.updateCellsLenght();
+		this.updateCounts();
+	}
+
+	@Mutation
+	saveGridSetting(){
+		this.tempGridSetting = JSON.parse(JSON.stringify(this.settings));
 	}
 
 	get getCssGridColumns() {
@@ -72,10 +93,82 @@ class GridModule extends VuexModule {
 	//                                   CELLS                                   			//
 	// --------------------------------------------------------------------------------------//
 	cells: Array<cell> = [];
+	
+	@Action
+	updateCellsLenght(): void{
+		let newLength = this.settings.grid.width * this.settings.grid.height;
+		
+		let tempCells: Array<cell> = [...this.cells];
+		console.log(tempCells);
+		 
+		this.resetCells();
+		this.addNewCell(this.settings.grid.width * this.settings.grid.height);
+
+		for (let y = 0; y < this.settings.grid.height; y++) {
+			for (let x = 0; x < this.settings.grid.width; x++) {
+
+				let isInBound = true;
+				if(x > this.settings.grid.width - 1 || x > this.tempGridSetting.grid.width - 1){
+					isInBound = false;
+				}
+				if(y > this.settings.grid.height - 1 || y > this.tempGridSetting.grid.height - 1){
+					isInBound = false;
+				}
+
+				if(isInBound){
+					let tempCellindex = x + (y * this.tempGridSetting.grid.width);
+
+					if(tempCellindex < tempCells.length){
+						let tempCell: cell = tempCells[tempCellindex];
+
+						let cellIndex = x + (y * this.settings.grid.width);
+						if(tempCell.checked && tempCell.color){
+							this.checkCell({
+								cellIndex: cellIndex,
+								color: tempCell.color,
+							});
+						}
+					}
+				}
+			}
+		}
+		// if(this.cells.length > newLength){
+		// 	let quantityToRemove = this.cells.length - newLength;
+		// 	this.cells.splice(newLength, quantityToRemove); 
+		// }
+		// else{
+		// 	let quantityToAdd = newLength - this.cells.length;
+		// 	this.addNewCell(quantityToAdd);
+		// }
+	}
 
 	@Mutation
-	addCell(newCell: cell): void {
-		this.cells.push(newCell);
+	resetCells():void {
+		this.cells = [];
+	}
+
+	@Mutation
+	addNewCell(quantity?: number): void {
+		if(quantity){
+			for (let index = 0; index < quantity; index++) {
+				this.cells.push({
+					checked: false,
+					color: null
+				});
+			}
+		}
+		else{
+			this.cells.push({
+				checked: false,
+				color: null
+			});
+		}
+	}
+
+	@Mutation
+	checkCell({ cellIndex, color }: { cellIndex: number; color: color }): void{
+		this.cells[cellIndex].checked = true;
+		this.cells[cellIndex].color = color;
 	}
 
 	@Action

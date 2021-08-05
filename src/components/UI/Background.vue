@@ -41,6 +41,7 @@ export default class Background extends Vue {
 		align-content: flex-start;
 		flex-direction: row;
 		max-width: calc(100vw + 20px); max-height: calc(100vh + 20px);
+		pointer-events: none;
 	}
 
 	.rect{

@@ -48,7 +48,7 @@ export default class backgroundGrid extends Vue {
         right: calc((var(--grid-border-width) / 2));
         bottom: calc((var(--grid-border-width) / 2));
         display: inline-block;
-        border-style: inset ;
+        border-style: solid;
         border-color: var(--grid-border-color);
         border-width: var(--grid-border-width);
         box-sizing: border-box;
