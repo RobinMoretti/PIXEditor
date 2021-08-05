@@ -11,8 +11,11 @@
                 v-model="gridHeight" 
                 @change="updateGridHeight">
         </div>
-
-        <p @click="exportImages" class="button export-button">EXPORT</p>
+        <div class="export-container">
+            <p  class="export-title">EXPORT:</p>
+            <p @click="exportGame" class="button export-button">GAME</p>
+            <p @click="exportSolution" class="button export-button">SOLUTION</p>
+        </div>
 			<!-- <input type="range" min="0" max="13" step="1" v-model="gridBorderWidth" @change="updateBorderWidth">  -->
 	</div>
 </template>
@@ -35,10 +38,11 @@ export default class BottomMenu extends Vue {
         this.gridModule.updateGridHeight(this.gridHeight);
     }
 
-    exportImages(): void{
-        this.$bus.$emit('EXPORT_IMAGES') // return this result from this event
-        // game
-        // solution
+    exportGame(): void{
+        this.$bus.$emit('EXPORT_GAME')
+    }
+    exportSolution(): void{
+        this.$bus.$emit('EXPORT_SOLUTION')
     }
 
 }
@@ -67,10 +71,26 @@ export default class BottomMenu extends Vue {
             margin: 0 5px;
         }
     }
+    
+    .export-container{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+        margin-left: 30px;
 
-    .export-button{
-        margin-left: 20px;
-        cursor: pointer;
+        .export-button{
+            margin-left: 10px;
+            cursor: pointer;
+            border-bottom: rgba(19, 19, 19, 0.335) 4px solid;
+            padding-bottom: 2px;
+        }
+        .export-button:hover{
+            margin-left: 10px;
+            cursor: pointer;
+            border-bottom: rgba(19, 19, 19, 0.644) 4px solid;
+            padding-bottom: 2px;
+        }
     }
 
     input[type=number]{

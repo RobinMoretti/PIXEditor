@@ -19,7 +19,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
-import { count, row } from '@/store/modules/grid-types';
+import { color, count, row } from '@/store/modules/grid-types';
 
 @Component
 export default class cellsCountHorizontal extends Vue {

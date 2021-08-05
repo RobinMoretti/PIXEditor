@@ -3,16 +3,16 @@
 		<!-- <p v-html="horizontalCellsCount"></p> -->
 		<div class="grid" v-if="cells.length">
 			<div class="horizontal-container">
-				<cells-count-horizontal class="horizontal-cells-count-container"/>
+				<cells-count-horizontal v-if="countsAreVisible" class="horizontal-cells-count-container"/>
 			</div>
 			<div>
 				<div class="vertical-container">
-					<cells-count-vertical class="vertical-cells-count-container"/>
+					<cells-count-vertical v-if="countsAreVisible" class="vertical-cells-count-container"/>
 				</div>
 				<div class="background-gid-container">
 					<background-grid class="background-gid"/>
 				</div>
-				<div class="cells-container">
+				<div class="cells-container" :class="{ hidden: !cellsAreVisible}">
 					<cell
 						v-for="index in ( cellsCount )"
 						:key="'cell-' + (index-1)"
@@ -59,6 +59,8 @@ export default class GridsContainer extends Vue {
 	gridModule = gridModule;
     gridBorderWidth = 10;
 	UIIsVisible = true;
+	cellsAreVisible = true;
+	countsAreVisible = true;
 
 	$refs!: {
 		grid: HTMLInputElement
@@ -84,14 +86,16 @@ export default class GridsContainer extends Vue {
 
 	mounted(): void {
 		this.gridModule.updateCounts(); 
-		this.$bus.$on('EXPORT_IMAGES', this.exportImage)
+		this.$bus.$on('EXPORT_GAME', this.exportGame)
+		this.$bus.$on('EXPORT_SOLUTION', this.exportSolution)
 		// setTimeout(() => {
 		// 	this.exportImage();
 		// }, 500);
 	}
 
-	exportImage(): void {
+	exportGame(): void {
 		this.UIIsVisible = false;
+		this.cellsAreVisible = false;
 		const node = this.$refs.grid as HTMLElement;
 		htmlToImage.toPng(node, {
 			// cacheBust: true,
@@ -106,10 +110,34 @@ export default class GridsContainer extends Vue {
 				link.click();
 				link.classList.add("inexistant");
 				this.UIIsVisible = true;
+				this.cellsAreVisible = true;
 			})
 			.catch((error) => {
 				console.error('oops, something went wrong!', error);
 				this.UIIsVisible = true;
+				this.cellsAreVisible = true;
+			});
+	}
+	exportSolution(): void {
+		this.UIIsVisible = false;
+		this.countsAreVisible = false;
+		const node = this.$refs.grid as HTMLElement;
+		htmlToImage.toPng(node, {
+			pixelRatio: 3,
+		})
+			.then((dataUrl) => {
+				var link = document.createElement('a');
+				link.download = 'pix-export.png';
+				link.href = dataUrl;
+				link.click();
+				link.classList.add("inexistant");
+				this.UIIsVisible = true;
+				this.countsAreVisible = true;
+			})
+			.catch((error) => {
+				console.error('oops, something went wrong!', error);
+				this.UIIsVisible = true;
+				this.countsAreVisible = true;
 			});
 	}
 
@@ -205,5 +233,9 @@ export default class GridsContainer extends Vue {
 		position: fixed;
 		left: -100000px;
 		right: -100000px;
+	}
+	.hidden{
+		visibility: hidden;
+		opacity: 0;
 	}
 </style>
