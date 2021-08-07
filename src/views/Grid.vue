@@ -72,6 +72,7 @@ export default class GridsContainer extends Vue {
 	}
 
 
+
 	get grid(): gridSetting {
 		return this.gridModule.settings.grid;
 	}
@@ -88,6 +89,7 @@ export default class GridsContainer extends Vue {
 		this.gridModule.updateCounts(); 
 		this.$bus.$on('EXPORT_GAME', this.exportGame)
 		this.$bus.$on('EXPORT_SOLUTION', this.exportSolution)
+		this.gridBorderWidth = this.gridModule.settings.grid.border.width;
 		// setTimeout(() => {
 		// 	this.exportImage();
 		// }, 500);
