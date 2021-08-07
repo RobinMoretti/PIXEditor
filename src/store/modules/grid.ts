@@ -36,6 +36,31 @@ class GridModule extends VuexModule {
 
 		return fullData;
 	}
+	
+	@Action
+	importDatas(datas: stringIndexedArray): void{
+		let gridDatas: stringIndexedArray = this as stringIndexedArray;
+
+		this.importExportDatas.forEach((dataName) => {
+			this.updateOneData({
+				dataName: dataName,
+				dataValue: datas[dataName],
+			});
+		});
+
+
+		this.connectColorsIntances();
+		this.selectColor(this.cellsColors[0]);
+		this.updateCounts();
+	}
+
+	@Mutation
+	updateOneData({ dataName, dataValue }: { dataName: string; dataValue: any }){
+		let gridDatas: stringIndexedArray = this as stringIndexedArray;
+		gridDatas[dataName] = dataValue;
+
+		// upadte colors connection
+	}
 	// --------------------------------------------------------------------------------------//
 	//                                         GRID SETTINGS                                 //
 	// --------------------------------------------------------------------------------------//
@@ -73,7 +98,7 @@ class GridModule extends VuexModule {
 	updateBorderWidth(value: number):void {
 		this.settings.grid.border.width = value;
 	}
-	
+
 	@Mutation
 	updateGridTitle(value: string):void {
 		this.settings.grid.title = value;
@@ -158,14 +183,6 @@ class GridModule extends VuexModule {
 				}
 			}
 		}
-		// if(this.cells.length > newLength){
-		// 	let quantityToRemove = this.cells.length - newLength;
-		// 	this.cells.splice(newLength, quantityToRemove); 
-		// }
-		// else{
-		// 	let quantityToAdd = newLength - this.cells.length;
-		// 	this.addNewCell(quantityToAdd);
-		// }
 	}
 
 	@Mutation
@@ -373,6 +390,24 @@ class GridModule extends VuexModule {
 
 	selectedColor: color | null = null;
 
+	@Mutation
+	connectColorsIntances(){
+		this.cells.forEach(cell => {
+			for (let i = 0; i < this.cellsColors.length; i++) {
+				const color = this.cellsColors[i];
+				if(cell.color){
+					let sameR = color.r === cell.color.r;
+					let sameG = color.g === cell.color.g;
+					let sameB = color.b === cell.color.b;
+
+					if(sameR && sameG && sameB){
+						cell.color = color;
+					}
+				}
+			}
+		});
+	}
+	
 	@Action
 	initColors(): void{
 		// main color

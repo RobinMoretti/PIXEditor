@@ -1,0 +1,671 @@
+{
+  "settings": {
+    "grid": {
+      "title": "PIX Editor",
+      "width": "13",
+      "height": "8",
+      "border": {
+        "width": 3
+      }
+    }
+  },
+  "cells": [
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": false,
+      "color": null
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    },
+    {
+      "checked": true,
+      "color": {
+        "r": 33,
+        "g": 37,
+        "b": 102
+      }
+    }
+  ],
+  "cellsColors": [
+    {
+      "r": 33,
+      "g": 37,
+      "b": 102
+    }
+  ],
+  "backgroudColor": {
+    "r": 150,
+    "g": 150,
+    "b": 150
+  },
+  "borderColor": {
+    "r": 255,
+    "g": 255,
+    "b": 255
+  }
+}

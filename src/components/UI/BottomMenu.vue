@@ -18,11 +18,18 @@
                 v-model="gridHeight" 
                 @change="updateGridHeight">
         </div>
+        
         <div class="export-container">
             <p  class="export-title">EXPORT:</p>
             <p @click="exportGame" class="button export-button">GAME</p>
             <p @click="exportSolution" class="button export-button">SOLUTION</p>
             <p @click="exportData" class="button export-button">DATA</p>
+        </div>
+
+        <div class="import-container">
+            <p  class="export-title">IMPORT:</p>
+            <input type="file" id="input" ref="fileInput" class="file-input" @change="uploadJsonFile($event)">
+            <p @click="clickInputData" class="button export-button">DATA</p>
         </div>
 	</div>
 </template>
@@ -31,6 +38,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
 import { downloadJsonFile } from '@/helper/exports';
+// import defaultGrid from '@/assets/pix-grid/pix-editor.json';
 
 @Component({
 })
@@ -39,7 +47,21 @@ export default class BottomMenu extends Vue {
     gridWidth = this.gridModule.settings.grid.width;
     gridHeight = this.gridModule.settings.grid.height;
     gridTitle = this.gridModule.settings.grid.title;
-    
+
+    mounted(): void{
+        this.axios.get('/pix-grid/pix-editor.json').then(
+            request => {
+                this.importData(request.data);    
+            }
+        );
+    }
+
+    updateBottomMenuDatas(): void{
+        this.gridWidth = this.gridModule.settings.grid.width;
+        this.gridHeight = this.gridModule.settings.grid.height;
+        this.gridTitle = this.gridModule.settings.grid.title;
+    }
+
     updateGridWidth(): void{
         this.gridModule.updateGridWidth(this.gridWidth);
     }
@@ -71,6 +93,36 @@ export default class BottomMenu extends Vue {
 
         downloadJsonFile(toExport, fileName);
     }
+    clickInputData(): void{
+        if(this.$refs.fileInput)
+             (<HTMLInputElement>this.$refs.fileInput).click();
+    }
+    uploadJsonFile(event: Event){
+        let files = (<HTMLInputElement>event.target).files;
+        if(files && files[0]){
+            let file = files[0];
+
+            if (file.type != 'application/json') {
+                alert('Please select JSON files only!');
+                return;
+            }
+            
+            // for displaying the contents of the file
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if(typeof(reader.result) === "string"){
+                    let fileContent: string = reader.result;
+                    this.importData(JSON.parse(reader.result))
+                }
+            }
+            reader.readAsText(file);
+        }
+    }
+
+    importData(data: object){
+        let response = this.gridModule.importDatas(data);
+        this.updateBottomMenuDatas();
+    }
 
 }
 </script>
@@ -85,13 +137,13 @@ export default class BottomMenu extends Vue {
         padding: 5px;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: baseline;
 	}
 
     .grid-sizing{
         display: flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items: baseline;
         .division{
             font-weight: 600;
             font-size: 20px;
@@ -106,10 +158,10 @@ export default class BottomMenu extends Vue {
         margin-right: 15px;
     }
     
-    .export-container{
+    .export-container, .import-container{
         display: flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items: baseline;
         flex-direction: row;
         margin-left: 30px;
 
@@ -154,5 +206,10 @@ export default class BottomMenu extends Vue {
     input[type=number]::-webkit-outer-spin-button { 
         -webkit-appearance: none; 
         margin: 0; 
+    }
+
+    .file-input{
+        position: fixed;
+        right: -10000px; top: -10000px;
     }
 </style>

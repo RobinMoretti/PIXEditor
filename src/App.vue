@@ -8,8 +8,6 @@
 		<background/>
 		<editor-nav/>
 		<router-view/>
-
-		<p>mouse {{mouse}}</p>
 	</div>
 </template>
 

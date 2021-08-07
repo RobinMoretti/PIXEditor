@@ -1,6 +1,6 @@
 <template>
 	<header class="editor-nav">
-			<h1>PIX</h1>
+			<h1>PIX Editor</h1>
 	</header>
 </template>
 
@@ -26,6 +26,7 @@ export default class EditorNav extends Vue {
 			font-weight: 350;
 			position: absolute;
 			left: 5px; top: 5px;
+			visibility: hidden;
 		}
 	}
 </style>
