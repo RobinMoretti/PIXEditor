@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { map } from '@/helper/mathHelper';
 import EditorNav from '@/components/header/EditorNav.vue';
 import Background from '@/components/UI/Background.vue';
 
@@ -64,12 +65,15 @@ export default class App extends Vue {
 	}
 
 	get cssVars(): Record<string, unknown> {
+		let marginBottom = this.gridModule.settings.grid.border.width +5;
 		return {
 			'--grid-border-width': `${this.gridModule.settings.grid.border.width}px`,
+			'--grid-cells-count-margin': `${marginBottom}px`,
 			'--grid-template-columns': this.gridModule.getCssGridColumns,
 			'--grid-template-rows': this.gridModule.getCssGridRows,
 			'--grid-border-color': this.backgroundColor,
 			'--grid-background-color': this.borderColor,
+			'--grid-count-font-weigth': String(map(0, 13, 400, 1000, this.gridModule.settings.grid.border.width)),
 		};
 	}
 }

@@ -52,7 +52,7 @@ export default class cellsCountVertical extends Vue {
 		justify-content: flex-end;
 		align-items: stretch;
 		box-sizing: border-box;
-		margin-bottom: var(--grid-border-width);
+		margin-bottom: 10px;
 		// background: white;
 
 		.cells-count-column{
@@ -68,7 +68,7 @@ export default class cellsCountVertical extends Vue {
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				font-size: 20px;
+				font-size: 25px;
 				font-weight: 600;
 			}
 		}
