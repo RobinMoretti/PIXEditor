@@ -1,3 +1,6 @@
+export interface stringIndexedArray{
+	[k: string]: any,
+}
 
 export interface color{
 	r: number,
@@ -21,6 +24,7 @@ export interface border{
 	width: number,
 }
 export interface gridSetting{
+	title: string,
 	width: number,
 	height: number,
 	border: border

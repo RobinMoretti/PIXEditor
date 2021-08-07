@@ -1,5 +1,12 @@
 <template>
 	<div class="bottom-nav-container">
+        <div class="title-container">
+            <input 
+                type="text" 
+                v-model="gridTitle" 
+                @change="updateTitleGrid">
+        </div>
+
         <div class="grid-sizing">
             <input 
                 type="number" 
@@ -15,14 +22,15 @@
             <p  class="export-title">EXPORT:</p>
             <p @click="exportGame" class="button export-button">GAME</p>
             <p @click="exportSolution" class="button export-button">SOLUTION</p>
+            <p @click="exportData" class="button export-button">DATA</p>
         </div>
-			<!-- <input type="range" min="0" max="13" step="1" v-model="gridBorderWidth" @change="updateBorderWidth">  -->
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
+import { downloadJsonFile } from '@/helper/exports';
 
 @Component({
 })
@@ -30,6 +38,7 @@ export default class BottomMenu extends Vue {
     gridModule = gridModule;
     gridWidth = this.gridModule.settings.grid.width;
     gridHeight = this.gridModule.settings.grid.height;
+    gridTitle = this.gridModule.settings.grid.title;
     
     updateGridWidth(): void{
         this.gridModule.updateGridWidth(this.gridWidth);
@@ -38,11 +47,29 @@ export default class BottomMenu extends Vue {
         this.gridModule.updateGridHeight(this.gridHeight);
     }
 
+    updateTitleGrid(): void{
+        this.gridModule.updateGridTitle(this.gridTitle);
+    }
+
     exportGame(): void{
         this.$bus.$emit('EXPORT_GAME')
     }
     exportSolution(): void{
         this.$bus.$emit('EXPORT_SOLUTION')
+    }
+
+    exportData(){
+        let toExport = this.gridModule.getFullDatas;
+
+        let fileName: string = toExport.settings.grid.title;
+
+        if(fileName.length == 0)
+            fileName = "no-title";
+            
+        fileName = fileName.toLowerCase().replace(/\s/g, '-');
+        fileName += ".json";
+
+        downloadJsonFile(toExport, fileName);
     }
 
 }
@@ -71,6 +98,13 @@ export default class BottomMenu extends Vue {
             margin: 0 5px;
         }
     }
+
+    .title-container{
+        input{
+            min-width: 100px;
+        }
+        margin-right: 15px;
+    }
     
     .export-container{
         display: flex;
@@ -93,7 +127,7 @@ export default class BottomMenu extends Vue {
         }
     }
 
-    input[type=number]{
+    input[type=number], input[type=text]{
         border: 0;
         border-bottom: rgba(19, 19, 19, 0.335) 4px solid;
         background-color: unset;
@@ -104,7 +138,7 @@ export default class BottomMenu extends Vue {
         text-align: center;
     }
     
-    input[type=number]:focus{
+    input[type=number]:focus, input[type=text]:focus{
         border-bottom: rgba(19, 19, 19, 0.644) 4px solid;
 
     }

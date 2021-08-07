@@ -7,7 +7,7 @@ import {
 } from 'vuex-class-modules';
 
 import {
-	cell, row, color, count, settings,
+	cell, row, color, count, settings, stringIndexedArray,
 } from './grid-types';
 import store from '../index';
 
@@ -17,11 +17,31 @@ class GridModule extends VuexModule {
 	init(): void{
 	}
 
+	importExportDatas: Array<string> = [
+		'settings',
+		'cells',
+		'cellsColors',
+		'backgroudColor',
+		'borderColor',
+	];
+
+	
+	get getFullDatas(): stringIndexedArray{
+		let fullData: stringIndexedArray = {};
+		let gridDatas: stringIndexedArray = this as stringIndexedArray;
+
+		this.importExportDatas.forEach(dataName => {
+			fullData[dataName] = gridDatas[dataName];
+		});
+
+		return fullData;
+	}
 	// --------------------------------------------------------------------------------------//
-	//                                         GRID SETTINGS                                        //
+	//                                         GRID SETTINGS                                 //
 	// --------------------------------------------------------------------------------------//
 	settings: settings = {
 		grid: {
+			title: '',
 			width: 10,
 			height: 10,
 			border: {
@@ -53,6 +73,12 @@ class GridModule extends VuexModule {
 	updateBorderWidth(value: number):void {
 		this.settings.grid.border.width = value;
 	}
+	
+	@Mutation
+	updateGridTitle(value: string):void {
+		this.settings.grid.title = value;
+	}
+
 	@Action
 	updateGridWidth(value: number):void {
 		this.saveGridSetting();
