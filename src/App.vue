@@ -32,16 +32,18 @@ export default class App extends Vue {
 
 	gridModule = gridModule;
 
-	get mouse(){
-		return this.gridModule.cellsInteraction
+	get mouse(): { clicked: boolean } {
+		return this.gridModule.cellsInteraction;
 	}
-	mounted(): void {
-		this.gridModule.init();
-	}
+
+	// mounted(): void {
+	// 	// this.gridModule.init();
+	// }
 
 	public toggleSystemClick(): void {
 		this.systemModule.toggleClicked();
 	}
+
 	public disableOtherClick(): void {
 		this.systemModule.disableOtherClick();
 	}
@@ -65,7 +67,7 @@ export default class App extends Vue {
 	}
 
 	get cssVars(): Record<string, unknown> {
-		let marginBottom = this.gridModule.settings.grid.border.width +5;
+		const marginBottom = this.gridModule.settings.grid.border.width + 5;
 		return {
 			'--grid-border-width': `${this.gridModule.settings.grid.border.width}px`,
 			'--grid-cells-count-margin': `${marginBottom}px`,

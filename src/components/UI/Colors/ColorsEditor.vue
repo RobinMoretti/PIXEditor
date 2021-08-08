@@ -8,14 +8,14 @@
 			<simple-color-component
 				:color="borderGridColor"></simple-color-component>
 		</div>
-		
+
 		<color-component
 			v-for="(color, key) in cellsColor"
 			:key="`color-${key}`"
 			:color="color"
 			:color-index="key"></color-component>
 
-		<div 
+		<div
 			class="button"
 			@click="addNewColor">+</div>
 	</div>
@@ -23,27 +23,29 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import colorComponent from './ColorPicker.vue';
-import simpleColorComponent from './SimpleColorPicker.vue';
 import gridModule from '@/store/modules/grid';
 import { color } from '@/store/modules/grid-types';
+import colorComponent from './ColorPicker.vue';
+import simpleColorComponent from './SimpleColorPicker.vue';
 
 @Component({
 	components: {
 		colorComponent,
 		simpleColorComponent,
-	}
+	},
 })
 export default class ColorsEditor extends Vue {
 	gridModule = gridModule;
 
-	get cellsColor(): Array<color>{
+	get cellsColor(): Array<color> {
 		return this.gridModule.cellsColors;
 	}
-	get backgroundGridColor(): color{
+
+	get backgroundGridColor(): color {
 		return this.gridModule.backgroudColor;
 	}
-	get borderGridColor(): color{
+
+	get borderGridColor(): color {
 		return this.gridModule.borderColor;
 	}
 

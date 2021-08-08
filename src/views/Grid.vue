@@ -23,12 +23,18 @@
 
 		<colors-editor v-if="UIIsVisible"/>
 
-		<div class="grid-settings" v-if="UIIsVisible"> 
-			<input type="range" min="0" max="13" step="1" v-model="gridBorderWidth" @change="updateBorderWidth"> 
+		<div class="grid-settings" v-if="UIIsVisible">
+			<input
+				type="range"
+				min="0"
+				max="13"
+				step="1"
+				v-model="gridBorderWidth"
+				@change="updateBorderWidth">
 		</div>
 
 		<bottom-menu v-if="UIIsVisible"/>
-		
+
 	</div>
 </template>
 
@@ -44,7 +50,6 @@ import BottomMenu from '@/components/UI/BottomMenu.vue';
 import Cell from '@/components/grid/Cell.vue';
 import { cell, gridSetting } from '@/store/modules/grid-types';
 
-
 @Component({
 	components: {
 		cellsCountHorizontal,
@@ -57,21 +62,23 @@ import { cell, gridSetting } from '@/store/modules/grid-types';
 })
 export default class GridsContainer extends Vue {
 	gridModule = gridModule;
+
     gridBorderWidth = 10;
+
 	UIIsVisible = true;
+
 	cellsAreVisible = true;
+
 	countsAreVisible = true;
 
 	$refs!: {
 		grid: HTMLInputElement
 	}
- 	
+
 	@Watch('gridBorderWidth')
-	onGridBorderWidthChange(value: number, oldValue: number) {
+	onGridBorderWidthChange(): void {
 		this.updateBorderWidth();
 	}
-
-
 
 	get grid(): gridSetting {
 		return this.gridModule.settings.grid;
@@ -86,9 +93,9 @@ export default class GridsContainer extends Vue {
 	}
 
 	mounted(): void {
-		this.gridModule.updateCounts(); 
-		this.$bus.$on('EXPORT_GAME', this.exportGame)
-		this.$bus.$on('EXPORT_SOLUTION', this.exportSolution)
+		this.gridModule.updateCounts();
+		this.$bus.$on('EXPORT_GAME', this.exportGame);
+		this.$bus.$on('EXPORT_SOLUTION', this.exportSolution);
 		this.gridBorderWidth = this.gridModule.settings.grid.border.width;
 	}
 
@@ -103,11 +110,11 @@ export default class GridsContainer extends Vue {
 			pixelRatio: 3,
 		})
 			.then((dataUrl) => {
-				var link = document.createElement('a');
+				const link = document.createElement('a');
 				link.download = 'pix-export.png';
 				link.href = dataUrl;
 				link.click();
-				link.classList.add("inexistant");
+				link.classList.add('inexistant');
 				this.UIIsVisible = true;
 				this.cellsAreVisible = true;
 			})
@@ -117,6 +124,7 @@ export default class GridsContainer extends Vue {
 				this.cellsAreVisible = true;
 			});
 	}
+
 	exportSolution(): void {
 		this.UIIsVisible = false;
 		this.countsAreVisible = false;
@@ -125,11 +133,11 @@ export default class GridsContainer extends Vue {
 			pixelRatio: 3,
 		})
 			.then((dataUrl) => {
-				var link = document.createElement('a');
+				const link = document.createElement('a');
 				link.download = 'pix-export.png';
 				link.href = dataUrl;
 				link.click();
-				link.classList.add("inexistant");
+				link.classList.add('inexistant');
 				this.UIIsVisible = true;
 				this.countsAreVisible = true;
 			})

@@ -10,6 +10,8 @@ import gridModule from './grid';
 
 @Module
 class SystemModule extends VuexModule {
+	gridModule = gridModule;
+
 	mouse = {
 		clicked: false,
 	};
@@ -30,7 +32,7 @@ class SystemModule extends VuexModule {
 
 	@Mutation
 	disableOtherClick():void{
-		gridModule.toggleCellsInteractionClicked(false);
+		this.gridModule.toggleCellsInteractionClicked(false);
 	}
 }
 

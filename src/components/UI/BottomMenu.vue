@@ -93,9 +93,12 @@ export default class BottomMenu extends Vue {
 
         downloadJsonFile(toExport, fileName);
     }
+
     clickInputData(): void{
-        if(this.$refs.fileInput)
-             (<HTMLInputElement>this.$refs.fileInput).click();
+        if(this.$refs.fileInput){
+            let htmlFileElem = <HTMLInputElement>this.$refs.fileInput;
+            htmlFileElem.click();
+        }
     }
     uploadJsonFile(event: Event){
         let files = (<HTMLInputElement>event.target).files;

@@ -44,13 +44,13 @@ export default class Color extends ColorProps {
 	}
 
 	updateEditorColor(event: Event): void{
-		let selectedColor = hexToRgbA((<HTMLInputElement>event.target).value)
-		
+		let selectedColor = hexToRgbA((<HTMLInputElement>event.target).value);
+
 		this.gridModule.updateBasicColor({
 			newColor: selectedColor, 
-			color: this.color
+			colorObj: this.color,
 		});
-
+		
 		this.updateInputColorValue();
 	}
 

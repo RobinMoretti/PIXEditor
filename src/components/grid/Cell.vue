@@ -6,7 +6,7 @@
         :style="cellCss"
         @mouseover="gridModule.toggleCell(index-1)"
         @mousedown="mouseDownCell(index-1)"
-        @mouseup="mouseUpCell(index-1)">
+        @mouseup="mouseUpCell()">
     </div>
 </template>
 
@@ -20,8 +20,8 @@ const CellProps = Vue.extend({
 	props: {
 		index: Number,
 		cell: Number,
-	}
-})
+	},
+});
 
 @Component
 export default class Cell extends CellProps {
@@ -30,16 +30,16 @@ export default class Cell extends CellProps {
 	get cells(): Array<cell> {
 		return this.gridModule.cells;
 	}
+
 	get cellCss(): Record<string, string> {
-        if(this.cells[this.index-1] && this.cells[this.index-1].color){
-            let color = this.cells[this.index-1].color;
-            return {
-                'background-color': `rgb(${color?.r},${color?.g},${color?.b})`,
-            };
-        }
-        else{
-            return {};
-        }
+		if (this.cells[this.index - 1] && this.cells[this.index - 1].color) {
+			const { color } = this.cells[this.index - 1];
+			return {
+				'background-color': `rgb(${color?.r},${color?.g},${color?.b})`,
+			};
+		}
+
+		return {};
 	}
 
 	public mouseDownCell(cellIndex: number): void{
@@ -47,7 +47,7 @@ export default class Cell extends CellProps {
 		this.gridModule.toggleCell(cellIndex);
 	}
 
-	public mouseUpCell(cellIndex: number): void{
+	public mouseUpCell(): void{
 		this.gridModule.toggleCellsInteractionClicked();
 	}
 }
@@ -56,7 +56,7 @@ export default class Cell extends CellProps {
 <style scoped lang="scss">
 	.cells-container{
 		*{
-			
+
 		-webkit-touch-callout: none; /* iOS Safari */
 			-webkit-user-select: none; /* Safari */
 			-khtml-user-select: none; /* Konqueror HTML */
