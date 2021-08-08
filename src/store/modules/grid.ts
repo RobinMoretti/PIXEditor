@@ -11,6 +11,8 @@ import {
 } from './grid-types';
 import store from '../index';
 
+let saveStorageTimeout: number | null = null;
+
 @Module
 class GridModule extends VuexModule {
 	firstInitied = false;
@@ -67,7 +69,13 @@ class GridModule extends VuexModule {
 
 	@Action
 	saveGridInLocalStorage(): void{
-		localStorage.setItem('grid', JSON.stringify(this.getFullDatas));
+		if(saveStorageTimeout !== null){
+			clearTimeout(saveStorageTimeout);
+		}
+
+		saveStorageTimeout = setTimeout(() => {
+			localStorage.setItem('grid', JSON.stringify(this.getFullDatas));
+		}, 1000);
 	}
 
 	@Action
@@ -281,7 +289,6 @@ class GridModule extends VuexModule {
 			for (let x = 0; x < this.settings.grid.width; x += 1) {
 				const activeCellIndex = (y * this.settings.grid.width) + x;
 				const activeCell = this.cells[activeCellIndex];
-				console.log('activeCellIndex =', activeCellIndex)
 
 				// si active row est vide, ajouter un premier item
 				if (!activeRow.items.length) {
