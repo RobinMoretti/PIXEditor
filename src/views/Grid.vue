@@ -108,7 +108,7 @@ export default class GridsContainer extends Vue {
 		})
 			.then((dataUrl) => {
 				const link = document.createElement('a');
-				link.download = 'pix-export.png';
+				link.download =  this.gridModule.settings.grid.title + '-game.png';
 				link.href = dataUrl;
 				link.click();
 				link.classList.add('inexistant');
@@ -131,7 +131,7 @@ export default class GridsContainer extends Vue {
 		})
 			.then((dataUrl) => {
 				const link = document.createElement('a');
-				link.download = 'pix-export.png';
+				link.download = this.gridModule.settings.grid.title + '-solution.png';
 				link.href = dataUrl;
 				link.click();
 				link.classList.add('inexistant');
