@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.27cd6f3db35ddadb0d5d05620658a565.js"
+  "precache-manifest.cec81751058b4cb03da57c74cf4b051e.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "new-pix-editor"});
+workbox.core.setCacheNameDetails({prefix: "pix-editor"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {

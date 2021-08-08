@@ -38,6 +38,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
 import { downloadJsonFile } from '@/helper/exports';
+const json = require('@/assets/pix-grid/pix-editor.json');
 // import defaultGrid from '@/assets/pix-grid/pix-editor.json';
 
 @Component({
@@ -49,15 +50,12 @@ export default class BottomMenu extends Vue {
     gridTitle = this.gridModule.settings.grid.title;
 
     mounted(): void{ 
+        console.log(json);
         if(localStorage.getItem('grid')){
             this.gridModule.loadGridFromLocalStorage();
         }
         else if(this.gridModule.firstInitied === false){
-            this.axios.get('/pix-grid/pix-editor.json').then(
-                request => {
-                    this.importData(request.data);    
-                }
-            );
+            this.importData(json); 
             this.gridModule.init();
         }
         this.updateBottomMenuDatas();
