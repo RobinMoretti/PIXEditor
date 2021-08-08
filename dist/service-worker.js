@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.01a16059fd94fc9d3c246be2c306bf03.js"
+  "precache-manifest.090622623796ca2d97f850244b03a7af.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "new-pix-editor"});
