@@ -1,6 +1,6 @@
 {
-  "name": "new-pix-editor",
-  "version": "0.1.0",
+  "name": "pix-editor",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
