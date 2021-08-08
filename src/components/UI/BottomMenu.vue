@@ -48,12 +48,19 @@ export default class BottomMenu extends Vue {
     gridHeight = this.gridModule.settings.grid.height;
     gridTitle = this.gridModule.settings.grid.title;
 
-    mounted(): void{
-        this.axios.get('/pix-grid/pix-editor.json').then(
-            request => {
-                this.importData(request.data);    
-            }
-        );
+    mounted(): void{ 
+        if(localStorage.getItem('grid')){
+            this.gridModule.loadGridFromLocalStorage();
+        }
+        else if(this.gridModule.firstInitied === false){
+            this.axios.get('/pix-grid/pix-editor.json').then(
+                request => {
+                    this.importData(request.data);    
+                }
+            );
+            this.gridModule.init();
+        }
+        this.updateBottomMenuDatas();
     }
 
     updateBottomMenuDatas(): void{
@@ -124,7 +131,6 @@ export default class BottomMenu extends Vue {
 
     importData(data: object){
         let response = this.gridModule.importDatas(data);
-        this.updateBottomMenuDatas();
     }
 
 }

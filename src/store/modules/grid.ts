@@ -13,9 +13,17 @@ import store from '../index';
 
 @Module
 class GridModule extends VuexModule {
-	// @Action
-	// init(): void{
-	// }
+	firstInitied = false;
+
+	@Action
+	init(): void{
+		this.firstInit();
+		this.saveGridInLocalStorage();
+	}
+	@Mutation
+	firstInit(){
+		this.firstInitied = true;
+	}
 
 	importExportDatas: Array<string> = [
 		'settings',
@@ -48,15 +56,29 @@ class GridModule extends VuexModule {
 		this.connectColorsIntances();
 		this.selectColor(this.cellsColors[0]);
 		this.updateCounts();
+		this.saveGridInLocalStorage();
 	}
 
 	@Mutation
 	updateOneData({ dataName, dataValue }: { dataName: string; dataValue: any }) {
 		const gridDatas: stringIndexedArray = this as stringIndexedArray;
-		gridDatas[dataName] = dataValue;
-
-		// upadte colors connection
+		gridDatas[dataName] = dataValue;	
 	}
+
+	@Action
+	saveGridInLocalStorage(): void{
+		localStorage.setItem('grid', JSON.stringify(this.getFullDatas));
+	}
+
+	@Action
+	loadGridFromLocalStorage(): void{
+		let gridString = localStorage.getItem('grid');
+		if(typeof(gridString) === "string"){
+			let gridObj = JSON.parse(gridString) as stringIndexedArray;
+			this.importDatas(gridObj);
+		}
+	}
+
 
 	// --------------------------------------------------------------------------------------//
 	//                                         GRID SETTINGS                                 //
@@ -82,22 +104,26 @@ class GridModule extends VuexModule {
 	@Action
 	initGrid():void {
 		this.initColors();
-		// generate random grid
+		
 		for (let y = 0; y < this.settings.grid.height; y += 1) {
 			for (let x = 0; x < this.settings.grid.width; x += 1) {
 				this.addNewCell();
 			}
 		}
+
+		this.saveGridInLocalStorage();
 	}
 
-	@Mutation
+	@Action
 	updateBorderWidth(value: number):void {
 		this.settings.grid.border.width = value;
+		this.saveGridInLocalStorage();
 	}
 
-	@Mutation
+	@Action
 	updateGridTitle(value: string):void {
 		this.settings.grid.title = value;
+		this.saveGridInLocalStorage();
 	}
 
 	@Action
@@ -106,6 +132,7 @@ class GridModule extends VuexModule {
 		this.settings.grid.width = value;
 		this.updateCellsLenght();
 		this.updateCounts();
+		this.saveGridInLocalStorage();
 	}
 
 	@Action
@@ -114,6 +141,7 @@ class GridModule extends VuexModule {
 		this.settings.grid.height = value;
 		this.updateCellsLenght();
 		this.updateCounts();
+		this.saveGridInLocalStorage();
 	}
 
 	@Mutation
@@ -145,7 +173,6 @@ class GridModule extends VuexModule {
 	@Action
 	updateCellsLenght(): void{
 		const tempCells: Array<cell> = [...this.cells];
-		console.log(tempCells);
 
 		this.resetCells();
 		this.addNewCell(this.settings.grid.width * this.settings.grid.height);
@@ -217,6 +244,7 @@ class GridModule extends VuexModule {
 				this.cells[cellIndex].color = null;
 			}
 			this.updateCounts();
+			this.saveGridInLocalStorage();
 		}
 	}
 
@@ -253,27 +281,24 @@ class GridModule extends VuexModule {
 			for (let x = 0; x < this.settings.grid.width; x += 1) {
 				const activeCellIndex = (y * this.settings.grid.width) + x;
 				const activeCell = this.cells[activeCellIndex];
+				console.log('activeCellIndex =', activeCellIndex)
 
 				// si active row est vide, ajouter un premier item
-				if (!activeRow.items[activeRow.items.length - 1]) {
+				if (!activeRow.items.length) {
 					activeRow.items.push({
 						number: 0,
-						color: null,
+						color: activeCell.color,
 					} as count);
 				}
 
 				const lastItemCount = activeRow.items[activeRow.items.length - 1];
 
 				if (activeCell.checked) {
-					let previousCell = null;
-
-					if (activeCellIndex - 1) {
-						previousCell = this.cells[activeCellIndex - 1];
-					}
-
-					if (!previousCell
-						|| (previousCell.checked && (previousCell.color === activeCell.color))) {
-						lastItemCount.color = activeCell.color;
+					let previousCell = activeCellIndex - 1 >= 0 ? this.cells[activeCellIndex - 1] : null;
+					
+					if (!previousCell ||
+						previousCell && (previousCell.checked && (previousCell.color === activeCell.color))) {
+						// lastItemCount.color = activeCell.color;
 						lastItemCount.number += 1;
 					} else if (lastItemCount.number) {
 						activeRow.items.push({
@@ -281,7 +306,7 @@ class GridModule extends VuexModule {
 							color: activeCell.color,
 						} as count);
 					} else {
-						if (lastItemCount.color === null) {
+						if (lastItemCount.number === 0) {
 							lastItemCount.color = activeCell.color;
 						}
 						lastItemCount.number += 1;
@@ -323,7 +348,7 @@ class GridModule extends VuexModule {
 					if ((activeCellIndex - this.settings.grid.width) >= 0) {
 						previousCellIndex = activeCellIndex - this.settings.grid.width;
 						previousCell = this.cells[activeCellIndex - this.settings.grid.width];
-					} else if ((activeCellIndex - 1 + (this.cellsCount - 1)) >= 0) {
+					} else if ((activeCellIndex - 1 + (this.settings.grid.width * this.settings.grid.height - 1)) >= 0) {
 						previousCellIndex = activeCellIndex - 1;
 						previousCellIndex += (this.settings.grid.width * this.settings.grid.height - 1);
 						previousCell = this.cells[previousCellIndex];
@@ -336,7 +361,7 @@ class GridModule extends VuexModule {
 					} else if (previousItemCount.number) {
 						activeColumn.items.push({
 							number: 1,
-							color: previousItemCount.color,
+							color: activeCell.color,
 						} as count);
 					} else {
 						if (previousItemCount.color === null) {
@@ -411,6 +436,7 @@ class GridModule extends VuexModule {
 
 		this.cellsColors.push(primaryColor);
 		this.selectColor(this.cellsColors[0]);
+		this.saveGridInLocalStorage();
 	}
 
 	@Mutation
@@ -432,22 +458,26 @@ class GridModule extends VuexModule {
 			this.cellsColors.push(newColor2);
 			this.selectColor(newColor2);
 		}
+		this.saveGridInLocalStorage();
 	}
 
-	@Mutation
+	@Action
 	updateColor({ newColor, colorIndex }: { newColor: color; colorIndex: number }): void {
 		this.cellsColors[colorIndex].r = newColor.r;
 		this.cellsColors[colorIndex].g = newColor.g;
 		this.cellsColors[colorIndex].b = newColor.b;
+
+		this.saveGridInLocalStorage();
 	}
 
 	/* eslint class-methods-use-this: ["error", { "exceptMethods": ["updateBasicColor"] }] */
-	@Mutation
+	@Action
 	updateBasicColor({ newColor, colorObj }: { newColor: color; colorObj: color }): void {
 		/* eslint no-param-reassign: "error" */
 		colorObj.r = newColor.r;
 		colorObj.g = newColor.g;
 		colorObj.b = newColor.b;
+		this.saveGridInLocalStorage();
 	}
 
 	@Action
@@ -456,6 +486,8 @@ class GridModule extends VuexModule {
 			// TODO: checker si d'autre couleur avec cette couleur sont présente
 			this.cellsColors.splice(index, 1);
 			this.selectColor(this.cellsColors[this.cellsColors.length - 1]);
+			this.saveGridInLocalStorage();
+			this.saveGridInLocalStorage();
 		}
 	}
 }

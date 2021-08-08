@@ -94,9 +94,9 @@ export default class GridsContainer extends Vue {
 
 	mounted(): void {
 		this.gridModule.updateCounts();
+		this.gridBorderWidth = this.gridModule.settings.grid.border.width;
 		this.$bus.$on('EXPORT_GAME', this.exportGame);
 		this.$bus.$on('EXPORT_SOLUTION', this.exportSolution);
-		this.gridBorderWidth = this.gridModule.settings.grid.border.width;
 	}
 
 	exportGame(): void {
@@ -104,9 +104,6 @@ export default class GridsContainer extends Vue {
 		this.cellsAreVisible = false;
 		const node = this.$refs.grid as HTMLElement;
 		htmlToImage.toPng(node, {
-			// cacheBust: true,
-			// width: 1000,
-			// canvasWidth: 2000,
 			pixelRatio: 3,
 		})
 			.then((dataUrl) => {
@@ -174,19 +171,7 @@ export default class GridsContainer extends Vue {
 			grid-template-columns: var(--grid-template-columns);
 		}
 
-		.cells-row{
-			// display: flex;
-			// flex-direction: row;
-			// justify-content: flex-start;
-			// margin-left: var(--grid-border-width);
-		}
-		.cells-row:last-child{
-			// margin-bottom: var(--grid-border-width);
-		}
-
 		.cell{
-			// margin-left: calc(0px - var(--grid-border-width));
-			// margin-bottom: calc(0px - var(--grid-border-width));
 			width: 30px; height: 30px;
 			border: var(--grid-border-width) solid rgba(121, 121, 121, 0);
 			box-sizing: border-box;
