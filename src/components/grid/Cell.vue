@@ -4,7 +4,7 @@
         :id="`cell-${index-1}`"
         :class="{'checked': cells[index-1].checked}"
         :style="cellCss"
-        @mouseover="gridModule.toggleCell(index-1)"
+        @mouseover="toggleIfPossible(index)"
         @mousedown="mouseDownCell(index-1)"
         @mouseup="mouseUpCell()">
     </div>
@@ -15,6 +15,7 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
 import { cell } from '@/store/modules/grid-types';
+import grid from '@/store/modules/grid';
 
 const CellProps = Vue.extend({
 	props: {
@@ -45,6 +46,12 @@ export default class Cell extends CellProps {
 	public mouseDownCell(cellIndex: number): void{
 		this.gridModule.toggleCellsInteractionClicked();
 		this.gridModule.toggleCell(cellIndex);
+	}
+
+	public toggleIfPossible(index: number){
+		if(this.gridModule.cellsInteraction.clicked){
+			gridModule.toggleCell(index-1);
+		}
 	}
 
 	public mouseUpCell(): void{
