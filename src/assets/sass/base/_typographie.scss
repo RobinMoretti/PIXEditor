@@ -24,8 +24,8 @@ h1{
 }
 
 @font-face {
-      font-family: 'dokdo';
-      src: url('~@/assets/fonts/Dokdo/Dokdo-Regular.ttf') format('truetype');
+      font-family: 'major-mono-display';
+      src: url('~@/assets/fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf') format('truetype');
       font-weight: bolder;
       font-style: italic;
 }
@@ -38,4 +38,24 @@ h1{
 @font-face {
       font-family: 'brygada';
       src: url('~@/assets/fonts/Brygada_1918/Brygada1918-VariableFont_wght.ttf') format('truetype');
+}
+
+
+.count-font-0{
+      font-family: 'rubik';
+      font-weight: 600 !important;
+      color: rgb(33, 33, 33) !important;
+}
+
+.count-font-1{
+      font-family: 'marker';
+      color: rgb(33, 33, 33) !important;
+}
+.count-font-2{
+      font-family: 'brygada';
+      color: rgb(33, 33, 33) !important;
+}
+.count-font-3{
+      font-family: 'major-mono-display';
+      color: rgb(33, 33, 33) !important;
 }

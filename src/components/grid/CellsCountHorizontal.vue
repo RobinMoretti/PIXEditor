@@ -9,7 +9,7 @@
 				class="cells-count-row-item"
 				v-for="(count, countKey) in row.items"
 				:key="'cells-horizontal-count-' + countKey"
-				:style="getCssCount(count)">
+				:class="getClassCount(count)">
 				{{ count.number }}
 			</div>
 		</div>
@@ -19,7 +19,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
-import { color, count, row } from '@/store/modules/grid-types';
+import { color, count, row, stringIndexedArray } from '@/store/modules/grid-types';
 
 @Component
 export default class cellsCountHorizontal extends Vue {
@@ -33,16 +33,38 @@ export default class cellsCountHorizontal extends Vue {
 		return this.gridModule.backgroudColor;
 	}
 
-	getCssCount(countItem: count): Record<string, string> {
-		if (countItem.color) {
-			return {
-				color: `rgb(${countItem.color.r}, ${countItem.color.g}, ${countItem.color.b})`,
-			};
-		}
+	// getCssCount(countItem: count): Record<string, string> {
+	// 	if (countItem.color) {
+	// 		return {
+	// 			color: `rgb(${countItem.color.r}, ${countItem.color.g}, ${countItem.color.b})`,
+	// 		};
+	// 	}
 
-		return {
-			color: `rgb(${this.borderColor.r}, ${this.borderColor.g}, ${this.borderColor.b})`,
-		};
+	// 	return {
+	// 		color: `rgb(${this.borderColor.r}, ${this.borderColor.g}, ${this.borderColor.b})`,
+	// 	};
+	// }
+	getClassCount(countItem: count): Record<string, string> {
+		let className = `count-font-0`;
+
+		if(countItem.color){
+			className = `count-font-${this.getColorIndex(countItem.color)}`
+		}
+		let classObj: stringIndexedArray = {};
+		classObj[className] = true;
+
+		return classObj;
+	}
+
+	getColorIndex(cellColor: color): number{
+		for (let i = 0; i < this.gridModule.cellsColors.length; i++) {
+			const color = this.gridModule.cellsColors[i];
+			if(color === cellColor){
+				return i;
+			}
+		}
+		
+		return 0;
 	}
 }
 </script>

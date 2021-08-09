@@ -56,7 +56,6 @@ export default class BottomMenu extends Vue {
     gridTitle = this.gridModule.settings.grid.title;
 
     mounted(): void{ 
-        console.log(json);
         if(localStorage.getItem('grid')){
             this.gridModule.loadGridFromLocalStorage();
         }

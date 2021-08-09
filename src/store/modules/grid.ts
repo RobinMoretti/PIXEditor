@@ -458,19 +458,21 @@ class GridModule extends VuexModule {
 
 	@Action
 	addColor(newColor?: color): void {
-		if (newColor) {
-			this.cellsColors.push(newColor);
-		} else {
-			const newColor2: color = {
-				r: Math.round(Math.random() * 255),
-				g: Math.round(Math.random() * 255),
-				b: Math.round(Math.random() * 255),
-			};
-
-			this.cellsColors.push(newColor2);
-			this.selectColor(newColor2);
+		if(this.cellsColors.length < 5){
+			if (newColor) {
+				this.cellsColors.push(newColor);
+			} else {
+				const newColor2: color = {
+					r: Math.round(Math.random() * 255),
+					g: Math.round(Math.random() * 255),
+					b: Math.round(Math.random() * 255),
+				};
+	
+				this.cellsColors.push(newColor2);
+				this.selectColor(newColor2);
+			}
+			this.saveGridInLocalStorage();
 		}
-		this.saveGridInLocalStorage();
 	}
 
 	@Action

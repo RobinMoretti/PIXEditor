@@ -1,10 +1,15 @@
 <template>
-	<div class="color-container">
+	<div 
+		class="color-container"
+		:class="{ selected: isSelected }"
+		@click="clickedButton">
+		<div class="color-index" :class="getCountFontCss" >
+			{{ colorIndex + 1 }}
+		</div>
+
 		<div 
 			class="color-button"
-			:class="{ selected: isSelected }"
 			for="color-input" 
-			@click="clickedButton"
 			:style="getCssColor">
 			<div 
 				class="delete-buton"
@@ -25,7 +30,7 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
 import { hexToRgbA, rgbToHex } from '@/helper/color';
-import { color } from '@/store/modules/grid-types';
+import { color, stringIndexedArray } from '@/store/modules/grid-types';
 
 const ColorProps = Vue.extend({
 	props: {
@@ -106,6 +111,16 @@ export default class Color extends ColorProps {
 
 		return cssColor;
 	}
+	get getCountFontCss(): object {
+		// linked with css font
+		let className = `count-font-${this.colorIndex}`;
+
+		let countFont: stringIndexedArray = {};
+		countFont[className] = true;
+
+		return countFont;
+	}
+	
 
 	updateInputColorValue(): void{
 		this.$refs.colorPicker.value = rgbToHex(this.color);
@@ -117,6 +132,10 @@ export default class Color extends ColorProps {
 <style scoped lang="scss">
 
 	.color-container{
+		padding: 0;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 10px;
 	}
 
 	.color-input{
@@ -124,13 +143,23 @@ export default class Color extends ColorProps {
 		right: 2000vw;
 	}
 
+	.color-index{
+		border: 2px solid rgba(33, 33, 33, 0.137);
+		border-right: 0px solid rgba(33, 33, 33, 0) !important;
+		font-size: 25px;
+		width: 35px; height: 35px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
 	.color-button{
 		display: inline-block;
 		width: 35px; height: 35px;
-		border-radius: 100%;
+		// border-radius: 100%;
 		cursor: pointer;
-		margin-top: 10px;
-		border: 2px solid rgba(12, 12, 12, 0.137);
+		// margin-top: 10px;
+		border: 2px solid rgba(33, 33, 33, 0.137);
 		position: relative;
 		
 		.delete-buton{
@@ -140,35 +169,42 @@ export default class Color extends ColorProps {
 			font-weight: 700;
 			font-size: 15px;
 			position: absolute;
-			left: -5px; top: -5px;
+			right: -5px; top: -5px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 		}
 	}
-
-	.color-button:hover{
-		display: inline-block;
-		width: 35px; height: 35px;
-		border-radius: 100%;
+	.color-container:hover{
+		.color-index{
+  			animation: 1s infinite blink_slowly;
+		}
+		.color-button{
+  			animation: 1s infinite blink_slowly;
+		}
 		cursor: pointer;
-  		animation: 1s infinite blink_slowly;
 	}
 
 	.selected{
-		border: 2px solid rgb(12, 12, 12, 1);
+		.color-index{
+			border: 2px solid rgb(33, 33, 33, 1);
+			border-right: 0px solid rgb(33, 33, 33, 1);
+		}
+		.color-button{
+			border: 2px solid rgb(33, 33, 33, 1);
+		}
 	}
 
 
 	@keyframes blink_slowly { 
 		0% { 
-			border: 2px solid rgba(12, 12, 12, 1);
+			border: 2px solid rgba(33, 33, 33, 1);
 		} 
 		50% { 				
-			border: 2px solid rgb(12, 12, 12, 0.5);
+			border: 2px solid rgb(33, 33, 33, 0.5);
 		}  
 		100% { 
-			border: 2px solid rgb(12, 12, 12, 1);
+			border: 2px solid rgb(33, 33, 33, 1);
 		} 
 	}
 

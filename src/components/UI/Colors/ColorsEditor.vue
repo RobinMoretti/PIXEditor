@@ -17,7 +17,8 @@
 
 		<div
 			class="button"
-			@click="addNewColor">+</div>
+			@click="addNewColor"
+			v-if="cellsColor.length < 4">+</div>
 	</div>
 </template>
 
@@ -60,6 +61,10 @@ export default class ColorsEditor extends Vue {
 		position: fixed;
 		right: 15px;
 		top: 15px;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-end;
+		flex-direction: column;
 	}
 
 	.button{
@@ -72,5 +77,6 @@ export default class ColorsEditor extends Vue {
 	.gid-colors-container{
 		padding: 5px;
 		border: 2px solid rgba(12, 12, 12);
+		width: 50px;
 	}
 </style>
