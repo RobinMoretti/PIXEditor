@@ -1,7 +1,7 @@
 <template>
 	<div 
 		class="color-container"
-		:class="{ selected: isSelected }"
+		:class="{ selected: isSelected, 'for-print': forPrint }"
 		@click="clickedButton">
 		<div class="color-index" :class="getCountFontCss" >
 			{{ colorIndex + 1 }}
@@ -13,7 +13,7 @@
 			:style="getCssColor">
 			<div 
 				class="delete-buton"
-				v-if="isSelected && canDelete"
+				v-if="isSelected && canDelete && !forPrint"
 				@click="deleteColor($event)">-</div>	
 		</div>
 		<input 
@@ -35,7 +35,8 @@ import { color, stringIndexedArray } from '@/store/modules/grid-types';
 const ColorProps = Vue.extend({
 	props: {
 		color: Object,
-		colorIndex: Number
+		colorIndex: Number,
+		forPrint: Boolean,
 	}
 })
 
@@ -135,7 +136,7 @@ export default class Color extends ColorProps {
 		padding: 0;
 		display: flex;
 		justify-content: space-between;
-		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 
 	.color-input{
@@ -192,6 +193,16 @@ export default class Color extends ColorProps {
 		}
 		.color-button{
 			border: 2px solid rgb(33, 33, 33, 1);
+		}
+	}
+
+	.for-print{
+		.color-index{
+			border: 2px solid rgb(33, 33, 33, 1) !important;
+			border-right: 0px solid rgb(33, 33, 33, 1) !important;
+		}
+		.color-button{
+			border: 2px solid rgb(33, 33, 33, 1) !important;
 		}
 	}
 

@@ -20,6 +20,16 @@
 				</div>
 			</div>
 		</div>
+		<div class="colors-container-export" v-if="!cellsAreVisible && !UIIsVisible">
+			<div class="colors-true-container">
+				<color-component
+					v-for="(color, key) in cellsColor"
+					:key="`color-${key}`"
+					:color="color"
+					:color-index="key"
+					for-print></color-component>	
+			</div>
+		</div>
 
 		<colors-editor v-if="UIIsVisible"/>
 
@@ -46,9 +56,10 @@ import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue';
 import cellsCountVertical from '@/components/grid/CellsCountVertical.vue';
 import backgroundGrid from '@/components/grid/BackgroundGrid.vue';
 import ColorsEditor from '@/components/UI/Colors/ColorsEditor.vue';
+import colorComponent from '@/components/UI/Colors/ColorPicker.vue';
 import BottomMenu from '@/components/UI/BottomMenu.vue';
 import Cell from '@/components/grid/Cell.vue';
-import { cell, gridSetting } from '@/store/modules/grid-types';
+import { cell, color, gridSetting } from '@/store/modules/grid-types';
 
 @Component({
 	components: {
@@ -58,6 +69,7 @@ import { cell, gridSetting } from '@/store/modules/grid-types';
 		ColorsEditor,
 		Cell,
 		BottomMenu,
+		colorComponent,
 	},
 })
 export default class GridsContainer extends Vue {
@@ -90,6 +102,10 @@ export default class GridsContainer extends Vue {
 
 	get cells(): Array<cell> {
 		return this.gridModule.cells;
+	}
+
+	get cellsColor(): Array<color> {
+		return this.gridModule.cellsColors;
 	}
 
 	mounted(): void {
@@ -217,6 +233,14 @@ export default class GridsContainer extends Vue {
 				border: solid rgba(10, 10, 10, 0.424) 2px;
 			}
 		}
+
+		.colors-container-export{
+			position: relative;
+			.colors-true-container{
+				position: absolute;
+				bottom: 10px; top: 0px;
+			}
+		}
 	}
 
 	.inexistant{
@@ -226,8 +250,10 @@ export default class GridsContainer extends Vue {
 		left: -100000px;
 		right: -100000px;
 	}
+
 	.hidden{
 		visibility: hidden;
 		opacity: 0;
 	}
+
 </style>

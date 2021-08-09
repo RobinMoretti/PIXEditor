@@ -76,6 +76,7 @@ export default class ColorsEditor extends Vue {
 
 	.gid-colors-container{
 		padding: 5px;
+		margin-bottom: 10px;
 		border: 2px solid rgba(12, 12, 12);
 		width: 50px;
 	}
