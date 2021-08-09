@@ -1,14 +1,14 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "03b030da637d870bb197",
-    "url": "css/app.6104b34f.css"
+    "revision": "4558a12cd51466f888a3",
+    "url": "css/app.0be25cd5.css"
   },
   {
     "revision": "c8041f987a7c34d176ad7014374a29cf",
     "url": "fonts/Rubik-VariableFont_wght.c8041f98.ttf"
   },
   {
-    "revision": "95ebe2a368263428ae9600ab0dac707e",
+    "revision": "b20b5fd17336915f0b8400f69ae44035",
     "url": "index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "js/about.f1e230e7.js"
   },
   {
-    "revision": "03b030da637d870bb197",
-    "url": "js/app.0a2ad6ab.js"
+    "revision": "4558a12cd51466f888a3",
+    "url": "js/app.6c32b991.js"
   },
   {
     "revision": "7f50004ed8de6a4c6d28",

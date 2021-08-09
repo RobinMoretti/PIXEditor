@@ -22,3 +22,20 @@ h1{
       font-weight: bolder;
       font-style: italic;
 }
+
+@font-face {
+      font-family: 'dokdo';
+      src: url('~@/assets/fonts/Dokdo/Dokdo-Regular.ttf') format('truetype');
+      font-weight: bolder;
+      font-style: italic;
+}
+
+@font-face {
+      font-family: 'marker';
+      src: url('~@/assets/fonts/Permanent_Marker/PermanentMarker-Regular.ttf') format('truetype');
+}
+
+@font-face {
+      font-family: 'brygada';
+      src: url('~@/assets/fonts/Brygada_1918/Brygada1918-VariableFont_wght.ttf') format('truetype');
+}
