@@ -43,6 +43,16 @@
 				@change="updateBorderWidth">
 		</div>
 
+		<div class="system-settings" v-if="UIIsVisible">
+			<input
+				type="range"
+				min="0.6"
+				max="2"
+				step="0.01"
+				v-model="systemZoom">
+				{{systemZoom}}
+		</div>
+
 		<bottom-menu v-if="UIIsVisible"/>
 
 	</div>
@@ -52,6 +62,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import * as htmlToImage from 'html-to-image';
 import gridModule from '@/store/modules/grid';
+import systemModule from '@/store/modules/system';
 import cellsCountHorizontal from '@/components/grid/CellsCountHorizontal.vue';
 import cellsCountVertical from '@/components/grid/CellsCountVertical.vue';
 import backgroundGrid from '@/components/grid/BackgroundGrid.vue';
@@ -74,13 +85,12 @@ import { cell, color, gridSetting } from '@/store/modules/grid-types';
 })
 export default class GridsContainer extends Vue {
 	gridModule = gridModule;
+	systemModule = systemModule;
 
+	systemZoom = 0;
     gridBorderWidth = 10;
-
 	UIIsVisible = true;
-
 	cellsAreVisible = true;
-
 	countsAreVisible = true;
 
 	$refs!: {
@@ -111,6 +121,8 @@ export default class GridsContainer extends Vue {
 	mounted(): void {
 		this.gridModule.updateCounts();
 		this.gridBorderWidth = this.gridModule.settings.grid.border.width;
+		this.systemZoom = this.systemModule.zoom;
+
 		this.$bus.$on('EXPORT_GAME', this.exportGame);
 		this.$bus.$on('EXPORT_SOLUTION', this.exportSolution);
 	}
@@ -164,6 +176,11 @@ export default class GridsContainer extends Vue {
 	updateBorderWidth(): void{
 		this.gridModule.updateBorderWidth(this.gridBorderWidth);
 	}
+	
+	@Watch('systemZoom')
+	updateSystemZoom(): void{
+		this.systemModule.updateZoom(this.systemZoom);
+	}
 }
 </script>
 
@@ -188,7 +205,7 @@ export default class GridsContainer extends Vue {
 		}
 
 		.cell{
-			width: 30px; height: 30px;
+			width: calc(30px * var(--system-zoom)); height: calc(30px * var(--system-zoom));
 			border: var(--grid-border-width) solid rgba(121, 121, 121, 0);
 			box-sizing: border-box;
 		}
@@ -228,6 +245,16 @@ export default class GridsContainer extends Vue {
 			position: absolute;
 			top: 14px;
 			right: 75px;
+
+			input{
+				border: solid rgba(10, 10, 10, 0.424) 2px;
+			}
+		}
+
+		.system-settings{
+			position: absolute;
+			top: 14px;
+			left: 14px;
 
 			input{
 				border: solid rgba(10, 10, 10, 0.424) 2px;

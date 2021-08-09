@@ -76,7 +76,7 @@ export default class cellsCountHorizontal extends Vue {
 
 		.cells-count-row{
 			box-sizing: border-box;
-			height: 30px;
+			height: calc(30px * var(--system-zoom));
 			width: 100%;
 			border-bottom: solid var(--grid-border-width) rgba(0, 0, 0, 0);
 			border-top: solid var(--grid-border-width) rgba(0, 0, 0, 0);
@@ -89,8 +89,8 @@ export default class cellsCountHorizontal extends Vue {
 			padding: 2px;
 
 			.cells-count-row-item{
-				width: 30px;
-				font-size: 25px;
+				width: calc(30px * var(--system-zoom));
+				font-size: calc(25px * var(--system-zoom));
 				font-weight: 600;
 			}
 		}

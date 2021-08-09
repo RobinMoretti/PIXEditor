@@ -76,6 +76,8 @@ export default class App extends Vue {
 			'--grid-border-color': this.backgroundColor,
 			'--grid-background-color': this.borderColor,
 			'--grid-count-font-weigth': String(map(0, 13, 400, 1000, this.gridModule.settings.grid.border.width)),
+			'--system-zoom': this.systemModule.zoom,
+			
 		};
 	}
 }

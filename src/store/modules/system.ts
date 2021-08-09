@@ -11,6 +11,7 @@ import gridModule from './grid';
 @Module
 class SystemModule extends VuexModule {
 	gridModule = gridModule;
+	zoom = 1;
 
 	mouse = {
 		clicked: false,
@@ -33,6 +34,11 @@ class SystemModule extends VuexModule {
 	@Mutation
 	disableOtherClick():void{
 		this.gridModule.toggleCellsInteractionClicked(false);
+	}
+
+	@Mutation
+	updateZoom(value: number):void{
+		this.zoom = value;
 	}
 }
 
