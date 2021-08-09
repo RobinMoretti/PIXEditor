@@ -31,6 +31,12 @@
             <input type="file" id="input" ref="fileInput" class="file-input" @change="uploadJsonFile($event)">
             <p @click="clickInputData" class="button export-button">DATA</p>
         </div>
+        <div class="grid-container">
+            <p  class="grid-title">GRID:</p>
+            <p @click="displayClearButton" class="button export-button" v-if="!clearButtonIsVisible">CLEAR</p>
+            <p @click="clearDatas" class="button export-button" v-else>REALLY ?</p>
+        </div>
+
 	</div>
 </template>
 
@@ -127,8 +133,22 @@ export default class BottomMenu extends Vue {
         }
     }
 
-    importData(data: object){
-        let response = this.gridModule.importDatas(data);
+    importData(data: object):void {
+        this.gridModule.importDatas(data);
+    }
+
+    clearButtonIsVisible = false;
+
+    displayClearButton(): void{
+        this.clearButtonIsVisible = true;
+        setTimeout(() => {
+            this.clearButtonIsVisible = false;
+        }, 3000);
+    }
+
+    clearDatas(): void{
+        this.gridModule.clear();
+        location.reload(); 
     }
 
 }
@@ -165,7 +185,7 @@ export default class BottomMenu extends Vue {
         margin-right: 15px;
     }
     
-    .export-container, .import-container{
+    .export-container, .import-container, .grid-container{
         display: flex;
         justify-content: flex-start;
         align-items: baseline;

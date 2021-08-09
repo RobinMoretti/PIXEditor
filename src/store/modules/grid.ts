@@ -26,6 +26,11 @@ class GridModule extends VuexModule {
 	firstInit(){
 		this.firstInitied = true;
 	}
+	
+	@Action
+	clear(){
+		localStorage.clear();
+	}
 
 	importExportDatas: Array<string> = [
 		'settings',
