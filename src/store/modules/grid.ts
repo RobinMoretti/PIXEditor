@@ -31,6 +31,12 @@ class GridModule extends VuexModule {
 	clear(){
 		localStorage.clear();
 	}
+	@Action
+	empty(){
+		this.clearCells();
+		this.updateCounts();
+		this.saveGridInLocalStorage();
+	}
 
 	importExportDatas: Array<string> = [
 		'settings',
@@ -222,6 +228,14 @@ class GridModule extends VuexModule {
 	@Mutation
 	resetCells():void {
 		this.cells = [];
+	}
+
+	@Mutation
+	clearCells():void {
+		this.cells.forEach(cell => {
+			cell.checked = false;
+			cell.color = null;
+		});
 	}
 
 	@Mutation

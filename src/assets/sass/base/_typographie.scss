@@ -24,15 +24,13 @@ h1{
 }
 
 @font-face {
-      font-family: 'major-mono-display';
-      src: url('~@/assets/fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf') format('truetype');
-      font-weight: bolder;
-      font-style: italic;
+      font-family: 'heebo';
+      src: url('~@/assets/fonts/Heebo/Heebo-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
-      font-family: 'marker';
-      src: url('~@/assets/fonts/Permanent_Marker/PermanentMarker-Regular.ttf') format('truetype');
+      font-family: 'dokdo';
+      src: url('~@/assets/fonts/Dokdo/Dokdo-Regular.ttf') format('truetype');
 }
 
 @font-face {
@@ -43,19 +41,21 @@ h1{
 
 .count-font-0{
       font-family: 'rubik';
-      font-weight: 600 !important;
+      font-weight: 900 !important;
       color: rgb(33, 33, 33) !important;
 }
 
 .count-font-1{
-      font-family: 'marker';
-      color: rgb(33, 33, 33) !important;
-}
-.count-font-2{
       font-family: 'brygada';
       color: rgb(33, 33, 33) !important;
 }
-.count-font-3{
-      font-family: 'major-mono-display';
+.count-font-2{
+      font-family: 'dokdo';
       color: rgb(33, 33, 33) !important;
+      font-size: 37px !important;
+}
+.count-font-3{
+      font-family: 'heebo';
+      color: rgb(33, 33, 33) !important;
+      font-weight: 100 !important;
 }

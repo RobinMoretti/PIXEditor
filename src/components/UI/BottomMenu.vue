@@ -33,6 +33,10 @@
         </div>
         <div class="grid-container">
             <p  class="grid-title">GRID:</p>
+
+            <p @click="displayEmptyButton" class="button export-button" v-if="!emptyButtonIsVisible">EMPTY</p>
+            <p @click="emptyGrid" class="button export-button" v-else>REALLY ?</p>
+
             <p @click="displayClearButton" class="button export-button" v-if="!clearButtonIsVisible">CLEAR</p>
             <p @click="clearDatas" class="button export-button" v-else>REALLY ?</p>
         </div>
@@ -148,6 +152,19 @@ export default class BottomMenu extends Vue {
     clearDatas(): void{
         this.gridModule.clear();
         location.reload(); 
+    }
+
+    emptyButtonIsVisible = false;
+
+    displayEmptyButton(): void{
+        this.emptyButtonIsVisible = true;
+        setTimeout(() => {
+            this.emptyButtonIsVisible = false;
+        }, 3000);
+    }
+
+    emptyGrid(): void{
+        this.gridModule.empty();
     }
 
 }

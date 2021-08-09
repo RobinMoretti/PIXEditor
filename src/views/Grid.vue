@@ -50,7 +50,9 @@
 				max="2"
 				step="0.01"
 				v-model="systemZoom">
-				{{systemZoom}}
+			<label>
+				zoom
+			</label>
 		</div>
 
 		<bottom-menu v-if="UIIsVisible"/>
@@ -257,9 +259,17 @@ export default class GridsContainer extends Vue {
 			position: absolute;
 			top: 14px;
 			left: 14px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 
 			input{
 				border: solid rgba(10, 10, 10, 0.424) 2px;
+			}
+			label{
+				margin-left: 10px;
+				text-transform: uppercase;
+				font-size: 12px;
 			}
 		}
 
