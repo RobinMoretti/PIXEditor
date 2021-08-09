@@ -1,14 +1,26 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4558a12cd51466f888a3",
-    "url": "css/app.0be25cd5.css"
+    "revision": "e5d56a47fbac70859e60",
+    "url": "css/app.9a575825.css"
+  },
+  {
+    "revision": "d6178eda82f78ffad49d8e88dc74fbde",
+    "url": "fonts/Brygada1918-VariableFont_wght.d6178eda.ttf"
+  },
+  {
+    "revision": "ddc1c416815910393d4e739f35741728",
+    "url": "fonts/Dokdo-Regular.ddc1c416.ttf"
+  },
+  {
+    "revision": "478a2e1d643459a5e0500265f80f8ffe",
+    "url": "fonts/Heebo-VariableFont_wght.478a2e1d.ttf"
   },
   {
     "revision": "c8041f987a7c34d176ad7014374a29cf",
     "url": "fonts/Rubik-VariableFont_wght.c8041f98.ttf"
   },
   {
-    "revision": "b20b5fd17336915f0b8400f69ae44035",
+    "revision": "4c931c0a256342fc7f132e43d18750ac",
     "url": "index.html"
   },
   {
@@ -16,8 +28,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "js/about.f1e230e7.js"
   },
   {
-    "revision": "4558a12cd51466f888a3",
-    "url": "js/app.6c32b991.js"
+    "revision": "e5d56a47fbac70859e60",
+    "url": "js/app.e179c39b.js"
   },
   {
     "revision": "7f50004ed8de6a4c6d28",
