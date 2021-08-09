@@ -46,7 +46,7 @@
 		<div class="system-settings" v-if="UIIsVisible">
 			<input
 				type="range"
-				min="0.6"
+				min="0"
 				max="2"
 				step="0.01"
 				v-model="systemZoom">
@@ -196,6 +196,8 @@ export default class GridsContainer extends Vue {
 			display: flex;
 			flex-direction: row;
 			justify-content: flex-start;
+			transform: scale(var(--system-zoom));
+			transform-origin: 50% 50% 0px;
 		}
 
 		.cells-container{
@@ -205,7 +207,7 @@ export default class GridsContainer extends Vue {
 		}
 
 		.cell{
-			width: calc(30px * var(--system-zoom)); height: calc(30px * var(--system-zoom));
+			width: 30px; height: 30px;
 			border: var(--grid-border-width) solid rgba(121, 121, 121, 0);
 			box-sizing: border-box;
 		}

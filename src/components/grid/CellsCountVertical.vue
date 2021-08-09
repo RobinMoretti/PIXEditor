@@ -69,18 +69,18 @@ export default class cellsCountVertical extends Vue {
 
 		.cells-count-column{
 			box-sizing: border-box;
-			width: calc(30px * var(--system-zoom));
+			width: 30px;
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
 			align-items: stretch;
 
 			.cells-count-column-item{
-				height: calc(30px * var(--system-zoom));
+				height: 30px;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				font-size:  calc(25px * var(--system-zoom));
+				font-size:  25px;
 				font-weight: 600;
 			}
 		}
