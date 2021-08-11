@@ -1,5 +1,5 @@
 <template>
-	<div class="grids-container" ref="grid" >
+	<div class="grids-container" ref="grid" :class="{print: !(!cellsAreVisible && !UIIsVisible)}">
 		<!-- <p v-html="horizontalCellsCount"></p> -->
 		<div class="grid" v-if="cells.length">
 			<div class="horizontal-container">
@@ -20,8 +20,7 @@
 				</div>
 			</div>
 
-			<div class="colors-container-export">
-				<!-- v-if="!cellsAreVisible && !UIIsVisible" -->
+			<div class="colors-container-export" v-if="!cellsAreVisible && !UIIsVisible">
 				<div class="colors-true-container">
 					<color-component
 						v-for="(color, key) in cellsColor"
@@ -135,6 +134,7 @@ export default class GridsContainer extends Vue {
 		this.UIIsVisible = false;
 		this.cellsAreVisible = false;
 		const node = this.$refs.grid as HTMLElement;
+
 		htmlToImage.toPng(node, {
 			pixelRatio: 3,
 		})
