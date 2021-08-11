@@ -19,15 +19,17 @@
 						:index="index"/>
 				</div>
 			</div>
-		</div>
-		<div class="colors-container-export" v-if="!cellsAreVisible && !UIIsVisible">
-			<div class="colors-true-container">
-				<color-component
-					v-for="(color, key) in cellsColor"
-					:key="`color-${key}`"
-					:color="color"
-					:color-index="key"
-					for-print></color-component>	
+
+			<div class="colors-container-export">
+				<!-- v-if="!cellsAreVisible && !UIIsVisible" -->
+				<div class="colors-true-container">
+					<color-component
+						v-for="(color, key) in cellsColor"
+						:key="`color-${key}`"
+						:color="color"
+						:color-index="key"
+						for-print></color-component>	
+				</div>
 			</div>
 		</div>
 
@@ -275,6 +277,7 @@ export default class GridsContainer extends Vue {
 
 		.colors-container-export{
 			position: relative;
+			margin-left: 10px;
 			.colors-true-container{
 				position: absolute;
 				bottom: 10px; top: 0px;
