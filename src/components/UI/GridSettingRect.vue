@@ -74,6 +74,7 @@ export default class GridsContainer extends Vue {
     background-color: white;
     padding: 5px;
     border-radius: 100%;
+    border: solid 3px rgba(0, 0, 0, 0.13);
 
     .abstract-grid-container{
         width: 20px; height: 20px;
