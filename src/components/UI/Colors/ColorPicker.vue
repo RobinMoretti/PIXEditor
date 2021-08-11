@@ -1,27 +1,38 @@
 <template>
-	<div 
-		class="color-container"
-		:class="{ selected: isSelected, 'for-print': forPrint }"
-		@click="clickedButton">
-		<div class="color-index" :class="getCountFontCss" >
-			{{ colorIndex + 1 }}
+	<div class="color-wrapper">
+		<div 
+			class="color-container"
+			:class="{ selected: isSelected, 'for-print': forPrint }"
+			@click="clickedButton">
+			<div class="color-index" :class="getCountFontCss" >
+				{{ colorIndex + 1 }}
+			</div>
+
+			<div 
+				class="color-button"
+				for="color-input" 
+				:style="getCssColor">
+				<div 
+					class="delete-buton"
+					v-if="isSelected && canDelete && !forPrint"
+					@click="deleteColor($event)">-</div>	
+
+
+			</div>
+			<input 
+				type="color" 
+				name="color-input" 
+				ref="colorPicker" 
+				class="color-input"
+				@change="updateEditorColor($event)">
 		</div>
 
-		<div 
-			class="color-button"
-			for="color-input" 
-			:style="getCssColor">
-			<div 
-				class="delete-buton"
-				v-if="isSelected && canDelete && !forPrint"
-				@click="deleteColor($event)">-</div>	
-		</div>
-		<input 
-			type="color" 
-			name="color-input" 
-			ref="colorPicker" 
-			class="color-input"
-			@change="updateEditorColor($event)">
+		<!-- <div 
+			class="download-buton"
+			v-if="isSelected && !forPrint"
+			@click="clickInputFile($event)">↧</div>	
+
+		<input type="file" id="input" ref="fileInput" class="file-input" @change="uploadImageFile($event)"> -->
 	</div>
 </template>
 
@@ -31,6 +42,7 @@ import { Component } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
 import { hexToRgbA, rgbToHex } from '@/helper/color';
 import { color, stringIndexedArray } from '@/store/modules/grid-types';
+import { downloadJsonFile } from '@/helper/exports';
 
 const ColorProps = Vue.extend({
 	props: {
@@ -45,7 +57,8 @@ export default class Color extends ColorProps {
 	gridModule = gridModule;
 
 	$refs!: {
-		colorPicker: HTMLInputElement
+		colorPicker: HTMLInputElement,
+		fileInput: HTMLInputElement,
 	}
 
 	mounted():void{
@@ -127,6 +140,32 @@ export default class Color extends ColorProps {
 		this.$refs.colorPicker.value = rgbToHex(this.color);
 	}
 
+    uploadImageFile(event: Event){
+		console.log("upload Imgage file")
+		console.log(event)
+
+        let files = (<HTMLInputElement>event.target).files;
+        if(files && files[0]){
+            let file = files[0];
+			// var reader = new FileReader();
+			// reader.addEventListener('load', event: Event => {
+			// 	console.log(event.target.result);
+			// });
+			// reader.readAsText(file);
+			console.log(files);
+        }	
+    }
+
+    clickInputFile(event: Event): void{
+		event.preventDefault();
+		event.stopPropagation();
+		
+        if(this.$refs.fileInput){
+            let htmlFileElem = <HTMLInputElement>this.$refs.fileInput;
+            htmlFileElem.click();
+        }
+    }
+
 }
 </script>
 
@@ -175,6 +214,13 @@ export default class Color extends ColorProps {
 			justify-content: center;
 			align-items: center;
 		}
+
+		.download-buton{
+			right: -5px; bottom: -5px;
+			top: unset;
+			font-size: 10px;
+			background:thistle;
+		}
 	}
 	.color-container:hover{
 		.color-index{
@@ -206,6 +252,28 @@ export default class Color extends ColorProps {
 		}
 	}
 
+	#input{
+		position: fixed;
+		left: -100000px; top: -100000px;
+	}
+
+	.color-wrapper{
+		position: relative;
+		
+		.download-buton{
+			width: 15px; height: 15px;
+			border-radius: 100%;
+			font-weight: 700;
+			font-size: 15px;
+			position: absolute;
+			right: -5px; bottom: 5px;
+			font-size: 10px;
+			background:thistle;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
 
 	@keyframes blink_slowly { 
 		0% { 

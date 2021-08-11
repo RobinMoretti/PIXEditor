@@ -8,3 +8,11 @@ export function downloadJsonFile(content: Record<string, unknown>, fileName: str
 	a.download = fileName;
 	a.click();
 }
+
+// export function downloadImageFile(content: Record<string, unknown>){
+// 	const file = new Blob([
+// 		JSON.stringify(content, null, 2),
+// 	], { type: 'image/jpeg' });
+
+// 	console.log('file =', file);
+// }
