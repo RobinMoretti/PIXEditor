@@ -70,7 +70,10 @@ export default class GridsContainer extends Vue {
 
 <style lang="scss" scoped>
 .count-positionning-container{
-    margin-top: 0;
+    margin-top: 5px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 100%;
 
     .abstract-grid-container{
         width: 20px; height: 20px;
