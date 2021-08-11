@@ -1,6 +1,7 @@
 <template>
 	<div
-		class="cells-count-horizontal">
+		class="cells-count-horizontal"
+		:class="{ right: horizontalPosition }">
 		<div
 			class="cells-count-row"
 			v-for="(row, key) in horizontalCellsCount"
@@ -33,17 +34,10 @@ export default class cellsCountHorizontal extends Vue {
 		return this.gridModule.backgroudColor;
 	}
 
-	// getCssCount(countItem: count): Record<string, string> {
-	// 	if (countItem.color) {
-	// 		return {
-	// 			color: `rgb(${countItem.color.r}, ${countItem.color.g}, ${countItem.color.b})`,
-	// 		};
-	// 	}
+	get horizontalPosition(){
+		return this.gridModule.settings.grid.counts.horizontalPosition === 'right' ? true : false;
+	}
 
-	// 	return {
-	// 		color: `rgb(${this.borderColor.r}, ${this.borderColor.g}, ${this.borderColor.b})`,
-	// 	};
-	// }
 	getClassCount(countItem: count): Record<string, string> {
 		let className = `count-font-0`;
 
@@ -71,7 +65,15 @@ export default class cellsCountHorizontal extends Vue {
 
 <style scoped lang="scss">
 	.cells-count-horizontal{
-		// background: white;
+		&.right{
+			margin-left: 10px;
+			left: 0;
+			right: unset !important;
+			.cells-count-row{
+				flex-direction: row-reverse;
+			}
+		}
+
 		margin-right: 10px;
 
 		.cells-count-row{

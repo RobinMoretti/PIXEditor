@@ -47,19 +47,19 @@ h1{
 
 .count-font-1{
       font-family: 'rubik';
-      color: rgb(33, 33, 33) !important;
-      font-weight: 100 !important;
-}
-.count-font-2{
-      font-family: 'rubik';
-      color: rgb(255, 255, 255) !important;
-      font-weight: 400 !important;   
-      -webkit-text-stroke: 1px black;
-}
-.count-font-3{
-      font-family: 'rubik';
       color: rgb(255, 255, 255) !important;
       font-weight: 800 !important;
       -webkit-text-stroke: 1px black;
       text-shadow: 1px 1px 1px #000000;
+}
+.count-font-2{
+      font-family: 'rubik';
+      color: rgb(33, 33, 33) !important;
+      font-weight: 100 !important;
+}
+.count-font-3{
+      font-family: 'rubik';
+      color: rgb(255, 255, 255) !important;
+      font-weight: 400 !important;   
+      -webkit-text-stroke: 1px black;
 }

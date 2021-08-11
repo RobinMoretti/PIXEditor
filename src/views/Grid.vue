@@ -2,12 +2,12 @@
 	<div class="grids-container" ref="grid" :class="{print: !(!cellsAreVisible && !UIIsVisible)}">
 		<!-- <p v-html="horizontalCellsCount"></p> -->
 		<div class="grid" v-if="cells.length">
-			<div class="horizontal-container">
-				<cells-count-horizontal v-if="countsAreVisible" class="horizontal-cells-count-container"/>
+			<div class="horizontal-container" :class="{ right: horizontalPosition }">
+				<cells-count-horizontal v-if="countsAreVisible && countsIsvisible" class="horizontal-cells-count-container"/>
 			</div>
-			<div>
-				<div class="vertical-container">
-					<cells-count-vertical v-if="countsAreVisible" class="vertical-cells-count-container"/>
+			<div class="grids-true-container">
+				<div class="vertical-container" :class="{ bottom: verticalPosition }">
+					<cells-count-vertical v-if="countsAreVisible && countsIsvisible" class="vertical-cells-count-container"/>
 				</div>
 				<div class="background-gid-container">
 					<background-grid class="background-gid"/>
@@ -20,7 +20,11 @@
 				</div>
 			</div>
 
-			<div class="colors-container-export" v-if="!cellsAreVisible && !UIIsVisible">
+			<div 
+				class="colors-container-export" 
+				:class="{ left: horizontalPosition }" 
+				v-if="!cellsAreVisible && !UIIsVisible">
+				 
 				<div class="colors-true-container">
 					<color-component
 						v-for="(color, key) in cellsColor"
@@ -35,25 +39,36 @@
 		<colors-editor v-if="UIIsVisible"/>
 
 		<div class="grid-settings" v-if="UIIsVisible">
-			<input
-				type="range"
-				min="0"
-				max="13"
-				step="1"
-				v-model="gridBorderWidth"
-				@change="updateBorderWidth">
 		</div>
 
 		<div class="system-settings" v-if="UIIsVisible">
-			<input
-				type="range"
-				min="0"
-				max="2"
-				step="0.01"
-				v-model="systemZoom">
-			<label>
-				zoom
-			</label>
+			<div class="range-container grid-border-width-container">
+				<input
+					type="range"
+					min="0"
+					max="13"
+					step="1"
+					v-model="gridBorderWidth"
+					@change="updateBorderWidth">
+				<label>
+					Border Width
+				</label>
+			</div>
+
+			<div class="range-container zoom-container">
+				<input
+					type="range"
+					min="0"
+					max="2"
+					step="0.01"
+					v-model="systemZoom">
+				<label>
+					Zoom
+				</label>
+			</div>
+
+			<grid-setting-rect/>
+			
 		</div>
 
 		<bottom-menu v-if="UIIsVisible"/>
@@ -71,6 +86,7 @@ import cellsCountVertical from '@/components/grid/CellsCountVertical.vue';
 import backgroundGrid from '@/components/grid/BackgroundGrid.vue';
 import ColorsEditor from '@/components/UI/Colors/ColorsEditor.vue';
 import colorComponent from '@/components/UI/Colors/ColorPicker.vue';
+import gridSettingRect from '@/components/UI/GridSettingRect.vue';
 import BottomMenu from '@/components/UI/BottomMenu.vue';
 import Cell from '@/components/grid/Cell.vue';
 import { cell, color, gridSetting } from '@/store/modules/grid-types';
@@ -84,6 +100,7 @@ import { cell, color, gridSetting } from '@/store/modules/grid-types';
 		Cell,
 		BottomMenu,
 		colorComponent,
+		gridSettingRect,
 	},
 })
 export default class GridsContainer extends Vue {
@@ -119,6 +136,16 @@ export default class GridsContainer extends Vue {
 
 	get cellsColor(): Array<color> {
 		return this.gridModule.cellsColors;
+	}
+
+	get horizontalPosition(){
+		return this.grid.counts.horizontalPosition === 'right' ? true : false;
+	}
+	get verticalPosition(){
+		return this.grid.counts.verticalPosition === 'bottom' ? true : false;
+	}
+	get countsIsvisible(){
+		return this.grid.counts.visible;
 	}
 
 	mounted(): void {
@@ -195,6 +222,11 @@ export default class GridsContainer extends Vue {
 		justify-content: center;
 		align-items: center;
 
+		.grids-true-container{
+			display: flex;
+			flex-direction: column;
+		}
+
 		.grid{
 			margin: 20px;
 			display: flex;
@@ -229,6 +261,16 @@ export default class GridsContainer extends Vue {
 			}
 		}
 
+		.vertical-container.bottom{
+			order: 3;
+
+			.vertical-cells-count-container{
+				position: absolute;
+				bottom: unset !important;
+				top: 0;
+			}
+		}
+		
 		.horizontal-container{
 			position: relative;
 
@@ -236,6 +278,10 @@ export default class GridsContainer extends Vue {
 				position: absolute;
 				right: 0;
 			}
+		}
+
+		.horizontal-container.right{
+			order: 3;
 		}
 
 		.background-gid-container{
@@ -262,8 +308,9 @@ export default class GridsContainer extends Vue {
 			top: 14px;
 			left: 14px;
 			display: flex;
-			align-items: center;
-			justify-content: center;
+			align-items: flex-start;
+			justify-content: flex-start;
+			flex-direction: column;
 
 			input{
 				border: solid rgba(10, 10, 10, 0.424) 2px;
@@ -273,9 +320,26 @@ export default class GridsContainer extends Vue {
 				text-transform: uppercase;
 				font-size: 12px;
 			}
+
+			.range-container{
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				flex-direction: row;
+				font-weight: bold;
+			}
 		}
 
 		.colors-container-export{
+			&.left{
+				order: -1;
+
+				.colors-true-container{
+					position: absolute;
+					right: 10px;
+				}
+			}
+
 			position: relative;
 			margin-left: 10px;
 			.colors-true-container{

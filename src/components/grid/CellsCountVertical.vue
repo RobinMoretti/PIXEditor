@@ -1,5 +1,5 @@
 <template>
-	<div class="cells-count-vertical">
+	<div class="cells-count-vertical" :class="{ bottom: verticalPosition }">
 		<div
 			class="cells-count-column"
 			v-for="(column, key) in verticalCellsCount"
@@ -30,6 +30,10 @@ export default class cellsCountVertical extends Vue {
 
 	get borderColor(): color {
 		return this.gridModule.backgroudColor;
+	}
+
+	get verticalPosition(){
+		return this.gridModule.settings.grid.counts.verticalPosition === 'bottom' ? true : false;
 	}
 
 	getClassCount(countItem: count): Record<string, string> {
@@ -65,6 +69,14 @@ export default class cellsCountVertical extends Vue {
 		align-items: stretch;
 		box-sizing: border-box;
 		margin-bottom: 10px;
+
+		&.bottom{
+			margin-top: 10px;
+			.cells-count-column{
+				flex-direction: column-reverse;
+			}
+		}
+
 		// background: white;
 
 		.cells-count-column{

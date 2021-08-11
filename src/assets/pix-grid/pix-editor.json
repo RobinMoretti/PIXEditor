@@ -6,6 +6,11 @@
       "height": "8",
       "border": {
         "width": 3
+      },
+      "counts": {
+        "verticalPosition": "top",
+        "horizontalPosition": "left",
+        "visible": true
       }
     }
   },

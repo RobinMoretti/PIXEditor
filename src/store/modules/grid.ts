@@ -7,9 +7,10 @@ import {
 } from 'vuex-class-modules';
 
 import {
-	cell, row, color, count, settings, stringIndexedArray,
+	cell, row, color, count, settings, stringIndexedArray, orientationType, positionType,
 } from './grid-types';
 import store from '../index';
+import Vue from 'vue';
 
 let saveStorageTimeout: number | null = null;
 
@@ -66,10 +67,24 @@ class GridModule extends VuexModule {
 			});
 		});
 
+		this.checkForMissingDatas();
+
 		this.connectColorsIntances();
 		this.selectColor(this.cellsColors[0]);
 		this.updateCounts();
 		this.saveGridInLocalStorage();
+		
+	}
+
+	@Mutation
+	checkForMissingDatas(){
+		if(!this.settings.grid.counts){
+			Vue.set(this.settings.grid, 'counts', {
+				verticalPosition: 'top',
+				horizontalPosition: 'left',
+				visible: true,
+			});
+		}
 	}
 
 	@Mutation
@@ -110,6 +125,11 @@ class GridModule extends VuexModule {
 			border: {
 				width: 3,
 			},
+			counts: {
+				verticalPosition: 'top',
+				horizontalPosition: 'left',
+				visible: true,
+			}
 		},
 	}
 
@@ -160,6 +180,29 @@ class GridModule extends VuexModule {
 		this.settings.grid.height = value;
 		this.updateCellsLenght();
 		this.updateCounts();
+		this.saveGridInLocalStorage();
+	}
+
+	@Action
+	updateCountsPosition({ orientation, targetPosition }: { orientation: orientationType; targetPosition: positionType }):void {
+		if(orientation === 'vertical'){
+			this.settings.grid.counts.verticalPosition = targetPosition;
+		}
+		else{
+			this.settings.grid.counts.horizontalPosition = targetPosition;
+		}
+		this.saveGridInLocalStorage();
+	}
+
+	@Action
+	toggleCountsVisibility(state?: boolean):void {
+		if(state !== undefined){
+			this.settings.grid.counts.visible = state;
+		}
+		else{
+			this.settings.grid.counts.visible = !this.settings.grid.counts.visible;
+		}
+
 		this.saveGridInLocalStorage();
 	}
 
