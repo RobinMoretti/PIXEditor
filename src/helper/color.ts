@@ -1,4 +1,5 @@
 import { color } from '@/store/modules/grid-types';
+import gridModule from '@/store/modules/grid';
 
 export function hexToRgbA(hexCode: string): color {
 	let hex = hexCode.replace('#', '');
@@ -24,4 +25,8 @@ export function rgbToHex(c: color): string {
 		componentToHex(c.r)
 	}${componentToHex(c.g)
 	}${componentToHex(c.b)}`;
+}
+
+export function findColorIndex(colorObj: color): number{
+	return gridModule.cellsColors.findIndex(color => color === colorObj);
 }

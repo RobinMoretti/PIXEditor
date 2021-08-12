@@ -72,7 +72,7 @@ export default class Color extends ColorProps {
 	}
 
 	get isSelected(): boolean{
-		if(this.color == this.gridModule.selectedColor){
+		if(this.color == this.gridModule.cellsColors[this.gridModule.selectedColorIndex]){
 			return true;
 		}
 		else{

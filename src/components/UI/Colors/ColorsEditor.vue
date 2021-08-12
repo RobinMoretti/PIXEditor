@@ -15,6 +15,8 @@
 			:color="color"
 			:color-index="key"></color-component>
 
+		<empty-color-selector/>
+
 		<div
 			class="button"
 			@click="addNewColor"
@@ -28,11 +30,13 @@ import gridModule from '@/store/modules/grid';
 import { color } from '@/store/modules/grid-types';
 import colorComponent from './ColorPicker.vue';
 import simpleColorComponent from './SimpleColorPicker.vue';
+import emptyColorSelector from './EmptyColorSelector.vue';
 
 @Component({
 	components: {
 		colorComponent,
 		simpleColorComponent,
+		emptyColorSelector,
 	},
 })
 export default class ColorsEditor extends Vue {

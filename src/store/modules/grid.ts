@@ -11,6 +11,7 @@ import {
 } from './grid-types';
 import store from '../index';
 import Vue from 'vue';
+import { findColorIndex } from '@/helper/color';
 
 let saveStorageTimeout: number | null = null;
 
@@ -69,11 +70,9 @@ class GridModule extends VuexModule {
 
 		this.checkForMissingDatas();
 
-		this.connectColorsIntances();
 		this.selectColor(this.cellsColors[0]);
 		this.updateCounts();
 		this.saveGridInLocalStorage();
-		
 	}
 
 	@Mutation
@@ -300,13 +299,8 @@ class GridModule extends VuexModule {
 
 	@Action
 	toggleCell(cellIndex: number): void{
-		console.log("toggleCell")
-		console.log(this.selectedColorIndex)
-		console.log(this.cells[cellIndex])
-
 		if (this.cellsInteraction.clicked) {
 			Vue.set(this.cells, cellIndex, this.selectedColorIndex);
-			// this.cells[cellIndex] = this.selectedColorIndex;
 			
 			this.updateCounts();
 			this.saveGridInLocalStorage();
@@ -469,26 +463,7 @@ class GridModule extends VuexModule {
 		r: 255, g: 255, b: 255,
 	};
 
-	selectedColor: color | null = null;
 	selectedColorIndex: number = 0;
-
-	@Mutation
-	connectColorsIntances() {
-		// this.cells.forEach((cellObj) => {
-		// 	for (let i = 0; i < this.cellsColors.length; i += 1) {
-		// 		const colorObj = this.cellsColors[i];
-		// 		if (cellObj.color) {
-		// 			const sameR = colorObj.r === cellObj.color.r;
-		// 			const sameG = colorObj.g === cellObj.color.g;
-		// 			const sameB = colorObj.b === cellObj.color.b;
-
-		// 			if (sameR && sameG && sameB) {
-		// 				cellObj.color = colorObj;
-		// 			}
-		// 		}
-		// 	}
-		// });
-	}
 
 	@Action
 	initColors(): void{
@@ -506,8 +481,12 @@ class GridModule extends VuexModule {
 
 	@Mutation
 	selectColor(colorObj: color): void {
-		this.selectedColor = colorObj;
-		this.selectedColorIndex = this.cellsColors.findIndex(color => color === colorObj);
+		this.selectedColorIndex = findColorIndex(colorObj);
+	}
+	
+	@Mutation
+	selectEmptyColor(): void {
+		this.selectedColorIndex = -1;
 	}
 
 	@Action
@@ -541,7 +520,6 @@ class GridModule extends VuexModule {
 	@Action
 	updateColorImg({ imgValue, colorIndex }: { imgValue?: string; colorIndex: number }): void {
 		Vue.set(this.cellsColors[colorIndex], 'img', imgValue);
-		// this.cellsColors[colorIndex].img = imgValue;
 		this.saveGridInLocalStorage();
 	}
 
