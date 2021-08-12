@@ -5,11 +5,11 @@
 Pix Editeur est un outil Web de création de [logimage](https://fr.wikipedia.org/wiki/Picross).
 Cet outil est pensé pour créer des grilles imprimables avec un fort aspect graphique. 
 
-### [PIX EST ACCESSIBLE DIRECTEMENT SUR ITCH](https://robinmoretti.itch.io/pix-editor)
+#### [PIX EST ACCESSIBLE DIRECTEMENT SUR ITCH](https://robinmoretti.itch.io/pix-editor)
 
 PIX Editor est un projet open source en cours de développement* 
 
-    J'imagine, c'est une première pour moi, je ne sais pas trop ce que ça implique, mais je vais y travailler 😀 
+> J'imagine, c'est une première pour moi, je ne sais pas trop ce que ça implique, mais je vais y travailler 😀 
 
 ##### TODO:
 * ~~données persistantes~~
@@ -27,12 +27,12 @@ PIX Editor est un projet open source en cours de développement*
 Pix Editor is a web-based [nonogram](https://en.wikipedia.org/wiki/Nonogram) creation tool*.
 This tool is made to create and share printable grids with a design aspect.
 
-### [PIX EST ACCESSIBLE DIRECTEMENT SUR ITCH](https://robinmoretti.itch.io/pix-editor)
+### [PIX IS AVAILABLE ON ITCH](https://robinmoretti.itch.io/pix-editor)
 
 
 PIX Editor is an open source project under development*.
 
-    I guess, this is a first for me, not sure what it entails, but I'll work on it 😀. 
+> I guess, this is a first for me, not sure what it entails, but I'll work on it 😀. 
 
 ##### TODO:
 * ~~persistent data~~

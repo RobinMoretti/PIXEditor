@@ -96,10 +96,6 @@ export default class Color extends ColorProps {
 </script>
 
 <style scoped lang="scss">
-
-	.color-container{
-	}
-
 	.color-input{
 		position: fixed;
 		right: 2000vw;
