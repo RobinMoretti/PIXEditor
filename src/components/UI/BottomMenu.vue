@@ -49,10 +49,8 @@ import { Component, Vue } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
 import { downloadJsonFile } from '@/helper/exports';
 const json = require('@/assets/pix-grid/pix-editor.json');
-// import defaultGrid from '@/assets/pix-grid/pix-editor.json';
 
-@Component({
-})
+@Component
 export default class BottomMenu extends Vue {
     gridModule = gridModule;
     gridWidth = this.gridModule.settings.grid.width;
@@ -64,7 +62,7 @@ export default class BottomMenu extends Vue {
             this.gridModule.loadGridFromLocalStorage();
         }
         else if(this.gridModule.firstInitied === false){
-            // this.importData(json); 
+            this.importData(json); 
             this.gridModule.init();
         }
         this.updateBottomMenuDatas();

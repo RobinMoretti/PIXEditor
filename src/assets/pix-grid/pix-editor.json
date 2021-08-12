@@ -1,7 +1,7 @@
 {
   "settings": {
     "grid": {
-      "title": "PIX Editor",
+      "title": "Pix editor",
       "width": "13",
       "height": "8",
       "border": {
@@ -15,652 +15,116 @@
     }
   },
   "cells": [
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": false,
-      "color": null
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    },
-    {
-      "checked": true,
-      "color": {
-        "r": 33,
-        "g": 37,
-        "b": 102
-      }
-    }
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    0,
+    0,
+    -1,
+    0,
+    0,
+    -1,
+    -1,
+    0,
+    -1,
+    0,
+    -1,
+    0,
+    -1,
+    0,
+    0,
+    -1,
+    0,
+    -1,
+    0,
+    -1,
+    -1,
+    -1,
+    -1,
+    0,
+    -1,
+    -1,
+    0,
+    0,
+    -1,
+    0,
+    0,
+    -1,
+    -1,
+    0,
+    -1,
+    0,
+    -1,
+    0,
+    -1,
+    0,
+    0,
+    -1,
+    0,
+    -1,
+    -1,
+    -1,
+    0,
+    -1,
+    0,
+    -1,
+    0,
+    -1,
+    0,
+    0,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
   ],
   "cellsColors": [
     {
-      "r": 33,
-      "g": 37,
-      "b": 102
+      "r": 0,
+      "g": 83,
+      "b": 146
     }
   ],
   "backgroudColor": {
