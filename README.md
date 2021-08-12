@@ -1,4 +1,4 @@
-# Pix Editor
+# Pix Editor [![Build Status](https://travis-ci.com/RobinMoretti/PIXEditor.svg?branch=main)](https://travis-ci.com/RobinMoretti/PIXEditor)
 
 ![Pix Editor Screenshot](https://github.com/RobinMoretti/PIXEditor/blob/main/src/assets/images/readme-image-header.png?raw=true)
 
