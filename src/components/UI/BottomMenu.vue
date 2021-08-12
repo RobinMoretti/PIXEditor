@@ -64,7 +64,7 @@ export default class BottomMenu extends Vue {
             this.gridModule.loadGridFromLocalStorage();
         }
         else if(this.gridModule.firstInitied === false){
-            this.importData(json); 
+            // this.importData(json); 
             this.gridModule.init();
         }
         this.updateBottomMenuDatas();

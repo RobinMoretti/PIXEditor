@@ -9,10 +9,8 @@ export interface color{
 	img?: string,
 }
 
-export interface cell{
-	checked: boolean,
-	color: color | null,
-}
+export type cell= number;
+
 export interface count{
 	color: color | null,
 	number: number,

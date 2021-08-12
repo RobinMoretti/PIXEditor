@@ -2,12 +2,12 @@
     <div
         class="cell"
         :id="`cell-${index-1}`"
-        :class="{'checked': cells[index-1].checked}"
+        :class="{'checked': cells[index-1] >= 0}"
         :style="cellCss"
         @mouseover="toggleIfPossible(index)"
         @mousedown="mouseDownCell(index-1)"
         @mouseup="mouseUpCell()">
-		<img :src="cells[index-1].color.img" class="img-cell" v-if="cells[index-1].color && cells[index-1].color.img">
+		<img :src="colors[cells[index-1]].img" class="img-cell" v-if="colors[cells[index-1]] && colors[cells[index-1]].img">
     </div>
 </template>
 
@@ -15,7 +15,7 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
-import { cell } from '@/store/modules/grid-types';
+import { cell, color } from '@/store/modules/grid-types';
 import grid from '@/store/modules/grid';
 
 const CellProps = Vue.extend({
@@ -32,10 +32,13 @@ export default class Cell extends CellProps {
 	get cells(): Array<cell> {
 		return this.gridModule.cells;
 	}
+	get colors(): Array<color> {
+		return this.gridModule.cellsColors;
+	}
 
 	get cellCss(): Record<string, string> {
-		if (this.cells[this.index - 1] && this.cells[this.index - 1].color) {
-			const { color } = this.cells[this.index - 1];
+		if (this.cells[this.index - 1] >= 0 && this.colors[this.cells[this.index - 1]]) {
+			const color = this.colors[this.cells[this.index - 1]];
 			if(!color?.img){
 				return {
 					'background-color': `rgb(${color?.r},${color?.g},${color?.b})`,

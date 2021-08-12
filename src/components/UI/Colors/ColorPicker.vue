@@ -100,7 +100,7 @@ export default class Color extends ColorProps {
 			// check if color have some cells
 			let filteredCells = this.gridModule.cells.filter(
 				cell => {
-					return cell.color == this.color;
+					return this.gridModule.cellsColors[cell] == this.color;
 				}
 			);
 

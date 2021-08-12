@@ -256,10 +256,11 @@ class GridModule extends VuexModule {
 						const tempCell: cell = tempCells[tempCellindex];
 
 						const cellIndex = x + (y * this.settings.grid.width);
-						if (tempCell.checked && tempCell.color) {
+
+						if (tempCell >= 0) {
 							this.checkCell({
 								cellIndex,
-								colorObj: tempCell.color,
+								refCell: tempCell,
 							});
 						}
 					}
@@ -275,44 +276,38 @@ class GridModule extends VuexModule {
 
 	@Mutation
 	clearCells():void {
-		this.cells.forEach(cell => {
-			cell.checked = false;
-			cell.color = null;
-		});
+		for (let index = 0; index < this.cells.length; index++) {
+			Vue.set(this.cells, index, -1);
+		}
 	}
 
 	@Mutation
 	addNewCell(quantity?: number): void {
 		if (quantity) {
 			for (let index = 0; index < quantity; index += 1) {
-				this.cells.push({
-					checked: false,
-					color: null,
-				});
+				this.cells.push(-1);
 			}
 		} else {
-			this.cells.push({
-				checked: false,
-				color: null,
-			});
+			this.cells.push(-1);
 		}
 	}
 
 	@Mutation
-	checkCell({ cellIndex, colorObj }: { cellIndex: number; colorObj: color }): void{
-		this.cells[cellIndex].checked = true;
-		this.cells[cellIndex].color = colorObj;
+	checkCell({ cellIndex, refCell }: { cellIndex: number; refCell: cell }): void{
+		Vue.set(this.cells, cellIndex, refCell);
+		// this.cells[cellIndex] = refCell;
 	}
 
 	@Action
 	toggleCell(cellIndex: number): void{
+		console.log("toggleCell")
+		console.log(this.selectedColorIndex)
+		console.log(this.cells[cellIndex])
+
 		if (this.cellsInteraction.clicked) {
-			this.cells[cellIndex].checked = !this.cells[cellIndex].checked;
-			if (this.cells[cellIndex].checked) {
-				this.cells[cellIndex].color = this.selectedColor;
-			} else {
-				this.cells[cellIndex].color = null;
-			}
+			Vue.set(this.cells, cellIndex, this.selectedColorIndex);
+			// this.cells[cellIndex] = this.selectedColorIndex;
+			
 			this.updateCounts();
 			this.saveGridInLocalStorage();
 		}
@@ -356,27 +351,27 @@ class GridModule extends VuexModule {
 				if (!activeRow.items.length) {
 					activeRow.items.push({
 						number: 0,
-						color: activeCell.color,
+						color: this.cellsColors[activeCell],
 					} as count);
 				}
 
 				const lastItemCount = activeRow.items[activeRow.items.length - 1];
 
-				if (activeCell.checked) {
+				if (activeCell >= 0) {
 					let previousCell = activeCellIndex - 1 >= 0 ? this.cells[activeCellIndex - 1] : null;
 					
 					if (!previousCell ||
-						previousCell && (previousCell.checked && (previousCell.color === activeCell.color))) {
+						previousCell >= 0 && (previousCell >= 0 && (previousCell === activeCell))) {
 						// lastItemCount.color = activeCell.color;
 						lastItemCount.number += 1;
 					} else if (lastItemCount.number) {
 						activeRow.items.push({
 							number: 1,
-							color: activeCell.color,
+							color: this.cellsColors[activeCell],
 						} as count);
 					} else {
 						if (lastItemCount.number === 0) {
-							lastItemCount.color = activeCell.color;
+							lastItemCount.color = this.cellsColors[activeCell];
 						}
 						lastItemCount.number += 1;
 					}
@@ -410,9 +405,9 @@ class GridModule extends VuexModule {
 
 				const previousItemCount = activeColumn.items[activeColumn.items.length - 1];
 
-				if (activeCell.checked) {
-					let previousCell = null;
-					let previousCellIndex = null;
+				if (activeCell >= 0) {
+					let previousCell = -1;
+					let previousCellIndex = -1;
 
 					if ((activeCellIndex - this.settings.grid.width) >= 0) {
 						previousCellIndex = activeCellIndex - this.settings.grid.width;
@@ -423,18 +418,18 @@ class GridModule extends VuexModule {
 						previousCell = this.cells[previousCellIndex];
 					}
 
-					if (!previousCell
-						|| (previousCell.checked && (previousCell.color === activeCell.color))) {
-						previousItemCount.color = activeCell.color;
+					if (!previousCellIndex
+						|| (previousCell >= 0 && (previousCell === activeCell))) {
+						previousItemCount.color = this.cellsColors[activeCell];
 						previousItemCount.number += 1;
 					} else if (previousItemCount.number) {
 						activeColumn.items.push({
 							number: 1,
-							color: activeCell.color,
+							color: this.cellsColors[activeCell],
 						} as count);
 					} else {
 						if (previousItemCount.color === null) {
-							previousItemCount.color = activeCell.color;
+							previousItemCount.color = this.cellsColors[activeCell];
 						}
 						previousItemCount.number += 1;
 					}
@@ -475,23 +470,24 @@ class GridModule extends VuexModule {
 	};
 
 	selectedColor: color | null = null;
+	selectedColorIndex: number = 0;
 
 	@Mutation
 	connectColorsIntances() {
-		this.cells.forEach((cellObj) => {
-			for (let i = 0; i < this.cellsColors.length; i += 1) {
-				const colorObj = this.cellsColors[i];
-				if (cellObj.color) {
-					const sameR = colorObj.r === cellObj.color.r;
-					const sameG = colorObj.g === cellObj.color.g;
-					const sameB = colorObj.b === cellObj.color.b;
+		// this.cells.forEach((cellObj) => {
+		// 	for (let i = 0; i < this.cellsColors.length; i += 1) {
+		// 		const colorObj = this.cellsColors[i];
+		// 		if (cellObj.color) {
+		// 			const sameR = colorObj.r === cellObj.color.r;
+		// 			const sameG = colorObj.g === cellObj.color.g;
+		// 			const sameB = colorObj.b === cellObj.color.b;
 
-					if (sameR && sameG && sameB) {
-						cellObj.color = colorObj;
-					}
-				}
-			}
-		});
+		// 			if (sameR && sameG && sameB) {
+		// 				cellObj.color = colorObj;
+		// 			}
+		// 		}
+		// 	}
+		// });
 	}
 
 	@Action
@@ -511,6 +507,7 @@ class GridModule extends VuexModule {
 	@Mutation
 	selectColor(colorObj: color): void {
 		this.selectedColor = colorObj;
+		this.selectedColorIndex = this.cellsColors.findIndex(color => color === colorObj);
 	}
 
 	@Action
