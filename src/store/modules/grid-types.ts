@@ -6,6 +6,7 @@ export interface color{
 	r: number,
 	g: number,
 	b: number,
+	img?: string,
 }
 
 export interface cell{

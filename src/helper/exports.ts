@@ -9,10 +9,11 @@ export function downloadJsonFile(content: Record<string, unknown>, fileName: str
 	a.click();
 }
 
-// export function downloadImageFile(content: Record<string, unknown>){
-// 	const file = new Blob([
-// 		JSON.stringify(content, null, 2),
-// 	], { type: 'image/jpeg' });
-
-// 	console.log('file =', file);
-// }
+export function getBase64(file: File): Promise<string | ArrayBuffer | null> {
+	return new Promise((resolve, reject) => {
+	  const reader = new FileReader();
+	  reader.readAsDataURL(file);
+	  reader.onload = () => resolve(reader.result);
+	  reader.onerror = error => reject(error);
+	});
+  }

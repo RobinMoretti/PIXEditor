@@ -12,6 +12,7 @@
 				class="color-button"
 				for="color-input" 
 				:style="getCssColor">
+				<img :src="color.img" class="img-cell" v-if="color && color.img">
 				<div 
 					class="delete-buton"
 					v-if="isSelected && canDelete && !forPrint"
@@ -27,12 +28,16 @@
 				@change="updateEditorColor($event)">
 		</div>
 
-		<!-- <div 
+		<div 
 			class="download-buton"
-			v-if="isSelected && !forPrint"
+			v-if="isSelected && !forPrint && !color.img"
 			@click="clickInputFile($event)">↧</div>	
+		<div 
+			class="delete-downloaded-img-buton"
+			v-if="isSelected && !forPrint && color.img"
+			@click="deleteUploadedImg($event)">⌇</div>	
 
-		<input type="file" id="input" ref="fileInput" class="file-input" @change="uploadImageFile($event)"> -->
+		<input type="file" id="input" ref="fileInput" class="file-input" @change="uploadImageFile($event)">
 	</div>
 </template>
 
@@ -42,7 +47,7 @@ import { Component } from 'vue-property-decorator';
 import gridModule from '@/store/modules/grid';
 import { hexToRgbA, rgbToHex } from '@/helper/color';
 import { color, stringIndexedArray } from '@/store/modules/grid-types';
-import { downloadJsonFile } from '@/helper/exports';
+import { downloadJsonFile, getBase64 } from '@/helper/exports';
 
 const ColorProps = Vue.extend({
 	props: {
@@ -123,6 +128,12 @@ export default class Color extends ColorProps {
 			'background-color': `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`
 		};
 
+		if(this.color.img){
+			cssColor = {
+				'background-color': `transparent !important`,
+			};
+		}
+
 		return cssColor;
 	}
 	get getCountFontCss(): object {
@@ -141,18 +152,14 @@ export default class Color extends ColorProps {
 	}
 
     uploadImageFile(event: Event){
-		console.log("upload Imgage file")
-		console.log(event)
-
         let files = (<HTMLInputElement>event.target).files;
         if(files && files[0]){
             let file = files[0];
-			// var reader = new FileReader();
-			// reader.addEventListener('load', event: Event => {
-			// 	console.log(event.target.result);
-			// });
-			// reader.readAsText(file);
-			console.log(files);
+			getBase64(file).then((result) => {
+				if(typeof(result) === 'string'){
+					this.gridModule.updateColorImg({imgValue: result, colorIndex: this.colorIndex});
+				}
+			});
         }	
     }
 
@@ -164,6 +171,11 @@ export default class Color extends ColorProps {
             let htmlFileElem = <HTMLInputElement>this.$refs.fileInput;
             htmlFileElem.click();
         }
+    }
+    deleteUploadedImg(event: Event): void{
+		event.preventDefault();
+		event.stopPropagation();
+		this.gridModule.updateColorImg({colorIndex: this.colorIndex});
     }
 
 }
@@ -209,17 +221,19 @@ export default class Color extends ColorProps {
 			font-weight: 700;
 			font-size: 15px;
 			position: absolute;
-			right: -5px; top: -5px;
+			right: -7px; top: -5px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 		}
 
-		.download-buton{
-			right: -5px; bottom: -5px;
-			top: unset;
-			font-size: 10px;
-			background:thistle;
+		position: relative;
+		.img-cell{
+			position: absolute;
+			left: calc((var(--grid-border-width)/2) * (-1)); top: calc((var(--grid-border-width)/2) * (-1));
+			width: calc(var(--grid-border-width) + 100%); height: calc(var(--grid-border-width) + 100%);
+			object-fit: cover;
+			z-index: -1;
 		}
 	}
 	.color-container:hover{
@@ -260,7 +274,7 @@ export default class Color extends ColorProps {
 	.color-wrapper{
 		position: relative;
 		
-		.download-buton{
+		.download-buton, .delete-downloaded-img-buton{
 			width: 15px; height: 15px;
 			border-radius: 100%;
 			font-weight: 700;
@@ -272,6 +286,13 @@ export default class Color extends ColorProps {
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			cursor: pointer;
+		}
+
+		.delete-downloaded-img-buton{
+			background:thistle;
+			font-size: 18px;
+			font-weight: bold;
 		}
 	}
 

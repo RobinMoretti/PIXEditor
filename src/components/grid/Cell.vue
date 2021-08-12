@@ -7,6 +7,7 @@
         @mouseover="toggleIfPossible(index)"
         @mousedown="mouseDownCell(index-1)"
         @mouseup="mouseUpCell()">
+		<img :src="cells[index-1].color.img" class="img-cell" v-if="cells[index-1].color && cells[index-1].color.img">
     </div>
 </template>
 
@@ -35,9 +36,16 @@ export default class Cell extends CellProps {
 	get cellCss(): Record<string, string> {
 		if (this.cells[this.index - 1] && this.cells[this.index - 1].color) {
 			const { color } = this.cells[this.index - 1];
-			return {
-				'background-color': `rgb(${color?.r},${color?.g},${color?.b})`,
-			};
+			if(!color?.img){
+				return {
+					'background-color': `rgb(${color?.r},${color?.g},${color?.b})`,
+				};
+			}
+			else{
+				return {
+					'background-color': `unset !important`,
+				};
+			}
 		}
 
 		return {};
@@ -62,6 +70,7 @@ export default class Cell extends CellProps {
 
 <style scoped lang="scss">
 	.cells-container{
+
 		*{
 
 		-webkit-touch-callout: none; /* iOS Safari */
@@ -70,6 +79,18 @@ export default class Cell extends CellProps {
 			-moz-user-select: none; /* Old versions of Firefox */
 				-ms-user-select: none; /* Internet Explorer/Edge */
 					user-select: none;
+		}
+		.cell{
+			position: relative;
+		}
+
+
+		.img-cell{
+			position: absolute;
+			left: calc((var(--grid-border-width)/2) * (-1)); top: calc((var(--grid-border-width)/2) * (-1));
+			width: calc(var(--grid-border-width) + 100%); height: calc(var(--grid-border-width) + 100%);
+			object-fit: cover;
+			z-index: -1;
 		}
 	}
 </style>

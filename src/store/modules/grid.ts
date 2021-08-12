@@ -541,6 +541,13 @@ class GridModule extends VuexModule {
 		this.saveGridInLocalStorage();
 	}
 
+	@Action
+	updateColorImg({ imgValue, colorIndex }: { imgValue?: string; colorIndex: number }): void {
+		Vue.set(this.cellsColors[colorIndex], 'img', imgValue);
+		// this.cellsColors[colorIndex].img = imgValue;
+		this.saveGridInLocalStorage();
+	}
+
 	/* eslint class-methods-use-this: ["error", { "exceptMethods": ["updateBasicColor"] }] */
 	@Action
 	updateBasicColor({ newColor, colorObj }: { newColor: color; colorObj: color }): void {
