@@ -24,6 +24,7 @@
 				class="colors-container-export" 
 				:class="{ left: horizontalPosition }" 
 				v-if="!cellsAreVisible && !UIIsVisible">
+				
 				 
 				<div class="colors-true-container">
 					<color-component
@@ -342,9 +343,10 @@ export default class GridsContainer extends Vue {
 
 			position: relative;
 			margin-left: 10px;
+			
 			.colors-true-container{
-				position: absolute;
-				bottom: 10px; top: 0px;
+				position: absolute; 
+				top: 0px;
 			}
 		}
 	}

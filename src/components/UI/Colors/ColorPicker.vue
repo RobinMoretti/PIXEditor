@@ -187,7 +187,6 @@ export default class Color extends ColorProps {
 		padding: 0;
 		display: flex;
 		justify-content: space-between;
-		margin-bottom: 10px;
 	}
 
 	.color-input{
@@ -273,6 +272,7 @@ export default class Color extends ColorProps {
 
 	.color-wrapper{
 		position: relative;
+		margin-bottom: 10px;
 		
 		.download-buton, .delete-downloaded-img-buton{
 			width: 15px; height: 15px;
@@ -280,7 +280,7 @@ export default class Color extends ColorProps {
 			font-weight: 700;
 			font-size: 15px;
 			position: absolute;
-			right: -5px; bottom: 5px;
+			right: -5px; bottom: -5px;
 			font-size: 10px;
 			background:thistle;
 			display: flex;

@@ -37,7 +37,7 @@
             <p @click="displayEmptyButton" class="button export-button" v-if="!emptyButtonIsVisible">EMPTY</p>
             <p @click="emptyGrid" class="button export-button" v-else>REALLY ?</p>
 
-            <p @click="displayClearButton" class="button export-button" v-if="!clearButtonIsVisible">CLEAR</p>
+            <p @click="displayClearButton" class="button export-button" v-if="!clearButtonIsVisible">RESET</p>
             <p @click="clearDatas" class="button export-button" v-else>REALLY ?</p>
         </div>
 
