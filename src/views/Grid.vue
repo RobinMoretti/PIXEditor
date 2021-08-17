@@ -218,7 +218,8 @@ export default class GridsContainer extends Vue {
 
 <style scoped lang="scss">
 	.grids-container{
-		width: 100%; height: 100%;
+		width: 100%; height: calc(100% - 40px);
+		overflow: auto;
 		display: flex;
 		justify-content: center;
 		align-items: center;

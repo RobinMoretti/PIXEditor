@@ -1,5 +1,8 @@
 <template>
-	<div class="bottom-nav-container">
+	<div class="bottom-nav-container"
+		@mousedown.stop
+		@mouseup.stop
+		@keydown.stop>
         <div @click="displayAbout" class="about-button">?</div>
         <div class="title-container">
             <input 
@@ -177,7 +180,7 @@ export default class BottomMenu extends Vue {
 	.bottom-nav-container{
 		position: fixed;
 		bottom: 0; left: 0;
-        width: 100%;
+        width: 100%; height: 40px;
 		background-color: rgb(255, 255, 255);
 		width: 100%;
         padding: 5px;
@@ -260,7 +263,6 @@ export default class BottomMenu extends Vue {
     }
 
     .about-button{
-        border: wheat;
         background: rgb(211, 192, 158);
         border-radius: 100%;
         width: 25px; height: 25px;
@@ -272,6 +274,6 @@ export default class BottomMenu extends Vue {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 35px;
+        margin-right: 15px;
     }
 </style>
