@@ -61,10 +61,6 @@ export default class App extends Vue {
 		}
 	}
 
-	public displayKey(event): void{
-		console.log(event.keyCode)
-	}
-
 	public toggleSystemClick(): void {
 		this.systemModule.toggleClicked();
 	}

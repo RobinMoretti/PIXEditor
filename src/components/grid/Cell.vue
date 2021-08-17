@@ -87,6 +87,10 @@ export default class Cell extends CellProps {
 			position: relative;
 		}
 
+		.cell:hover{
+			border-color: rgba(255, 252, 45, 0.486) !important;
+		}
+
 
 		.img-cell{
 			position: absolute;
