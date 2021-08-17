@@ -136,6 +136,7 @@ export default class BottomMenu extends Vue {
 
     importData(data: object):void {
         this.gridModule.importDatas(data);
+        this.updateBottomMenuDatas();
     }
 
     clearButtonIsVisible = false;
