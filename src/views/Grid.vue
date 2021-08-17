@@ -164,7 +164,7 @@ export default class GridsContainer extends Vue {
 		const node = this.$refs.grid as HTMLElement;
 
 		htmlToImage.toPng(node, {
-			pixelRatio: 10,
+			pixelRatio: 5,
 		})
 			.then((dataUrl) => {
 				const link = document.createElement('a');
@@ -187,7 +187,7 @@ export default class GridsContainer extends Vue {
 		this.countsAreVisible = false;
 		const node = this.$refs.grid as HTMLElement;
 		htmlToImage.toPng(node, {
-			pixelRatio: 10,
+			pixelRatio: 5,
 		})
 			.then((dataUrl) => {
 				const link = document.createElement('a');
