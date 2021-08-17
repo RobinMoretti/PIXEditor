@@ -9,6 +9,33 @@
 		<background/>
 		<editor-nav/>
 		<router-view/>
+
+		<modal on-title="DISPLAY_ABOUT">
+			<h1>Pix Editor</h1>
+			<p>
+				Picross is a web printable <a href="https://en.wikipedia.org/wiki/Nonogram" target="_blank">picross</a> (minimalist) editor/creator. <br>
+				<br>
+				Compatible with Firefox and Chrome on desktop.
+				<br>
+				<br>
+
+				<ul>
+					<li>Create and draw your grid (max 4 colors)</li>
+					<li>Print it</li>
+					<li>Share it</li>
+				</ul>
+				<br>
+				<b>Shortcuts</b> 
+				<ul>
+					<li>1~4 colors</li>
+					<li>shift (pressed) to erase</li>
+				</ul>
+				<br>
+				Made by Robin Moretti with ❤️
+				<br>
+				{{appVersion}} - <a href="https://github.com/RobinMoretti/PIXEditor" target="_blank">source code</a>
+			</p>
+		</modal>
 	</div>
 </template>
 
@@ -17,21 +44,24 @@ import { Component, Vue } from 'vue-property-decorator';
 import { map } from '@/helper/mathHelper';
 import EditorNav from '@/components/header/EditorNav.vue';
 import Background from '@/components/UI/Background.vue';
+import Modal from '@/components/UI/Modal.vue'; 
 
 import systemModule from '@/store/modules/system';
 import gridModule from '@/store/modules/grid';
+import {version} from '@/../package.json';
 
 @Component({
 	components: {
 		EditorNav,
 		Background,
+		Modal,
 	},
 })
 
 export default class App extends Vue {
 	systemModule = systemModule;
-
 	gridModule = gridModule;
+	appVersion = version;
 
 	get mouse(): { clicked: boolean } {
 		return this.gridModule.cellsInteraction;

@@ -1,5 +1,6 @@
 <template>
 	<div class="bottom-nav-container">
+        <div @click="displayAbout" class="about-button">?</div>
         <div class="title-container">
             <input 
                 type="text" 
@@ -40,7 +41,6 @@
             <p @click="displayClearButton" class="button export-button" v-if="!clearButtonIsVisible">RESET</p>
             <p @click="clearDatas" class="button export-button" v-else>REALLY ?</p>
         </div>
-
 	</div>
 </template>
 
@@ -90,6 +90,10 @@ export default class BottomMenu extends Vue {
     }
     exportSolution(): void{
         this.$bus.$emit('EXPORT_SOLUTION')
+    }
+
+    displayAbout(): void{
+        this.$bus.$emit('DISPLAY_ABOUT')
     }
 
     exportData(){
@@ -253,5 +257,21 @@ export default class BottomMenu extends Vue {
     .file-input{
         position: fixed;
         right: -10000px; top: -10000px;
+    }
+
+    .about-button{
+        border: wheat;
+        background: rgb(211, 192, 158);
+        border-radius: 100%;
+        width: 25px; height: 25px;
+        display: inline-block;
+        cursor: pointer;
+        color: white;
+        font-weight: 900;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 35px;
     }
 </style>
