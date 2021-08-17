@@ -4,6 +4,7 @@
 		class="app-container"
 		@mousedown="toggleSystemClick"
 		@mouseup="toggleSystemClick"
+		@keydown="displayKey($event)"
 		:style="cssVars">
 		<background/>
 		<editor-nav/>
@@ -36,9 +37,33 @@ export default class App extends Vue {
 		return this.gridModule.cellsInteraction;
 	}
 
-	// mounted(): void {
-	// 	// this.gridModule.init();
-	// }
+	mounted(): void {      
+		window.addEventListener('keydown', (event: KeyboardEvent)=>{
+			this.keyIsPressed(event.key);
+		});
+		window.addEventListener('keyup', (event: KeyboardEvent)=>{
+			this.keyIsUp(event.key);
+		});
+	}
+
+	public keyIsPressed(key: string): void{
+		if(key === '1' || key === '2' || key === '3' || key === '4'){
+			this.gridModule.selectColor(this.gridModule.cellsColors[parseInt(key) - 1]);
+		}
+		else if(key === 'Shift'){
+			this.gridModule.tempSelectEmptyColor();
+		}
+	}
+
+	public keyIsUp(key: string): void{ 
+		if(key === 'Shift'){
+			this.gridModule.tempReleaseEmptyColor();
+		}
+	}
+
+	public displayKey(event): void{
+		console.log(event.keyCode)
+	}
 
 	public toggleSystemClick(): void {
 		this.systemModule.toggleClicked();

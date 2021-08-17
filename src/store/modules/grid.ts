@@ -464,6 +464,7 @@ class GridModule extends VuexModule {
 	};
 
 	selectedColorIndex: number = 0;
+	lastSelectedColor: number = 0;
 
 	@Action
 	initColors(): void{
@@ -488,6 +489,20 @@ class GridModule extends VuexModule {
 	selectEmptyColor(): void {
 		this.selectedColorIndex = -1;
 	}
+	
+	@Mutation
+	tempSelectEmptyColor(): void {
+		this.lastSelectedColor = this.selectedColorIndex;
+		this.selectedColorIndex = -1;
+	}
+
+	@Mutation
+	tempReleaseEmptyColor(): void {
+		if(this.selectedColorIndex < 0)
+			this.selectedColorIndex = this.lastSelectedColor;
+	}
+
+	
 
 	@Action
 	addColor(newColor?: color): void {
