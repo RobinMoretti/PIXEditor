@@ -352,22 +352,16 @@ class GridModule extends VuexModule {
 				const lastItemCount = activeRow.items[activeRow.items.length - 1];
 
 				if (activeCell >= 0) {
-					let previousCell = activeCellIndex - 1 >= 0 ? this.cells[activeCellIndex - 1] : null;
+					let previousCell = x > 0 ? this.cells[activeCellIndex - 1] : null;
 					
-					if (!previousCell ||
-						previousCell >= 0 && (previousCell >= 0 && (previousCell === activeCell))) {
-						// lastItemCount.color = activeCell.color;
+					if (previousCell == null ||
+						previousCell >= 0 && (previousCell === activeCell)) {
 						lastItemCount.number += 1;
-					} else if (lastItemCount.number) {
+					} else {
 						activeRow.items.push({
 							number: 1,
 							color: this.cellsColors[activeCell],
 						} as count);
-					} else {
-						if (lastItemCount.number === 0) {
-							lastItemCount.color = this.cellsColors[activeCell];
-						}
-						lastItemCount.number += 1;
 					}
 				}
 			}
