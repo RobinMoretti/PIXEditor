@@ -267,20 +267,18 @@ export const useGridStore = defineStore('grid', {
 					const activeCellIndex = (y * this.settings.grid.width) + x
 					const activeCell = this.cells[activeCellIndex]
 
-					if (!activeRow.items.length) {
-						activeRow.items.push({
-							number: 0,
-							color: this.cellsColors[activeCell],
-						})
-					}
-
-					const lastItemCount = activeRow.items[activeRow.items.length - 1]
-
 					if (activeCell >= 0) {
 						const previousCell = x > 0 ? this.cells[activeCellIndex - 1] : null
 
 						if (previousCell == null || (previousCell >= 0 && previousCell === activeCell)) {
-							lastItemCount.number += 1
+							if (!activeRow.items.length) {
+								activeRow.items.push({
+									number: 1,
+									color: this.cellsColors[activeCell],
+								})
+							} else {
+								activeRow.items[activeRow.items.length - 1].number += 1
+							}
 						} else {
 							activeRow.items.push({
 								number: 1,
