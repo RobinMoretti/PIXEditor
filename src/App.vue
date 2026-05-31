@@ -14,27 +14,28 @@
 			<h1>Pix Editor</h1>
 			<div>
 				<p>
-					Picross is a web printable
-					<a href="https://en.wikipedia.org/wiki/Nonogram" target="_blank">picross</a>
-					(minimalist) editor/creator.
+					A minimalist web editor to create and print
+					<a href="https://en.wikipedia.org/wiki/Nonogram" target="_blank">nonogram</a>
+					(picross) puzzles — right in your browser.
 				</p>
-				<p>Compatible with Firefox and Chrome on desktop.</p>
+				<p>Works on Firefox and Chrome (desktop).</p>
+				<p><b>Features</b></p>
 				<ul>
-					<li>Create and draw your grid (max 4 colors)</li>
-					<li>Print it</li>
-					<li>Share it</li>
+					<li>Draw on a customizable grid (up to 4 colors)</li>
+					<li>Adjust grid size and borders</li>
+					<li>Print a clean puzzle sheet</li>
+					<li>Share via URL</li>
 				</ul>
-				<p><b>Shortcuts</b></p>
+				<p><b>Keyboard shortcuts</b></p>
 				<ul>
-					<li>1~4 colors</li>
-					<li>shift (pressed) to erase</li>
+					<li><kbd>1</kbd> – <kbd>4</kbd> &nbsp;select color</li>
+					<li><kbd>Shift</kbd> &nbsp;erase (hold)</li>
 				</ul>
 				<p>
-					Made by Robin Moretti with <br />
-					{{ appVersion }} -
-					<a href="https://github.com/RobinMoretti/PIXEditor" target="_blank"
-						>source code</a
-					>
+					Made by Robin Moretti &mdash;
+					<a href="https://github.com/RobinMoretti/PIXEditor" target="_blank">source code</a>
+					<br />
+					<small>v{{ appVersion }}</small>
 				</p>
 			</div>
 		</modal>
