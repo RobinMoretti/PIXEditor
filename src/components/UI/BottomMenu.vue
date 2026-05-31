@@ -155,8 +155,12 @@ export default {
 			reader.onload = (e) => {
 				const img = new Image();
 				img.onload = () => {
-					const width = this.gridModule.settings.grid.width;
-					const height = this.gridModule.settings.grid.height;
+					const width = img.naturalWidth;
+					const height = img.naturalHeight;
+
+					// Resize grid to match image dimensions
+					this.gridModule.updateGridWidth(width);
+					this.gridModule.updateGridHeight(height);
 
 					const canvas = document.createElement("canvas");
 					canvas.width = width;
@@ -205,6 +209,20 @@ export default {
 		quantizeColors(pixels, k) {
 			const opaque = pixels.filter((p) => p.a >= 128);
 			if (opaque.length === 0) return [{ r: 0, g: 0, b: 0 }];
+
+			// Detect unique colors in the image
+			const uniqueColors = new Map();
+			for (const p of opaque) {
+				const key = `${p.r},${p.g},${p.b}`;
+				if (!uniqueColors.has(key)) {
+					uniqueColors.set(key, p);
+				}
+			}
+
+			// If there are fewer unique colors than k, use the actual number
+			if (uniqueColors.size < k) {
+				return Array.from(uniqueColors.values()).map(({ r, g, b }) => ({ r, g, b }));
+			}
 
 			// k-means++ initialisation
 			const centroids = [{ ...opaque[Math.floor(Math.random() * opaque.length)] }];
@@ -259,7 +277,24 @@ export default {
 				}
 				if (!changed) break;
 			}
-			return centroids.map(({ r, g, b }) => ({ r, g, b }));
+
+			// Merge very similar colors (threshold of 30)
+			const result = [];
+			const threshold = 30 * 30; // squared distance
+			for (const c of centroids) {
+				let merged = false;
+				for (const r of result) {
+					if (colorDistance(c, r) < threshold) {
+						merged = true;
+						break;
+					}
+				}
+				if (!merged) {
+					result.push({ r: c.r, g: c.g, b: c.b });
+				}
+			}
+
+			return result;
 		},
 		nearestColorIndex(pixel, palette) {
 			let minDist = Infinity,
