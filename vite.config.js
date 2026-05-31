@@ -9,5 +9,12 @@ export default defineConfig({
 			'@': resolve(__dirname, 'src'),
 		},
 	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				api: 'modern-compiler',
+			},
+		},
+	},
 	base: process.env.NODE_ENV === 'production' ? '' : '/',
 })
