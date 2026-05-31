@@ -1,100 +1,89 @@
 <template>
-	<div
-		class="cells-count-horizontal"
-		:class="{ right: horizontalPosition }">
-		<div
-			class="cells-count-row"
-			v-for="(row, key) in horizontalCellsCount"
-			:key="'cells-count-row-' + key">
-			<div
-				class="cells-count-row-item"
-				v-for="(count, countKey) in row.items"
-				:key="'cells-horizontal-count-' + countKey"
-				:class="getClassCount(count)">
-				{{ count.number }}
-			</div>
-		</div>
-	</div>
+<div
+class="cells-count-horizontal"
+:class="{ right: horizontalPosition }">
+<div
+class="cells-count-row"
+v-for="(row, key) in horizontalCellsCount"
+:key="'cells-count-row-' + key">
+<div
+class="cells-count-row-item"
+v-for="(count, countKey) in row.items"
+:key="'cells-horizontal-count-' + countKey"
+:class="getClassCount(count)">
+{{ count.number }}
+</div>
+</div>
+</div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import gridModule from '@/store/modules/grid';
-import { color, count, row, stringIndexedArray } from '@/store/modules/grid-types';
+<script>
+import { useGridStore } from '@/store/grid'
 
-@Component
-export default class cellsCountHorizontal extends Vue {
-	gridModule = gridModule;
-
-	get horizontalCellsCount(): row[] {
-		return this.gridModule.horizontalCellsCount;
-	}
-
-	get borderColor(): color {
-		return this.gridModule.backgroudColor;
-	}
-
-	get horizontalPosition(){
-		return this.gridModule.settings.grid.counts.horizontalPosition === 'right' ? true : false;
-	}
-
-	getClassCount(countItem: count): Record<string, string> {
-		let className = `count-font-0`;
-
-		if(countItem.color){
-			className = `count-font-${this.getColorIndex(countItem.color)}`
-		}
-		let classObj: stringIndexedArray = {};
-		classObj[className] = true;
-
-		return classObj;
-	}
-
-	getColorIndex(cellColor: color): number{
-		for (let i = 0; i < this.gridModule.cellsColors.length; i++) {
-			const color = this.gridModule.cellsColors[i];
-			if(color === cellColor){
-				return i;
-			}
-		}
-		
-		return 0;
-	}
+export default {
+setup() {
+return {
+gridModule: useGridStore(),
+}
+},
+computed: {
+horizontalCellsCount() {
+return this.gridModule.horizontalCellsCount
+},
+horizontalPosition() {
+return this.gridModule.settings.grid.counts.horizontalPosition === 'right'
+},
+},
+methods: {
+getClassCount(countItem) {
+let className = 'count-font-0'
+if (countItem.color) {
+className = `count-font-${this.getColorIndex(countItem.color)}`
+}
+return { [className]: true }
+},
+getColorIndex(cellColor) {
+for (let i = 0; i < this.gridModule.cellsColors.length; i++) {
+if (this.gridModule.cellsColors[i] === cellColor) return i
+}
+return 0
+},
+},
 }
 </script>
 
 <style scoped lang="scss">
-	.cells-count-horizontal{
-		&.right{
-			margin-left: 10px;
-			left: 0;
-			right: unset !important;
-			.cells-count-row{
-				flex-direction: row-reverse;
-			}
-		}
+.cells-count-horizontal{
+&.right{
+margin-left: 10px;
+left: 0;
+right: unset !important;
+.cells-count-row{
+flex-direction: row-reverse;
+}
+}
 
-		margin-right: 10px;
+margin-right: 10px;
 
-		.cells-count-row{
-			box-sizing: border-box;
-			height: 30px;
-			width: 100%;
-			border-bottom: solid var(--grid-border-width) rgba(0, 0, 0, 0);
-			border-top: solid var(--grid-border-width) rgba(0, 0, 0, 0);
-			border-left: solid var(--grid-border-width) rgba(0, 0, 0, 0);
-			display: flex;
-			flex-direction: row;
-			justify-content: flex-end;
-			align-items: center;
+.cells-count-row{
+box-sizing: border-box;
+height: 30px;
+width: 100%;
+border-bottom: solid var(--grid-border-width) rgba(0, 0, 0, 0);
+border-top: solid var(--grid-border-width) rgba(0, 0, 0, 0);
+border-left: solid var(--grid-border-width) rgba(0, 0, 0, 0);
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+align-items: center;
 
-			padding: 2px;
+padding: 2px;
 
-			.cells-count-row-item{
-				width: 30px;
-				font-size: 25px;
-				font-weight: 600;
-			}
-		}
-	}
+.cells-count-row-item{
+width: 30px;
+font-size: 25px;
+font-weight: 600;
+}
+}
+}
 </style>
