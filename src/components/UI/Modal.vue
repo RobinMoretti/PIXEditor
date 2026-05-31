@@ -7,36 +7,36 @@
     </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { emitter } from '@/eventBus'
 
-const ModalProps = Vue.extend({
-  props: {
-    onTitle: String
-  }
-})
-
-@Component({})
-export default class BottomMenu extends ModalProps  {
-    visible: boolean = false;
-    
-    public hide(): void{
-        this.visible = false;
-    }
-    
-    public display(): void{
-        this.visible = true;
-    }
-
-    mounted(): void{
-		this.$bus.$on(this.onTitle, this.display);
-    }
+export default {
+props: {
+onTitle: String,
+},
+data() {
+return {
+visible: false,
+}
+},
+mounted() {
+emitter.on(this.onTitle, this.display)
+},
+unmounted() {
+emitter.off(this.onTitle, this.display)
+},
+methods: {
+hide() {
+this.visible = false
+},
+display() {
+this.visible = true
+},
+},
 }
 </script>
 
-
 <style lang="scss">
-
     .modal-container.visible{
         display: flex !important;
     }
@@ -85,7 +85,7 @@ export default class BottomMenu extends ModalProps  {
                 margin-top: 5px;
                 li{
                     &:after {
-                        content: " ←";
+                        content: " \2190";
                     }
                 }
             }

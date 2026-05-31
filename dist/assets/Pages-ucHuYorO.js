@@ -1,0 +1,1 @@
+import{_ as s,c as o,a as t,o as a}from"./index-4-AmZ0GB.js";const n={},r={class:"pages-container"};function c(p,e,_,i,d,l){return a(),o("div",r,[...e[0]||(e[0]=[t("h1",null,"pages view",-1)])])}const u=s(n,[["render",c]]);export{u as default};

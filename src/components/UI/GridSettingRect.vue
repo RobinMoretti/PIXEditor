@@ -36,35 +36,34 @@
     </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import gridModule from '@/store/modules/grid';
-import { orientationType, positionType } from '@/store/modules/grid-types';
+<script>
+import { useGridStore } from '@/store/grid'
 
-export default class GridsContainer extends Vue {
-	gridModule = gridModule;
-
-    get verticalCountPosition(){
-        return this.gridModule.settings.grid.counts.verticalPosition;
-    }
-    get horizontalCountPosition(){
-        return this.gridModule.settings.grid.counts.horizontalPosition;
-    }
-
-    get countsAreVisible(){
-        return this.gridModule.settings.grid.counts.visible;
-    }
-    
-    public toggleVisibility(): void{
-        this.gridModule.toggleCountsVisibility();
-    }
-
-    public toggleCountPosition(orientation: orientationType, targetPosition: positionType): void{
-        this.gridModule.updateCountsPosition({
-            orientation, 
-            targetPosition
-        });
-    }
+export default {
+setup() {
+return {
+gridModule: useGridStore(),
+}
+},
+computed: {
+verticalCountPosition() {
+return this.gridModule.settings.grid.counts.verticalPosition
+},
+horizontalCountPosition() {
+return this.gridModule.settings.grid.counts.horizontalPosition
+},
+countsAreVisible() {
+return this.gridModule.settings.grid.counts.visible
+},
+},
+methods: {
+toggleVisibility() {
+this.gridModule.toggleCountsVisibility()
+},
+toggleCountPosition(orientation, targetPosition) {
+this.gridModule.updateCountsPosition({ orientation, targetPosition })
+},
+},
 }
 </script>
 
@@ -117,4 +116,3 @@ export default class GridsContainer extends Vue {
     }
 }
 </style>
-

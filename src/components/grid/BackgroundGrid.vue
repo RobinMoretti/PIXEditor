@@ -9,22 +9,20 @@
     </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import gridModule from '@/store/modules/grid';
-import { gridSetting } from '@/store/modules/grid-types';
+<script>
+import { useGridStore } from '@/store/grid'
 
-@Component
-export default class backgroundGrid extends Vue {
-	gridModule = gridModule;
-
-	get grid(): gridSetting {
-		return this.gridModule.settings.grid;
-	}
-
-	get cellsCount(): number {
-		return this.gridModule.settings.grid.width * this.gridModule.settings.grid.height;
-	}
+export default {
+	setup() {
+		return {
+			gridModule: useGridStore(),
+		}
+	},
+	computed: {
+		cellsCount() {
+			return this.gridModule.settings.grid.width * this.gridModule.settings.grid.height
+		},
+	},
 }
 </script>
 

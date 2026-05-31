@@ -14,32 +14,29 @@
     </div>
 </template>
 
+<script>
+import { useGridStore } from '@/store/grid'
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import gridModule from '@/store/modules/grid';
-
-@Component
-export default class ColorsEditor extends Vue {
-	gridModule = gridModule;
-
-	clickedButton(): void{
-		this.gridModule.selectEmptyColor();
-	}
-
-	get isSelected(): boolean{
-		if(this.gridModule.selectedColorIndex < 0){
-			return true;
+export default {
+	setup() {
+		return {
+			gridModule: useGridStore(),
 		}
-		else{
-			return false;
-		}
-	}
+	},
+	computed: {
+		isSelected() {
+			return this.gridModule.selectedColorIndex < 0
+		},
+	},
+	methods: {
+		clickedButton() {
+			this.gridModule.selectEmptyColor()
+		},
+	},
 }
 </script>
 
 <style scoped lang="scss">
-
 	.color-container{
 		padding: 0;
 		display: flex;
@@ -110,27 +107,6 @@ export default class ColorsEditor extends Vue {
 	.color-wrapper{
 		position: relative;
 		margin-bottom: 10px;
-		
-		.download-buton, .delete-downloaded-img-buton{
-			width: 15px; height: 15px;
-			border-radius: 100%;
-			font-weight: 700;
-			font-size: 15px;
-			position: absolute;
-			right: -5px; bottom: -5px;
-			font-size: 10px;
-			background:thistle;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-		}
-
-		.delete-downloaded-img-buton{
-			background:thistle;
-			font-size: 18px;
-			font-weight: bold;
-		}
 	}
 
 	@keyframes blink_slowly { 
@@ -144,5 +120,4 @@ export default class ColorsEditor extends Vue {
 			border: 2px solid rgb(33, 33, 33, 1);
 		} 
 	}
-
 </style>

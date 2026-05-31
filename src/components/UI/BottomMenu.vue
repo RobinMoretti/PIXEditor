@@ -1,8 +1,8 @@
 <template>
-	<div class="bottom-nav-container"
-		@mousedown.stop
-		@mouseup.stop
-		@keydown.stop>
+<div class="bottom-nav-container"
+@mousedown.stop
+@mouseup.stop
+@keydown.stop>
         <div @click="displayAbout" class="about-button">?</div>
         <div class="title-container">
             <input 
@@ -44,150 +44,137 @@
             <p @click="displayClearButton" class="button export-button" v-if="!clearButtonIsVisible">RESET</p>
             <p @click="clearDatas" class="button export-button" v-else>REALLY ?</p>
         </div>
-	</div>
+</div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import gridModule from '@/store/modules/grid';
-import { downloadJsonFile } from '@/helper/exports';
-const json = require('@/assets/pix-grid/pix-editor.json');
+<script>
+import { useGridStore } from '@/store/grid'
+import { downloadJsonFile } from '@/helper/exports'
+import { emitter } from '@/eventBus'
+import json from '@/assets/pix-grid/pix-editor.json'
 
-@Component
-export default class BottomMenu extends Vue {
-    gridModule = gridModule;
-    gridWidth = this.gridModule.settings.grid.width;
-    gridHeight = this.gridModule.settings.grid.height;
-    gridTitle = this.gridModule.settings.grid.title;
+export default {
+setup() {
+return {
+gridModule: useGridStore(),
+}
+},
+data() {
+return {
+gridWidth: 0,
+gridHeight: 0,
+gridTitle: '',
+clearButtonIsVisible: false,
+emptyButtonIsVisible: false,
+}
+},
+mounted() {
+if (localStorage.getItem('grid')) {
+this.gridModule.loadGridFromLocalStorage()
+} else if (this.gridModule.firstInitied === false) {
+this.importData(json)
+this.gridModule.init()
+}
+this.updateBottomMenuDatas()
+},
+methods: {
+updateBottomMenuDatas() {
+this.gridWidth = this.gridModule.settings.grid.width
+this.gridHeight = this.gridModule.settings.grid.height
+this.gridTitle = this.gridModule.settings.grid.title
+},
+updateGridWidth() {
+this.gridModule.updateGridWidth(this.gridWidth)
+},
+updateGridHeight() {
+this.gridModule.updateGridHeight(this.gridHeight)
+},
+updateTitleGrid() {
+this.gridModule.updateGridTitle(this.gridTitle)
+},
+exportGame() {
+emitter.emit('EXPORT_GAME')
+},
+exportSolution() {
+emitter.emit('EXPORT_SOLUTION')
+},
+displayAbout() {
+emitter.emit('DISPLAY_ABOUT')
+},
+exportData() {
+const toExport = this.gridModule.getFullDatas
+let fileName = toExport.settings.grid.title
 
-    mounted(): void{ 
-        if(localStorage.getItem('grid')){
-            this.gridModule.loadGridFromLocalStorage();
-        }
-        else if(this.gridModule.firstInitied === false){
-            this.importData(json); 
-            this.gridModule.init();
-        }
-        this.updateBottomMenuDatas();
-    }
+if (fileName.length === 0) fileName = 'no-title'
 
-    updateBottomMenuDatas(): void{
-        this.gridWidth = this.gridModule.settings.grid.width;
-        this.gridHeight = this.gridModule.settings.grid.height;
-        this.gridTitle = this.gridModule.settings.grid.title;
-    }
+fileName = fileName.toLowerCase().replace(/\s/g, '-')
+fileName += '.json'
 
-    updateGridWidth(): void{
-        this.gridModule.updateGridWidth(this.gridWidth);
-    }
-    updateGridHeight(): void{
-        this.gridModule.updateGridHeight(this.gridHeight);
-    }
+downloadJsonFile(toExport, fileName)
+},
+clickInputData() {
+if (this.$refs.fileInput) {
+this.$refs.fileInput.click()
+}
+},
+uploadJsonFile(event) {
+const files = event.target.files
+if (files && files[0]) {
+const file = files[0]
 
-    updateTitleGrid(): void{
-        this.gridModule.updateGridTitle(this.gridTitle);
-    }
+if (file.type !== 'application/json') {
+alert('Please select JSON files only!')
+return
+}
 
-    exportGame(): void{
-        this.$bus.$emit('EXPORT_GAME')
-    }
-    exportSolution(): void{
-        this.$bus.$emit('EXPORT_SOLUTION')
-    }
-
-    displayAbout(): void{
-        this.$bus.$emit('DISPLAY_ABOUT')
-    }
-
-    exportData(){
-        let toExport = this.gridModule.getFullDatas;
-
-        let fileName: string = toExport.settings.grid.title;
-
-        if(fileName.length == 0)
-            fileName = "no-title";
-            
-        fileName = fileName.toLowerCase().replace(/\s/g, '-');
-        fileName += ".json";
-
-        downloadJsonFile(toExport, fileName);
-    }
-
-    clickInputData(): void{
-        if(this.$refs.fileInput){
-            let htmlFileElem = <HTMLInputElement>this.$refs.fileInput;
-            htmlFileElem.click();
-        }
-    }
-    uploadJsonFile(event: Event){
-        let files = (<HTMLInputElement>event.target).files;
-        if(files && files[0]){
-            let file = files[0];
-
-            if (file.type != 'application/json') {
-                alert('Please select JSON files only!');
-                return;
-            }
-            
-            // for displaying the contents of the file
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                if(typeof(reader.result) === "string"){
-                    let fileContent: string = reader.result;
-                    this.importData(JSON.parse(reader.result))
-                }
-            }
-            reader.readAsText(file);
-        }
-    }
-
-    importData(data: object):void {
-        this.gridModule.importDatas(data);
-        this.updateBottomMenuDatas();
-    }
-
-    clearButtonIsVisible = false;
-
-    displayClearButton(): void{
-        this.clearButtonIsVisible = true;
-        setTimeout(() => {
-            this.clearButtonIsVisible = false;
-        }, 3000);
-    }
-
-    clearDatas(): void{
-        this.gridModule.clear();
-        location.reload(); 
-    }
-
-    emptyButtonIsVisible = false;
-
-    displayEmptyButton(): void{
-        this.emptyButtonIsVisible = true;
-        setTimeout(() => {
-            this.emptyButtonIsVisible = false;
-        }, 3000);
-    }
-
-    emptyGrid(): void{
-        this.gridModule.empty();
-    }
-
+const reader = new FileReader()
+reader.onload = () => {
+if (typeof reader.result === 'string') {
+this.importData(JSON.parse(reader.result))
+}
+}
+reader.readAsText(file)
+}
+},
+importData(data) {
+this.gridModule.importDatas(data)
+this.updateBottomMenuDatas()
+},
+displayClearButton() {
+this.clearButtonIsVisible = true
+setTimeout(() => {
+this.clearButtonIsVisible = false
+}, 3000)
+},
+clearDatas() {
+this.gridModule.clear()
+location.reload()
+},
+displayEmptyButton() {
+this.emptyButtonIsVisible = true
+setTimeout(() => {
+this.emptyButtonIsVisible = false
+}, 3000)
+},
+emptyGrid() {
+this.gridModule.empty()
+},
+},
 }
 </script>
 
 <style scoped lang="scss">
-	.bottom-nav-container{
-		position: fixed;
-		bottom: 0; left: 0;
+.bottom-nav-container{
+position: fixed;
+bottom: 0; left: 0;
         width: 100%; height: 40px;
-		background-color: rgb(255, 255, 255);
-		width: 100%;
+background-color: rgb(255, 255, 255);
+width: 100%;
         padding: 5px;
         display: flex;
         justify-content: center;
         align-items: baseline;
-	}
+}
 
     .grid-sizing{
         display: flex;
@@ -241,9 +228,7 @@ export default class BottomMenu extends Vue {
     
     input[type=number]:focus, input[type=text]:focus{
         border-bottom: rgba(19, 19, 19, 0.644) 4px solid;
-
     }
-    
     
     input[type=number] { 
         -moz-appearance: textfield;
