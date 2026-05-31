@@ -34,6 +34,8 @@
             <p  class="export-title">IMPORT:</p>
             <input type="file" id="input" ref="fileInput" class="file-input" @change="uploadJsonFile($event)">
             <p @click="clickInputData" class="button export-button">DATA</p>
+            <input type="file" id="imageInput" ref="imageInput" class="file-input" accept="image/jpeg,image/png" @change="uploadImageFile($event)">
+            <p @click="clickInputImage" class="button export-button">IMAGE</p>
         </div>
         <div class="grid-container">
             <p  class="grid-title">GRID:</p>
@@ -52,6 +54,10 @@ import { useGridStore } from '@/store/grid'
 import { downloadJsonFile } from '@/helper/exports'
 import { emitter } from '@/eventBus'
 import json from '@/assets/pix-grid/pix-editor.json'
+
+function colorDistance(a, b) {
+	return (a.r - b.r) ** 2 + (a.g - b.g) ** 2 + (a.b - b.b) ** 2
+}
 
 export default {
 setup() {
@@ -116,6 +122,117 @@ clickInputData() {
 if (this.$refs.fileInput) {
 this.$refs.fileInput.click()
 }
+},
+clickInputImage() {
+if (this.$refs.imageInput) {
+this.$refs.imageInput.click()
+}
+},
+uploadImageFile(event) {
+const files = event.target.files
+if (!files || !files[0]) return
+
+const file = files[0]
+if (!file.type.startsWith('image/')) {
+alert('Please select a JPG or PNG image!')
+return
+}
+
+const reader = new FileReader()
+reader.onload = (e) => {
+const img = new Image()
+img.onload = () => {
+const width = this.gridModule.settings.grid.width
+const height = this.gridModule.settings.grid.height
+
+const canvas = document.createElement('canvas')
+canvas.width = width
+canvas.height = height
+const ctx = canvas.getContext('2d')
+ctx.drawImage(img, 0, 0, width, height)
+
+const imageData = ctx.getImageData(0, 0, width, height)
+const pixels = []
+for (let i = 0; i < imageData.data.length; i += 4) {
+pixels.push({
+r: imageData.data[i],
+g: imageData.data[i + 1],
+b: imageData.data[i + 2],
+a: imageData.data[i + 3],
+})
+}
+
+const palette = this.quantizeColors(pixels, 5)
+const cells = pixels.map((pixel) => {
+if (pixel.a < 128) return -1
+return this.nearestColorIndex(pixel, palette)
+})
+
+this.importData({
+settings: {
+grid: {
+title: file.name.replace(/\.[^/.]+$/, ''),
+width,
+height,
+border: this.gridModule.settings.grid.border,
+counts: this.gridModule.settings.grid.counts,
+},
+},
+cells,
+cellsColors: palette,
+backgroudColor: this.gridModule.backgroudColor,
+borderColor: this.gridModule.borderColor,
+})
+}
+img.src = e.target.result
+}
+reader.readAsDataURL(file)
+event.target.value = ''
+},
+quantizeColors(pixels, k) {
+const opaque = pixels.filter((p) => p.a >= 128)
+if (opaque.length === 0) return [{ r: 0, g: 0, b: 0 }]
+
+// k-means++ initialisation
+const centroids = [{ ...opaque[Math.floor(Math.random() * opaque.length)] }]
+while (centroids.length < k) {
+const dists = opaque.map((p) => Math.min(...centroids.map((c) => colorDistance(p, c))))
+const total = dists.reduce((a, b) => a + b, 0)
+let r = Math.random() * total
+let chosen = opaque[opaque.length - 1]
+for (let i = 0; i < opaque.length; i++) {
+r -= dists[i]
+if (r <= 0) { chosen = opaque[i]; break }
+}
+centroids.push({ ...chosen })
+}
+
+// k-means iterations
+for (let iter = 0; iter < 20; iter++) {
+const clusters = Array.from({ length: k }, () => [])
+for (const p of opaque) {
+let minD = Infinity, minI = 0
+centroids.forEach((c, i) => { const d = colorDistance(p, c); if (d < minD) { minD = d; minI = i } })
+clusters[minI].push(p)
+}
+let changed = false
+for (let i = 0; i < k; i++) {
+if (!clusters[i].length) continue
+const nr = Math.round(clusters[i].reduce((s, p) => s + p.r, 0) / clusters[i].length)
+const ng = Math.round(clusters[i].reduce((s, p) => s + p.g, 0) / clusters[i].length)
+const nb = Math.round(clusters[i].reduce((s, p) => s + p.b, 0) / clusters[i].length)
+if (nr !== centroids[i].r || ng !== centroids[i].g || nb !== centroids[i].b) {
+centroids[i] = { r: nr, g: ng, b: nb }; changed = true
+}
+}
+if (!changed) break
+}
+return centroids.map(({ r, g, b }) => ({ r, g, b }))
+},
+nearestColorIndex(pixel, palette) {
+let minDist = Infinity, minIdx = 0
+palette.forEach((c, i) => { const d = colorDistance(pixel, c); if (d < minDist) { minDist = d; minIdx = i } })
+return minIdx
 },
 uploadJsonFile(event) {
 const files = event.target.files
