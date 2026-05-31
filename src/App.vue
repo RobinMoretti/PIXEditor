@@ -11,29 +11,22 @@ class="app-container"
 
 <modal on-title="DISPLAY_ABOUT">
 <h1>Pix Editor</h1>
-<p>
-Picross is a web printable <a href="https://en.wikipedia.org/wiki/Nonogram" target="_blank">picross</a> (minimalist) editor/creator. <br>
-<br>
-Compatible with Firefox and Chrome on desktop.
-<br>
-<br>
-
+<div>
+<p>Picross is a web printable <a href="https://en.wikipedia.org/wiki/Nonogram" target="_blank">picross</a> (minimalist) editor/creator.</p>
+<p>Compatible with Firefox and Chrome on desktop.</p>
 <ul>
 <li>Create and draw your grid (max 4 colors)</li>
 <li>Print it</li>
 <li>Share it</li>
 </ul>
-<br>
-<b>Shortcuts</b> 
+<p><b>Shortcuts</b></p>
 <ul>
 <li>1~4 colors</li>
 <li>shift (pressed) to erase</li>
 </ul>
-<br>
-Made by Robin Moretti with 
-<br>
-{{appVersion}} - <a href="https://github.com/RobinMoretti/PIXEditor" target="_blank">source code</a>
-</p>
+<p>Made by Robin Moretti with <br>
+{{appVersion}} - <a href="https://github.com/RobinMoretti/PIXEditor" target="_blank">source code</a></p>
+</div>
 </modal>
 </div>
 </template>
@@ -126,7 +119,7 @@ this.systemModule.disableOtherClick()
 </script>
 
 <style lang="scss">
-@import "./assets/sass/app.scss";
+@use "./assets/sass/app.scss";
 
 #app {
 font-family: Avenir, Helvetica, Arial, sans-serif;
