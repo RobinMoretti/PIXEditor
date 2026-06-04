@@ -36,6 +36,9 @@
 						for-print
 					></color-component>
 				</div>
+				<div class="grid-size-export">
+					{{ gridModule.settings.grid.width }}×{{ gridModule.settings.grid.height }}
+				</div>
 			</div>
 		</div>
 
@@ -333,6 +336,15 @@ export default {
 		.colors-true-container {
 			position: absolute;
 			top: 0px;
+		}
+
+		.grid-size-export {
+			position: absolute;
+			bottom: 0px;
+			font-size: 12px;
+			font-weight: bold;
+			color: #333;
+			white-space: nowrap;
 		}
 	}
 }
