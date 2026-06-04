@@ -72,6 +72,10 @@ function colorDistance(a, b) {
 	return (a.r - b.r) ** 2 + (a.g - b.g) ** 2 + (a.b - b.b) ** 2;
 }
 
+function isWhitePixel(pixel, threshold = 245) {
+	return pixel.r >= threshold && pixel.g >= threshold && pixel.b >= threshold;
+}
+
 export default {
 	setup() {
 		return {
@@ -155,12 +159,13 @@ export default {
 			reader.onload = (e) => {
 				const img = new Image();
 				img.onload = () => {
-					const width = img.naturalWidth;
-					const height = img.naturalHeight;
+					const width = this.gridModule.settings.grid.width;
+					const height = this.gridModule.settings.grid.height;
 
-					// Resize grid to match image dimensions
-					this.gridModule.updateGridWidth(width);
-					this.gridModule.updateGridHeight(height);
+					if (!width || !height) {
+						alert("Please define a valid grid size before importing an image.");
+						return;
+					}
 
 					const canvas = document.createElement("canvas");
 					canvas.width = width;
@@ -181,7 +186,7 @@ export default {
 
 					const palette = this.quantizeColors(pixels, 5);
 					const cells = pixels.map((pixel) => {
-						if (pixel.a < 128) return -1;
+						if (pixel.a < 128 || isWhitePixel(pixel)) return -1;
 						return this.nearestColorIndex(pixel, palette);
 					});
 
@@ -207,7 +212,7 @@ export default {
 			event.target.value = "";
 		},
 		quantizeColors(pixels, k) {
-			const opaque = pixels.filter((p) => p.a >= 128);
+			const opaque = pixels.filter((p) => p.a >= 128 && !isWhitePixel(p));
 			if (opaque.length === 0) return [{ r: 0, g: 0, b: 0 }];
 
 			// Detect unique colors in the image
