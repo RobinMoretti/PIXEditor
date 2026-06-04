@@ -1,1 +1,0 @@
-import{_ as s,o,a as t,c as a}from"./index-CQkiviJq.js";const n={},r={class:"pages-container"};function c(p,e,_,i,d,l){return o(),t("div",r,[...e[0]||(e[0]=[a("h1",null,"pages view",-1)])])}const u=s(n,[["render",c]]);export{u as default};

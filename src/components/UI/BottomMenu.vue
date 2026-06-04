@@ -142,6 +142,9 @@ export default {
 				cellsColors: this.gridModule.cellsColors,
 				settings: this.gridModule.settings,
 				backgroudColor: this.gridModule.backgroudColor,
+				borderColor: this.gridModule.borderColor,
+				horizontalCellsCount: this.gridModule.horizontalCellsCount,
+				verticalCellsCount: this.gridModule.verticalCellsCount,
 			});
 		},
 		clickInputData() {
