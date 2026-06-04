@@ -112,25 +112,31 @@ export async function exportPsd({ cells, cellsColors, settings, backgroudColor, 
 	paletteCtx.font = `bold ${paletteLabelFontSize}px sans-serif`
 	paletteCtx.fillText(`${gridWidth}×${gridHeight}`, paletteX + swatchSize / 2, sizeY + swatchSize / 2)
 
-	// ─── One layer per color for count numbers ───
-	const colorLayers = cellsColors.map((color, colorIndex) => {
-		const canvas = document.createElement('canvas')
-		canvas.width = canvasWidth
-		canvas.height = canvasHeight
-		const ctx = canvas.getContext('2d')
-		ctx.font = `bold ${fontSize}px sans-serif`
-		ctx.textAlign = 'center'
-		ctx.textBaseline = 'middle'
-		ctx.fillStyle = `rgb(${color.r}, ${color.g}, ${color.b})`
+	// ─── One group per color with individual text layers for count numbers ───
+	const colorGroups = cellsColors.map((color, colorIndex) => {
+		const textLayers = []
+		const fillColor = { r: color.r / 255, g: color.g / 255, b: color.b / 255 }
 
 		// Horizontal counts (left side, right-aligned)
 		horizontalCellsCount.forEach((row, rowIndex) => {
 			const allItems = [...row.items].reverse()
 			allItems.forEach((item, j) => {
 				if (item.color === cellsColors[colorIndex]) {
-					const cx = countsLeftWidth - (j + 0.5) * countItemSize
-					const cy = countsTopHeight + borderWidth + rowIndex * (cellSize + borderWidth) + cellSize / 2
-					ctx.fillText(String(item.number), cx, cy)
+					const cx = Math.round(countsLeftWidth - (j + 0.5) * countItemSize)
+					const cy = Math.round(countsTopHeight + borderWidth + rowIndex * (cellSize + borderWidth) + cellSize / 2)
+					textLayers.push({
+						name: String(item.number),
+						left: Math.round(cx - countItemSize / 2),
+						top: Math.round(cy - fontSize),
+						right: Math.round(cx + countItemSize / 2),
+						bottom: Math.round(cy + fontSize),
+						text: {
+							text: String(item.number),
+							transform: { translateX: cx, translateY: cy },
+							style: { font: { name: 'ArialMT' }, fontSize, fillColor, bold: true },
+							paragraphStyle: { justification: 'center' },
+						},
+					})
 				}
 			})
 		})
@@ -140,14 +146,26 @@ export async function exportPsd({ cells, cellsColors, settings, backgroudColor, 
 			const allItems = [...col.items].filter((item) => item.number > 0).reverse()
 			allItems.forEach((item, j) => {
 				if (item.color === cellsColors[colorIndex]) {
-					const cx = countsLeftWidth + borderWidth + colIndex * (cellSize + borderWidth) + cellSize / 2
-					const cy = countsTopHeight - (j + 0.5) * countItemSize
-					ctx.fillText(String(item.number), cx, cy)
+					const cx = Math.round(countsLeftWidth + borderWidth + colIndex * (cellSize + borderWidth) + cellSize / 2)
+					const cy = Math.round(countsTopHeight - (j + 0.5) * countItemSize)
+					textLayers.push({
+						name: String(item.number),
+						left: Math.round(cx - countItemSize / 2),
+						top: Math.round(cy - fontSize),
+						right: Math.round(cx + countItemSize / 2),
+						bottom: Math.round(cy + fontSize),
+						text: {
+							text: String(item.number),
+							transform: { translateX: cx, translateY: cy },
+							style: { font: { name: 'ArialMT' }, fontSize, fillColor, bold: true },
+							paragraphStyle: { justification: 'center' },
+						},
+					})
 				}
 			})
 		})
 
-		return { name: `Couleur ${colorIndex + 1}`, canvas }
+		return { name: `Couleur ${colorIndex + 1}`, children: textLayers }
 	})
 
 	const psd = {
@@ -155,7 +173,7 @@ export async function exportPsd({ cells, cellsColors, settings, backgroudColor, 
 		height: canvasHeight,
 		children: [
 			{ name: 'Palette', canvas: paletteCanvas },
-			...colorLayers,
+			...colorGroups,
 			{ name: 'Grille', canvas: gridCanvas },
 			{ name: 'Background', canvas: bgCanvas },
 		],
