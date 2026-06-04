@@ -16,6 +16,7 @@
 			<p @click="exportGame" class="button export-button">GAME</p>
 			<p @click="exportSolution" class="button export-button">SOLUTION</p>
 			<p @click="exportData" class="button export-button">DATA</p>
+			<p @click="exportPsd" class="button export-button">PSD</p>
 		</div>
 
 		<div class="import-container">
@@ -64,7 +65,7 @@
 
 <script>
 import { useGridStore } from "@/store/grid";
-import { downloadJsonFile } from "@/helper/exports";
+import { downloadJsonFile, exportPsd } from "@/helper/exports";
 import { emitter } from "@/eventBus";
 import json from "@/assets/pix-grid/pix-editor.json";
 
@@ -134,6 +135,14 @@ export default {
 			fileName += ".json";
 
 			downloadJsonFile(toExport, fileName);
+		},
+		exportPsd() {
+			exportPsd({
+				cells: this.gridModule.cells,
+				cellsColors: this.gridModule.cellsColors,
+				settings: this.gridModule.settings,
+				backgroudColor: this.gridModule.backgroudColor,
+			});
 		},
 		clickInputData() {
 			if (this.$refs.fileInput) {

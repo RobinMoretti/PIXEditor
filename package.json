@@ -9,6 +9,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "ag-psd": "^30.1.1",
     "axios": "^1.6.8",
     "html-to-image": "^1.11.11",
     "mitt": "^3.0.1",
