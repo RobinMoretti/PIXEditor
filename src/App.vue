@@ -84,6 +84,12 @@ export default {
 			color += `,${this.gridModule.borderColor.b}`;
 			return color;
 		},
+		markerBorderColor() {
+			const { r, g, b } = this.gridModule.backgroudColor;
+			const brightness = (r + g + b) / 3;
+			const offset = brightness > 128 ? -60 : 60;
+			return `rgb(${Math.max(0, Math.min(255, r + offset))},${Math.max(0, Math.min(255, g + offset))},${Math.max(0, Math.min(255, b + offset))})`;
+		},
 		cssVars() {
 			const marginBottom = this.gridModule.settings.grid.border.width + 5;
 			return {
@@ -93,6 +99,7 @@ export default {
 				"--grid-template-rows": this.gridModule.getCssGridRows,
 				"--grid-border-color": this.backgroundColor,
 				"--grid-background-color": this.borderColor,
+				"--grid-marker-border-color": this.markerBorderColor,
 				"--grid-count-font-weigth": String(
 					map(0, 13, 400, 1000, this.gridModule.settings.grid.border.width),
 				),

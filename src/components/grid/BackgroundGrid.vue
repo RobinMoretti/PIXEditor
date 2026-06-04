@@ -3,7 +3,8 @@
         <div
             class="cell"
             v-for="cell in cellsCount"
-            :key="'cell-' + cell">
+            :key="'cell-' + cell"
+            :class="getCellClasses(cell - 1)">
             <div class="cell-border-item"></div>
         </div>
     </div>
@@ -21,6 +22,19 @@ export default {
 	computed: {
 		cellsCount() {
 			return this.gridModule.settings.grid.width * this.gridModule.settings.grid.height
+		},
+		gridWidth() {
+			return this.gridModule.settings.grid.width
+		},
+	},
+	methods: {
+		getCellClasses(index) {
+			const col = index % this.gridWidth
+			const row = Math.floor(index / this.gridWidth)
+			return {
+				'fifth-col': (col + 1) % 5 === 0,
+				'fifth-row': (row + 1) % 5 === 0,
+			}
 		},
 	},
 }
@@ -50,5 +64,13 @@ export default {
         border-color: var(--grid-border-color);
         border-width: var(--grid-border-width);
         box-sizing: border-box;
+    }
+
+    .cell.fifth-col .cell-border-item {
+        border-right-color: var(--grid-marker-border-color);
+    }
+
+    .cell.fifth-row .cell-border-item {
+        border-bottom-color: var(--grid-marker-border-color);
     }
 </style>
