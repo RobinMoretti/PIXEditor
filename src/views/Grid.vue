@@ -146,10 +146,12 @@ export default {
 
 		emitter.on("EXPORT_GAME", this.exportGame);
 		emitter.on("EXPORT_SOLUTION", this.exportSolution);
+		document.addEventListener("mouseup", this.onGlobalMouseUp);
 	},
 	unmounted() {
 		emitter.off("EXPORT_GAME", this.exportGame);
 		emitter.off("EXPORT_SOLUTION", this.exportSolution);
+		document.removeEventListener("mouseup", this.onGlobalMouseUp);
 	},
 	methods: {
 		exportGame() {
@@ -194,6 +196,11 @@ export default {
 					this.UIIsVisible = true;
 					this.countsAreVisible = true;
 				});
+		},
+		onGlobalMouseUp() {
+			if (this.gridModule.cellsInteraction.clicked) {
+				this.gridModule.toggleCellsInteractionClicked(false);
+			}
 		},
 		updateBorderWidth() {
 			this.gridModule.updateBorderWidth(this.gridBorderWidth);
