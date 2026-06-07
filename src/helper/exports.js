@@ -115,7 +115,7 @@ export async function exportPsd({ cells, cellsColors, settings, backgroudColor, 
 	// ─── One group per color with individual text layers for count numbers ───
 	const colorGroups = cellsColors.map((color, colorIndex) => {
 		const textLayers = []
-		const fillColor = { r: color.r / 255, g: color.g / 255, b: color.b / 255 }
+		const fillColor = { r: color.r, g: color.g, b: color.b }
 
 		// Horizontal counts (left side, right-aligned)
 		horizontalCellsCount.forEach((row, rowIndex) => {
@@ -124,16 +124,24 @@ export async function exportPsd({ cells, cellsColors, settings, backgroudColor, 
 				if (item.color === cellsColors[colorIndex]) {
 					const cx = Math.round(countsLeftWidth - (j + 0.5) * countItemSize)
 					const cy = Math.round(countsTopHeight + borderWidth + rowIndex * (cellSize + borderWidth) + cellSize / 2)
+					const layerLeft = Math.round(cx - countItemSize / 2)
+					const layerTop = Math.round(cy - fontSize)
+					const layerRight = Math.round(cx + countItemSize / 2)
+					const layerBottom = Math.round(cy + fontSize)
 					textLayers.push({
 						name: String(item.number),
-						left: Math.round(cx - countItemSize / 2),
-						top: Math.round(cy - fontSize),
-						right: Math.round(cx + countItemSize / 2),
-						bottom: Math.round(cy + fontSize),
+						left: layerLeft,
+						top: layerTop,
+						right: layerRight,
+						bottom: layerBottom,
 						text: {
 							text: String(item.number),
-							transform: { translateX: cx, translateY: cy },
-							style: { font: { name: 'ArialMT' }, fontSize, fillColor, bold: true },
+							transform: [1, 0, 0, 1, cx, cy],
+							left: layerLeft,
+							top: layerTop,
+							right: layerRight,
+							bottom: layerBottom,
+							style: { font: { name: 'ArialMT' }, fontSize, fillColor, fauxBold: true },
 							paragraphStyle: { justification: 'center' },
 						},
 					})
@@ -148,16 +156,24 @@ export async function exportPsd({ cells, cellsColors, settings, backgroudColor, 
 				if (item.color === cellsColors[colorIndex]) {
 					const cx = Math.round(countsLeftWidth + borderWidth + colIndex * (cellSize + borderWidth) + cellSize / 2)
 					const cy = Math.round(countsTopHeight - (j + 0.5) * countItemSize)
+					const layerLeft = Math.round(cx - countItemSize / 2)
+					const layerTop = Math.round(cy - fontSize)
+					const layerRight = Math.round(cx + countItemSize / 2)
+					const layerBottom = Math.round(cy + fontSize)
 					textLayers.push({
 						name: String(item.number),
-						left: Math.round(cx - countItemSize / 2),
-						top: Math.round(cy - fontSize),
-						right: Math.round(cx + countItemSize / 2),
-						bottom: Math.round(cy + fontSize),
+						left: layerLeft,
+						top: layerTop,
+						right: layerRight,
+						bottom: layerBottom,
 						text: {
 							text: String(item.number),
-							transform: { translateX: cx, translateY: cy },
-							style: { font: { name: 'ArialMT' }, fontSize, fillColor, bold: true },
+							transform: [1, 0, 0, 1, cx, cy],
+							left: layerLeft,
+							top: layerTop,
+							right: layerRight,
+							bottom: layerBottom,
+							style: { font: { name: 'ArialMT' }, fontSize, fillColor, fauxBold: true },
 							paragraphStyle: { justification: 'center' },
 						},
 					})
