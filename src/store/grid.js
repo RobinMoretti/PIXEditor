@@ -12,6 +12,8 @@ export const useGridStore = defineStore('grid', {
 			'cellsColors',
 			'backgroudColor',
 			'borderColor',
+			'markerBorderColor',
+			'countsColor',
 		],
 
 		settings: {
@@ -26,6 +28,9 @@ export const useGridStore = defineStore('grid', {
 					verticalPosition: 'top',
 					horizontalPosition: 'left',
 					visible: true,
+				},
+				export: {
+					showGridSize: true,
 				},
 			},
 		},
@@ -49,6 +54,8 @@ export const useGridStore = defineStore('grid', {
 
 		backgroudColor: { r: 150, g: 150, b: 150 },
 		borderColor: { r: 255, g: 255, b: 255 },
+		markerBorderColor: { r: 90, g: 90, b: 90 },
+		countsColor: { r: 33, g: 33, b: 33 },
 
 		selectedColorIndex: 0,
 		lastSelectedColor: 0,
@@ -119,6 +126,22 @@ export const useGridStore = defineStore('grid', {
 					horizontalPosition: 'left',
 					visible: true,
 				}
+			}
+			if (!this.settings.grid.export) {
+				this.settings.grid.export = { showGridSize: true }
+			}
+			if (!this.markerBorderColor) {
+				const { r, g, b } = this.backgroudColor
+				const brightness = (r + g + b) / 3
+				const offset = brightness > 128 ? -60 : 60
+				this.markerBorderColor = {
+					r: Math.max(0, Math.min(255, r + offset)),
+					g: Math.max(0, Math.min(255, g + offset)),
+					b: Math.max(0, Math.min(255, b + offset)),
+				}
+			}
+			if (!this.countsColor) {
+				this.countsColor = { r: 33, g: 33, b: 33 }
 			}
 		},
 
@@ -416,6 +439,16 @@ export const useGridStore = defineStore('grid', {
 			colorObj.r = newColor.r
 			colorObj.g = newColor.g
 			colorObj.b = newColor.b
+			this.saveGridInLocalStorage()
+		},
+
+		updateMarkerBorderColor(color) {
+			this.markerBorderColor = color
+			this.saveGridInLocalStorage()
+		},
+
+		toggleShowGridSize() {
+			this.settings.grid.export.showGridSize = !this.settings.grid.export.showGridSize
 			this.saveGridInLocalStorage()
 		},
 

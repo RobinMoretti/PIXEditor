@@ -7,6 +7,12 @@
 no-margin-top></simple-color-component>
 <simple-color-component
 :color="borderGridColor"></simple-color-component>
+<simple-color-component
+:color="markerBorderGridColor"
+title="Lignes ×5"></simple-color-component>
+<simple-color-component
+:color="countsColor"
+title="Chiffres"></simple-color-component>
 </div>
 
 <color-component
@@ -50,6 +56,12 @@ return this.gridModule.backgroudColor
 },
 borderGridColor() {
 return this.gridModule.borderColor
+},
+markerBorderGridColor() {
+return this.gridModule.markerBorderColor
+},
+countsColor() {
+return this.gridModule.countsColor
 },
 },
 methods: {

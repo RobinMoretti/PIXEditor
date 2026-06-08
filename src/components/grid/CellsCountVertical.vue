@@ -6,7 +6,7 @@ v-for="(column, key) in verticalCellsCount"
 :key="'cells-count-column-' + key">
 <div
 class="cells-count-column-item"
-v-for="(count, countKey) in column.items"
+v-for="(count, countKey) in getColumnItems(column)"
 :key="'cells-vertical-count-' + countKey"
 :class="getClassCount(count)">
 {{ count.number }}
@@ -32,8 +32,11 @@ verticalPosition() {
 return this.gridModule.settings.grid.counts.verticalPosition === 'bottom'
 },
 },
-methods: {
-getClassCount(countItem) {
+	methods: {
+		getColumnItems(column) {
+			return this.verticalPosition ? [...column.items].reverse() : column.items;
+		},
+		getClassCount(countItem) {
 let className = 'count-font-0'
 if (countItem.color) {
 className = `count-font-${this.getColorIndex(countItem.color)}`

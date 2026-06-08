@@ -14,6 +14,14 @@
 		<div class="export-container">
 			<p class="export-title">EXPORT:</p>
 			<p @click="exportGame" class="button export-button">GAME</p>
+			<div class="game-options">
+				<div
+					class="game-option-toggle"
+					:class="{ active: showGridSize }"
+					@click="toggleShowGridSize"
+					title="Afficher la taille de la grille"
+				>W×H</div>
+			</div>
 			<p @click="exportSolution" class="button export-button">SOLUTION</p>
 			<p @click="exportData" class="button export-button">DATA</p>
 			<p @click="exportPsd" class="button export-button">PSD</p>
@@ -101,7 +109,15 @@ export default {
 		}
 		this.updateBottomMenuDatas();
 	},
+	computed: {
+		showGridSize() {
+			return this.gridModule.settings.grid.export?.showGridSize !== false;
+		},
+	},
 	methods: {
+		toggleShowGridSize() {
+			this.gridModule.toggleShowGridSize();
+		},
 		updateBottomMenuDatas() {
 			this.gridWidth = this.gridModule.settings.grid.width;
 			this.gridHeight = this.gridModule.settings.grid.height;
@@ -424,6 +440,44 @@ export default {
 		cursor: pointer;
 		border-bottom: rgba(19, 19, 19, 0.644) 4px solid;
 		padding-bottom: 2px;
+	}
+}
+
+.game-options {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-left: 6px;
+
+	.game-option-toggle {
+		font-size: 9px;
+		font-weight: 700;
+		padding: 1px 4px;
+		border-radius: 3px;
+		cursor: pointer;
+		border: 2px solid rgba(19, 19, 19, 0.2);
+		color: rgba(19, 19, 19, 0.3);
+		line-height: 1;
+		white-space: nowrap;
+
+		&.active {
+			border-color: rgba(19, 19, 19, 0.7);
+			color: rgba(19, 19, 19, 0.8);
+		}
+		&:hover {
+			border-color: rgba(19, 19, 19, 0.5);
+		}
+	}
+
+	.game-option-color {
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		cursor: pointer;
+		border: 2px solid rgba(19, 19, 19, 0.25);
+		&:hover {
+			border-color: rgba(19, 19, 19, 0.6);
+		}
 	}
 }
 

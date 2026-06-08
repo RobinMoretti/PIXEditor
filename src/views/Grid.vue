@@ -35,9 +35,9 @@
 						:color-index="key"
 						for-print
 					></color-component>
-				</div>
-				<div class="grid-size-export">
-					{{ gridModule.settings.grid.width }}×{{ gridModule.settings.grid.height }}
+					<div class="grid-size-export" v-if="showGridSize">
+						{{ gridModule.settings.grid.width }}×{{ gridModule.settings.grid.height }}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -137,6 +137,9 @@ export default {
 		},
 		countsIsvisible() {
 			return this.gridModule.settings.grid.counts.visible;
+		},
+		showGridSize() {
+			return this.gridModule.settings.grid.export?.showGridSize !== false;
 		},
 	},
 	mounted() {
@@ -343,15 +346,17 @@ export default {
 		.colors-true-container {
 			position: absolute;
 			top: 0px;
-		}
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 
-		.grid-size-export {
-			position: absolute;
-			bottom: 0px;
-			font-size: 12px;
-			font-weight: bold;
-			color: #333;
-			white-space: nowrap;
+			.grid-size-export {
+				margin-top: 8px;
+				font-size: 12px;
+				font-weight: bold;
+				color: var(--grid-count-font-color);
+				white-space: nowrap;
+			}
 		}
 	}
 }

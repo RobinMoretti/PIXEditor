@@ -7,7 +7,7 @@
 		>
 			<div
 				class="cells-count-row-item"
-				v-for="(count, countKey) in row.items"
+				v-for="(count, countKey) in getRowItems(row)"
 				:key="'cells-horizontal-count-' + countKey"
 				:class="getClassCount(count)"
 			>
@@ -35,6 +35,9 @@ export default {
 		},
 	},
 	methods: {
+		getRowItems(row) {
+			return this.horizontalPosition ? [...row.items].reverse() : row.items;
+		},
 		getClassCount(countItem) {
 			let className = "count-font-0";
 			if (countItem.color) {

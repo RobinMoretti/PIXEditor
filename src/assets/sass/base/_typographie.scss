@@ -40,24 +40,24 @@ h1{
 .count-font-0{
       font-family: 'rubik';
       font-weight: 500 !important;
-      color: rgb(33, 33, 33) !important;
+      color: var(--grid-count-font-color) !important;
 }
 
 .count-font-1{
       font-family: 'rubik';
-      color: rgb(255, 255, 255) !important;
+      color: var(--grid-count-font-color) !important;
       font-weight: 800 !important;
       -webkit-text-stroke: 1px black;
       text-shadow: 1px 1px 1px #000000;
 }
 .count-font-2{
       font-family: 'rubik';
-      color: rgb(33, 33, 33) !important;
+      color: var(--grid-count-font-color) !important;
       font-weight: 100 !important;
 }
 .count-font-3{
       font-family: 'rubik';
-      color: rgb(255, 255, 255) !important;
+      color: var(--grid-count-font-color) !important;
       font-weight: 400 !important;   
       -webkit-text-stroke: 1px black;
 }
